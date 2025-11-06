@@ -54,6 +54,16 @@ namespace IT13
             return bmp;
         }
 
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NavBar_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
         // Public properties to easily change title & username
         public string Title
         {

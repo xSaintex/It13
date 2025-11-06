@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿ne;
+            this.TopLevel = false;
+            this.Dock = DockStyle.Fill;
+            this.BackColor = Color.White; // clean background
+        }
 
-namespace IT13
-{
-    public partial class Dashboard : Form
-    {
-        public Dashboard()
+
+        private void label1_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
+
         }
     }
 }
