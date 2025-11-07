@@ -2,14 +2,8 @@
 {
     partial class NavBar
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,82 +15,113 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavBar));
+            pnlContainer = new Panel();
             lblTitle = new Label();
-            picUser = new PictureBox();
-            lblUserName = new Label();
+            pnlUser = new Panel();
             picArrow = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)picUser).BeginInit();
+            lblUserName = new Label();
+            picUser = new PictureBox();
+            pnlContainer.SuspendLayout();
+            pnlUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picArrow).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picUser).BeginInit();
             SuspendLayout();
+            // 
+            // pnlContainer
+            // 
+            pnlContainer.BackColor = Color.White;
+            pnlContainer.Controls.Add(lblTitle);
+            pnlContainer.Controls.Add(pnlUser);
+            pnlContainer.Dock = DockStyle.Fill;
+            pnlContainer.Location = new Point(0, 0);
+            pnlContainer.Name = "pnlContainer";
+            pnlContainer.Padding = new Padding(20, 10, 30, 10);
+            pnlContainer.Size = new Size(1871, 60);
+            pnlContainer.TabIndex = 0;
             // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            lblTitle.Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(0, 51, 102);
-            lblTitle.Location = new Point(49, 15);
+            lblTitle.Location = new Point(20, 15);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(100, 28);
+            lblTitle.Size = new Size(120, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "Inventory";
-            lblTitle.Click += lblTitle_Click;
+            lblTitle.Text = "Dashboard";
             // 
-            // picUser
+            // pnlUser
             // 
-            picUser.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            picUser.Image = (Image)resources.GetObject("picUser.Image");
-            picUser.Location = new Point(1670, 13);
-            picUser.Name = "picUser";
-            picUser.Size = new Size(24, 24);
-            picUser.SizeMode = PictureBoxSizeMode.Zoom;
-            picUser.TabIndex = 1;
-            picUser.TabStop = false;
-            // 
-            // lblUserName
-            // 
-            lblUserName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblUserName.AutoSize = true;
-            lblUserName.Font = new Font("Segoe UI", 10F);
-            lblUserName.ForeColor = Color.FromArgb(0, 51, 102);
-            lblUserName.Location = new Point(1520, 0);
-            lblUserName.Name = "lblUserName";
-            lblUserName.Size = new Size(46, 23);
-            lblUserName.TabIndex = 2;
-            lblUserName.Text = "John";
+            pnlUser.AutoSize = true;
+            pnlUser.Controls.Add(picArrow);
+            pnlUser.Controls.Add(lblUserName);
+            pnlUser.Controls.Add(picUser);
+            pnlUser.Dock = DockStyle.Right;
+            pnlUser.Location = new Point(1782, 10);
+            pnlUser.Name = "pnlUser";
+            pnlUser.Padding = new Padding(0, 8, 0, 8);
+            pnlUser.Size = new Size(59, 40);
+            pnlUser.TabIndex = 1;
             // 
             // picArrow
             // 
-            picArrow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            picArrow.Location = new Point(1520, 0);
+            picArrow.Cursor = Cursors.Hand;
+            picArrow.Location = new Point(0, 0);
+            picArrow.Margin = new Padding(0, 18, 0, 0);
             picArrow.Name = "picArrow";
-            picArrow.Size = new Size(14, 14);
+            picArrow.Size = new Size(12, 12);
             picArrow.SizeMode = PictureBoxSizeMode.Zoom;
-            picArrow.TabIndex = 3;
+            picArrow.TabIndex = 0;
             picArrow.TabStop = false;
+            picArrow.Click += PicUser_Click;
+            // 
+            // lblUserName
+            // 
+            lblUserName.AutoSize = true;
+            lblUserName.Font = new Font("Segoe UI", 10F);
+            lblUserName.ForeColor = Color.FromArgb(0, 51, 102);
+            lblUserName.Location = new Point(0, 0);
+            lblUserName.Margin = new Padding(10, 12, 5, 0);
+            lblUserName.Name = "lblUserName";
+            lblUserName.Size = new Size(54, 23);
+            lblUserName.TabIndex = 1;
+            lblUserName.Text = "Guest";
+            lblUserName.Click += PicUser_Click;
+            // 
+            // picUser
+            // 
+            picUser.BackColor = Color.FromArgb(0, 89, 179);
+            picUser.Cursor = Cursors.Hand;
+            picUser.Location = new Point(0, 0);
+            picUser.Name = "picUser";
+            picUser.Size = new Size(36, 36);
+            picUser.SizeMode = PictureBoxSizeMode.Zoom;
+            picUser.TabIndex = 2;
+            picUser.TabStop = false;
+            picUser.Click += PicUser_Click;
             // 
             // NavBar
             // 
             BackColor = Color.White;
-            Controls.Add(lblTitle);
-            Controls.Add(picUser);
-            Controls.Add(lblUserName);
-            Controls.Add(picArrow);
+            Controls.Add(pnlContainer);
             Name = "NavBar";
-            Padding = new Padding(20, 5, 20, 5);
-            Size = new Size(1520, 59);
-            Load += NavBar_Load_1;
-            ((System.ComponentModel.ISupportInitialize)picUser).EndInit();
+            Size = new Size(1871, 60);
+            pnlContainer.ResumeLayout(false);
+            pnlContainer.PerformLayout();
+            pnlUser.ResumeLayout(false);
+            pnlUser.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picArrow).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picUser).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.PictureBox picUser;
-        private System.Windows.Forms.Label lblUserName;
-        private System.Windows.Forms.PictureBox picArrow;
+        private Panel pnlContainer;
+        private Label lblTitle;
+        private Panel pnlUser;
+        private PictureBox picUser;
+        private Label lblUserName;
+        private PictureBox picArrow;
     }
 }

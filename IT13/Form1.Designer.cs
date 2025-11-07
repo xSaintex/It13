@@ -2,44 +2,74 @@
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            sidebar1 = new Sidebar();
+            navBar1 = new NavBar();
+            pnlContent = new Panel();
             SuspendLayout();
+            // 
+            // sidebar1
+            // 
+            sidebar1.BackColor = Color.White;
+            sidebar1.Location = new Point(0, 0);
+            sidebar1.Margin = new Padding(0);
+            sidebar1.Name = "sidebar1";
+            sidebar1.Size = new Size(260, 700);
+            sidebar1.TabIndex = 1;
+            // 
+            // navBar1
+            // 
+            navBar1.BackColor = Color.White;
+            navBar1.Dock = DockStyle.Top;
+            navBar1.Location = new Point(0, 0);
+            navBar1.Name = "navBar1";
+            navBar1.NavWidth = 1468;
+            navBar1.PageTitle = "Dashboard";
+            navBar1.Size = new Size(1468, 70);
+            navBar1.TabIndex = 2;
+            navBar1.UserImage = null;
+            navBar1.UserName = "Guest";
+            // 
+            // pnlContent
+            // 
+            pnlContent.BackColor = Color.FromArgb(245, 247, 250);
+            pnlContent.Dock = DockStyle.Fill;
+            pnlContent.Location = new Point(0, 0);
+            pnlContent.Name = "pnlContent";
+            pnlContent.Size = new Size(1450, 800);
+            pnlContent.TabIndex = 0;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1450, 733);
+            ClientSize = new Size(1450, 800);
+            Controls.Add(navBar1);
+            Controls.Add(sidebar1);
+            Controls.Add(pnlContent);
+            MinimumSize = new Size(1200, 700);
             Name = "Form1";
-            Text = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "LE PARISIEN - Inventory System";
+            WindowState = FormWindowState.Maximized;
+            Load += Form1_Load;
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Sidebar sidebar1;
+        private NavBar navBar1;
+        private Panel pnlContent;
     }
 }

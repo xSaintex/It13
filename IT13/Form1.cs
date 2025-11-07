@@ -1,75 +1,58 @@
-﻿namespace IT13
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace IT13
 {
     public partial class Form1 : Form
     {
-        private Panel contentPanel;
-
         public Form1()
         {
             InitializeComponent();
-
-            // CREATE NAVBAR FIRST
-            NavBar navbar = new NavBar();
-            navbar.Name = "navbar";
-            navbar.Dock = DockStyle.Top;
-            navbar.Title = "Dashboard";
-            navbar.UserName = "Administrator";
-            this.Controls.Add(navbar);
-
-            // CREATE SIDEBAR
-            Sidebar sidebar = new Sidebar();
-            sidebar.Name = "sidebar";
-            sidebar.Dock = DockStyle.Left;
-            this.Controls.Add(sidebar);
-
-            // CREATE CONTENT PANEL (Center area)
-            contentPanel = new Panel();
-            contentPanel.Dock = DockStyle.Fill;
-            contentPanel.BackColor = Color.White;
-            this.Controls.Add(contentPanel);
-
-            // Load Dashboard at startup
-            LoadForm(new Dashboard());
-
-            // Handle Sidebar Click Events
-            sidebar.SidebarItemClicked += Sidebar_SidebarItemClicked;
         }
 
-        private void Sidebar_SidebarItemClicked(object sender, string section)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            // Update NavBar title
-            NavBar navbar = this.Controls["navbar"] as NavBar;
-            if (navbar != null)
-                navbar.Title = section;
+            // NAVBAR: SMALLER WIDTH + STARTS AFTER SIDEBAR
+            navBar1.Dock = DockStyle.None; // no dock
+            navBar1.Width = 1190; // SMALLER WIDTH (total 1450 - 260 sidebar)
+            navBar1.Height = 70; // your height
+            navBar1.Left = 260; // STARTS AFTER SIDEBAR
+            navBar1.Top = 0; // at very top
+            navBar1.Padding = new Padding(20, 0, 30, 0); // normal padding inside
 
-            // Load selected page
-            switch (section)
+            // DEFAULT TEXT
+            navBar1.PageTitle = "Dashboard";
+            navBar1.UserName = "John Doe";
+
+            // SIDEBAR: FULL TOP TO BOTTOM
+            sidebar1.Dock = DockStyle.Left;
+            sidebar1.Width = 260;
+            sidebar1.Height = this.ClientSize.Height; // full height
+            sidebar1.BringToFront(); // on top of navbar
+
+            // CONTENT: FILLS REMAINING SPACE
+            pnlContent.Dock = DockStyle.Fill;
+            pnlContent.Left = 260; // after sidebar
+            pnlContent.Top = 70; // after navbar
+            pnlContent.Width = 1190;
+            pnlContent.Height = this.ClientSize.Height - 70;
+
+            // AUTO-RESIZE ON WINDOW CHANGE
+            this.Resize += (s, ev) =>
             {
-                case "Dashboard":
-                    LoadForm(new Dashboard());
-                    break;
-                case "Inventory":
-                    LoadForm(new Inventory()); // Example future form
-                    break;
-                // Add more cases when forms are created...
-                default:
-                    MessageBox.Show("No form assigned yet for: " + section);
-                    break;
-            }
-        }
+                sidebar1.Height = this.ClientSize.Height;
+                navBar1.Width = this.ClientSize.Width - 260;
+                navBar1.Left = 260;
+                pnlContent.Width = this.ClientSize.Width - 260;
+                pnlContent.Height = this.ClientSize.Height - navBar1.Height;
+            };
 
-        private void LoadForm(Form frm)
-        {
-            // Clear previous form
-            contentPanel.Controls.Clear();
-
-            // Configure new form to act as UserControl
-            frm.TopLevel = false;
-            frm.FormBorderStyle = FormBorderStyle.None;
-            frm.Dock = DockStyle.Fill;
-
-            contentPanel.Controls.Add(frm);
-            frm.Show();
+            // UPDATED: SidebarItemClicked now passes SidebarItemClickedEventArgs
+            sidebar1.SidebarItemClicked += (s, ev) =>
+            {
+                navBar1.PageTitle = ev.Section;   // reads the real name
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,66 +7,59 @@ namespace IT13
 {
     public partial class NavBar : UserControl
     {
+        private int _navHeight = 70;
+
         public NavBar()
         {
             InitializeComponent();
-            this.Resize += NavBar_Resize;
-            this.Load += NavBar_Load;
+            ApplySize();
         }
 
-        private void NavBar_Load(object sender, EventArgs e)
+        [Category("Appearance")]
+        [Description("Height of the navbar")]
+        [DefaultValue(70)]
+        public int NavHeight
         {
-            // Setup default styles on load
-            picArrow.Image = CreateDownArrowIcon(Color.FromArgb(0, 51, 102));
-            PositionControls();
+            get => _navHeight;
+            set { _navHeight = value; ApplySize(); }
         }
 
-        private void NavBar_Resize(object sender, EventArgs e)
+        [Category("Layout")]
+        [Description("Width of the navbar (0 = auto full width)")]
+        [DefaultValue(0)]
+        public int NavWidth
         {
-            PositionControls();
+            get => this.Width;
+            set { this.Width = value <= 0 ? this.Parent?.Width ?? 800 : value; ApplySize(); }
         }
 
-        private void PositionControls()
+        private void ApplySize()
         {
-            // Adjust elements to the right dynamically
-            int marginRight = 160;
-            picUser.Location = new Point(this.Width - marginRight, 13);
-            lblUserName.Location = new Point(this.Width - marginRight + 32, 16);
-            picArrow.Location = new Point(this.Width - 60, 18);
+            this.Height = _navHeight;
+            pnlContainer.Height = _navHeight;
+            pnlContainer.Width = this.Width;
+
+            int centerY = (_navHeight - lblTitle.Height) / 2;
+            lblTitle.Top = centerY < 0 ? 0 : centerY;
+            pnlUser.Top = centerY < 0 ? 0 : centerY;
+
+            if (this.Parent != null)
+                this.Width = this.Parent.Width;
         }
 
-        // Create ▼ arrow dynamically
-        private Bitmap CreateDownArrowIcon(Color color)
+        protected override void OnResize(EventArgs e)
         {
-            Bitmap bmp = new Bitmap(16, 16);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                Point[] triangle =
-                {
-                    new Point(3, 5),
-                    new Point(13, 5),
-                    new Point(8, 11)
-                };
-                using (Brush brush = new SolidBrush(color))
-                {
-                    g.FillPolygon(brush, triangle);
-                }
-            }
-            return bmp;
+            base.OnResize(e);
+            ApplySize();
         }
 
-        private void lblTitle_Click(object sender, EventArgs e)
+        protected override void OnParentChanged(EventArgs e)
         {
-
+            base.OnParentChanged(e);
+            ApplySize();
         }
 
-        private void NavBar_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        // Public properties to easily change title & username
-        public string Title
+        public string PageTitle
         {
             get => lblTitle.Text;
             set => lblTitle.Text = value;
@@ -75,6 +69,19 @@ namespace IT13
         {
             get => lblUserName.Text;
             set => lblUserName.Text = value;
+        }
+
+        public Image UserImage
+        {
+            get => picUser.Image;
+            set => picUser.Image = value;
+        }
+
+        public event EventHandler? UserProfileClicked;
+
+        private void PicUser_Click(object sender, EventArgs e)
+        {
+            UserProfileClicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }
