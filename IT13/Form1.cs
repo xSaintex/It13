@@ -54,11 +54,10 @@ namespace IT13
             {
                 if (ev.Section == "Products")
                 {
-                    navBar1.PageTitle = "Products";
-                    // Just toggle dropdown in your sidebar control (assumed done internally)
-                    // No form load here
+                    // Just toggle dropdown, don't change content
+                    // Dropdown is handled internally by sidebar
                 }
-                else if (ev.Section == "ProductList")
+                else if (ev.Section == "Product List") // This is the dropdown item under Products
                 {
                     navBar1.PageTitle = "Product List";
                     LoadProductListForm();
