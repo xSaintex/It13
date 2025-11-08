@@ -7,7 +7,7 @@ namespace IT13
 {
     public partial class NavBar : UserControl
     {
-        private int _navHeight = 70;
+        private int _navHeight = 80;
 
         public NavBar()
         {
@@ -17,7 +17,7 @@ namespace IT13
 
         [Category("Appearance")]
         [Description("Height of the navbar")]
-        [DefaultValue(70)]
+        [DefaultValue(80)]
         public int NavHeight
         {
             get => _navHeight;

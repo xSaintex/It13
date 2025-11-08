@@ -1,5 +1,4 @@
-﻿// Sidebar.cs — manual layout matched to your Sidebar.Designer.cs (no FontAwesome)
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;

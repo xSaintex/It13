@@ -37,7 +37,7 @@
             navBar1.Name = "navBar1";
             navBar1.NavWidth = 1468;
             navBar1.PageTitle = "Dashboard";
-            navBar1.Size = new Size(1468, 70);
+            navBar1.Size = new Size(1468, 80);
             navBar1.TabIndex = 2;
             navBar1.UserImage = null;
             navBar1.UserName = "Guest";
