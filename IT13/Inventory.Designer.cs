@@ -17,223 +17,225 @@
 
         private void InitializeComponent()
         {
-            this.panelTop = new System.Windows.Forms.Panel();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnAddStock = new System.Windows.Forms.Button();
-            this.cmbFilters = new System.Windows.Forms.ComboBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.panelBottom = new System.Windows.Forms.Panel();
-            this.btnLast = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
-            this.lblPageInfo = new System.Windows.Forms.Label();
-            this.btnPrev = new System.Windows.Forms.Button();
-            this.btnFirst = new System.Windows.Forms.Button();
-            this.panelTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            this.panelBottom.SuspendLayout();
-            this.SuspendLayout();
+            panelTop = new Panel();
+            dataGridView = new DataGridView();
+            panelBottom = new Panel();
+            btnLast = new Button();
+            btnNext = new Button();
+            lblPageInfo = new Label();
+            btnPrev = new Button();
+            btnFirst = new Button();
+            btnExport = new Button();
+            btnAddStock = new Button();
+            cmbFilters = new ComboBox();
+            btnSearch = new Button();
+            txtSearch = new TextBox();
+            lblTotal = new Label();
+            panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
+            panelBottom.SuspendLayout();
+            SuspendLayout();
             // 
             // panelTop
             // 
-            this.panelTop.BackColor = System.Drawing.Color.White;
-            this.panelTop.Controls.Add(this.btnExport);
-            this.panelTop.Controls.Add(this.btnAddStock);
-            this.panelTop.Controls.Add(this.cmbFilters);
-            this.panelTop.Controls.Add(this.btnSearch);
-            this.panelTop.Controls.Add(this.txtSearch);
-            this.panelTop.Controls.Add(this.lblTotal);
-            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(0, 0);
-            this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1200, 70);
-            this.panelTop.TabIndex = 0;
-            // 
-            // btnExport
-            // 
-            this.btnExport.BackColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnExport.FlatAppearance.BorderSize = 0;
-            this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExport.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnExport.ForeColor = System.Drawing.Color.White;
-            this.btnExport.Location = new System.Drawing.Point(1050, 20);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(120, 35);
-            this.btnExport.TabIndex = 5;
-            this.btnExport.Text = "Export Data ▼";
-            this.btnExport.UseVisualStyleBackColor = false;
-            // 
-            // btnAddStock
-            // 
-            this.btnAddStock.BackColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnAddStock.FlatAppearance.BorderSize = 0;
-            this.btnAddStock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddStock.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAddStock.ForeColor = System.Drawing.Color.White;
-            this.btnAddStock.Location = new System.Drawing.Point(920, 20);
-            this.btnAddStock.Name = "btnAddStock";
-            this.btnAddStock.Size = new System.Drawing.Size(120, 35);
-            this.btnAddStock.TabIndex = 4;
-            this.btnAddStock.Text = "+ Add Stock";
-            this.btnAddStock.UseVisualStyleBackColor = false;
-            // 
-            // cmbFilters
-            // 
-            this.cmbFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbFilters.FormattingEnabled = true;
-            this.cmbFilters.Items.AddRange(new object[] { "All", "Active", "Inactive", "Low Stock", "No Stock" });
-            this.cmbFilters.Location = new System.Drawing.Point(750, 23);
-            this.cmbFilters.Name = "cmbFilters";
-            this.cmbFilters.Size = new System.Drawing.Size(160, 28);
-            this.cmbFilters.TabIndex = 3;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.BackColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.Location = new System.Drawing.Point(320, 20);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(90, 35);
-            this.btnSearch.TabIndex = 2;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = false;
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(70, 22);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search...";
-            this.txtSearch.Size = new System.Drawing.Size(250, 30);
-            this.txtSearch.TabIndex = 1;
-            // 
-            // lblTotal
-            // 
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTotal.ForeColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.lblTotal.Location = new System.Drawing.Point(15, 28);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(49, 23);
-            this.lblTotal.TabIndex = 0;
-            this.lblTotal.Text = "12345";
+            panelTop.BackColor = Color.White;
+            panelTop.Controls.Add(dataGridView);
+            panelTop.Controls.Add(panelBottom);
+            panelTop.Controls.Add(btnExport);
+            panelTop.Controls.Add(btnAddStock);
+            panelTop.Controls.Add(cmbFilters);
+            panelTop.Controls.Add(btnSearch);
+            panelTop.Controls.Add(txtSearch);
+            panelTop.Controls.Add(lblTotal);
+            panelTop.Dock = DockStyle.Fill;
+            panelTop.Location = new Point(0, 0);
+            panelTop.Name = "panelTop";
+            panelTop.Size = new Size(1532, 1055);
+            panelTop.TabIndex = 0;
+            panelTop.Paint += panelTop_Paint;
             // 
             // dataGridView
             // 
-            this.dataGridView.AllowUserToAddRows = false;
-            this.dataGridView.AllowUserToDeleteRows = false;
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.EnableHeadersVisualStyles = false;
-            this.dataGridView.Location = new System.Drawing.Point(0, 70);
-            this.dataGridView.MultiSelect = false;
-            this.dataGridView.Name = "dataGridView";
-            this.dataGridView.ReadOnly = true;
-            this.dataGridView.RowHeadersVisible = false;
-            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1200, 480);
-            this.dataGridView.TabIndex = 1;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView.BackgroundColor = Color.White;
+            dataGridView.BorderStyle = BorderStyle.None;
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.EnableHeadersVisualStyles = false;
+            dataGridView.Location = new Point(564, 209);
+            dataGridView.MultiSelect = false;
+            dataGridView.Name = "dataGridView";
+            dataGridView.ReadOnly = true;
+            dataGridView.RowHeadersVisible = false;
+            dataGridView.RowHeadersWidth = 51;
+            dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView.Size = new Size(701, 406);
+            dataGridView.TabIndex = 1;
             // 
             // panelBottom
             // 
-            this.panelBottom.BackColor = System.Drawing.Color.White;
-            this.panelBottom.Controls.Add(this.btnLast);
-            this.panelBottom.Controls.Add(this.btnNext);
-            this.panelBottom.Controls.Add(this.lblPageInfo);
-            this.panelBottom.Controls.Add(this.btnPrev);
-            this.panelBottom.Controls.Add(this.btnFirst);
-            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 550);
-            this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1200, 60);
-            this.panelBottom.TabIndex = 2;
+            panelBottom.BackColor = Color.White;
+            panelBottom.Controls.Add(btnLast);
+            panelBottom.Controls.Add(btnNext);
+            panelBottom.Controls.Add(lblPageInfo);
+            panelBottom.Controls.Add(btnPrev);
+            panelBottom.Controls.Add(btnFirst);
+            panelBottom.Location = new Point(564, 621);
+            panelBottom.Name = "panelBottom";
+            panelBottom.Size = new Size(701, 39);
+            panelBottom.TabIndex = 2;
             // 
             // btnLast
             // 
-            this.btnLast.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLast.Location = new System.Drawing.Point(1120, 18);
-            this.btnLast.Name = "btnLast";
-            this.btnLast.Size = new System.Drawing.Size(50, 30);
-            this.btnLast.TabIndex = 4;
-            this.btnLast.Text = ">>";
-            this.btnLast.UseVisualStyleBackColor = true;
+            btnLast.FlatAppearance.BorderColor = Color.FromArgb(128, 87, 255);
+            btnLast.FlatStyle = FlatStyle.Flat;
+            btnLast.Location = new Point(1120, 18);
+            btnLast.Name = "btnLast";
+            btnLast.Size = new Size(50, 30);
+            btnLast.TabIndex = 4;
+            btnLast.Text = ">>";
+            btnLast.UseVisualStyleBackColor = true;
             // 
             // btnNext
             // 
-            this.btnNext.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Location = new System.Drawing.Point(1070, 18);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(50, 30);
-            this.btnNext.TabIndex = 3;
-            this.btnNext.Text = ">";
-            this.btnNext.UseVisualStyleBackColor = true;
+            btnNext.FlatAppearance.BorderColor = Color.FromArgb(128, 87, 255);
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Location = new Point(1070, 18);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(50, 30);
+            btnNext.TabIndex = 3;
+            btnNext.Text = ">";
+            btnNext.UseVisualStyleBackColor = true;
             // 
             // lblPageInfo
             // 
-            this.lblPageInfo.AutoSize = true;
-            this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPageInfo.Location = new System.Drawing.Point(540, 25);
-            this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(120, 20);
-            this.lblPageInfo.TabIndex = 2;
-            this.lblPageInfo.Text = "Showing 1-10 of 1000";
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Font = new Font("Segoe UI", 9F);
+            lblPageInfo.Location = new Point(304, 8);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(154, 20);
+            lblPageInfo.TabIndex = 2;
+            lblPageInfo.Text = "Showing 1-10 of 1000";
+            lblPageInfo.Click += lblPageInfo_Click;
             // 
             // btnPrev
             // 
-            this.btnPrev.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrev.Location = new System.Drawing.Point(480, 18);
-            this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(50, 30);
-            this.btnPrev.TabIndex = 1;
-            this.btnPrev.Text = "<";
-            this.btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.FlatAppearance.BorderColor = Color.FromArgb(128, 87, 255);
+            btnPrev.FlatStyle = FlatStyle.Flat;
+            btnPrev.Location = new Point(59, 3);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(50, 30);
+            btnPrev.TabIndex = 1;
+            btnPrev.Text = "<";
+            btnPrev.UseVisualStyleBackColor = true;
             // 
             // btnFirst
             // 
-            this.btnFirst.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(128, 87, 255);
-            this.btnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFirst.Location = new System.Drawing.Point(430, 18);
-            this.btnFirst.Name = "btnFirst";
-            this.btnFirst.Size = new System.Drawing.Size(50, 30);
-            this.btnFirst.TabIndex = 0;
-            this.btnFirst.Text = "<<";
-            this.btnFirst.UseVisualStyleBackColor = true;
+            btnFirst.FlatAppearance.BorderColor = Color.FromArgb(128, 87, 255);
+            btnFirst.FlatStyle = FlatStyle.Flat;
+            btnFirst.Location = new Point(3, 3);
+            btnFirst.Name = "btnFirst";
+            btnFirst.Size = new Size(50, 30);
+            btnFirst.TabIndex = 0;
+            btnFirst.Text = "<<";
+            btnFirst.UseVisualStyleBackColor = true;
+            // 
+            // btnExport
+            // 
+            btnExport.BackColor = Color.FromArgb(128, 87, 255);
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.Font = new Font("Segoe UI", 9F);
+            btnExport.ForeColor = Color.White;
+            btnExport.Location = new Point(1238, 123);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(70, 31);
+            btnExport.TabIndex = 5;
+            btnExport.Text = "Export Data ▼";
+            btnExport.UseVisualStyleBackColor = false;
+            // 
+            // btnAddStock
+            // 
+            btnAddStock.BackColor = Color.FromArgb(128, 87, 255);
+            btnAddStock.FlatAppearance.BorderSize = 0;
+            btnAddStock.FlatStyle = FlatStyle.Flat;
+            btnAddStock.Font = new Font("Segoe UI", 9F);
+            btnAddStock.ForeColor = Color.White;
+            btnAddStock.Location = new Point(1172, 123);
+            btnAddStock.Name = "btnAddStock";
+            btnAddStock.Size = new Size(60, 31);
+            btnAddStock.TabIndex = 4;
+            btnAddStock.Text = "+ Add Stock";
+            btnAddStock.UseVisualStyleBackColor = false;
+            // 
+            // cmbFilters
+            // 
+            cmbFilters.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFilters.FlatStyle = FlatStyle.Flat;
+            cmbFilters.FormattingEnabled = true;
+            cmbFilters.Items.AddRange(new object[] { "All", "Active", "Inactive", "Low Stock", "No Stock" });
+            cmbFilters.Location = new Point(1006, 127);
+            cmbFilters.Name = "cmbFilters";
+            cmbFilters.Size = new Size(160, 28);
+            cmbFilters.TabIndex = 3;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(128, 87, 255);
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 9F);
+            btnSearch.ForeColor = Color.White;
+            btnSearch.Location = new Point(888, 129);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(70, 29);
+            btnSearch.TabIndex = 2;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            // 
+            // txtSearch
+            // 
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.Font = new Font("Segoe UI", 10F);
+            txtSearch.ForeColor = Color.Gray;
+            txtSearch.Location = new Point(623, 129);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search...";
+            txtSearch.Size = new Size(250, 30);
+            txtSearch.TabIndex = 1;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // lblTotal
+            // 
+            lblTotal.AutoSize = true;
+            lblTotal.Font = new Font("Segoe UI", 10F);
+            lblTotal.ForeColor = Color.FromArgb(128, 87, 255);
+            lblTotal.Location = new Point(562, 131);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(55, 23);
+            lblTotal.TabIndex = 0;
+            lblTotal.Text = "12345";
             // 
             // Inventory
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(248, 249, 252);
-            this.ClientSize = new System.Drawing.Size(1200, 610);
-            this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.panelBottom);
-            this.Controls.Add(this.panelTop);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MinimumSize = new System.Drawing.Size(1000, 600);
-            this.Name = "Inventory";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Inventory";
-            this.Load += new System.EventHandler(this.Inventory_Load);
-            this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            this.panelBottom.ResumeLayout(false);
-            this.panelBottom.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(248, 249, 252);
+            ClientSize = new Size(1532, 1055);
+            Controls.Add(panelTop);
+            Font = new Font("Segoe UI", 9F);
+            MinimumSize = new Size(1000, 600);
+            Name = "Inventory";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Inventory";
+            Load += Inventory_Load;
+            panelTop.ResumeLayout(false);
+            panelTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
+            panelBottom.ResumeLayout(false);
+            panelBottom.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

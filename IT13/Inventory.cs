@@ -142,5 +142,20 @@ namespace IT13
         private void btnPrev_Click(object sender, EventArgs e) { if (currentPage > 1) { currentPage--; LoadPage(); } }
         private void btnNext_Click(object sender, EventArgs e) { if (currentPage < totalRecords / pageSize) { currentPage++; LoadPage(); } }
         private void btnLast_Click(object sender, EventArgs e) { currentPage = totalRecords / pageSize; LoadPage(); }
+
+        private void panelTop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblPageInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
