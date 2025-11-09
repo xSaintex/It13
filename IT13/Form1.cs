@@ -6,6 +6,10 @@ namespace IT13
 {
     public partial class Form1 : Form
     {
+        private inven inventoryForm;
+        private ProductList productListForm;
+        private ProductCategory productCategoryForm; 
+
         public Form1()
         {
             InitializeComponent();
@@ -13,32 +17,30 @@ namespace IT13
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // NAVBAR: SMALLER WIDTH + STARTS AFTER SIDEBAR
-            navBar1.Dock = DockStyle.None; // no dock
-            navBar1.Width = 1190; // SMALLER WIDTH (total 1450 - 260 sidebar)
-            navBar1.Height = 70; // your height
-            navBar1.Left = 260; // STARTS AFTER SIDEBAR
-            navBar1.Top = 0; // at very top
-            navBar1.Padding = new Padding(20, 0, 30, 0); // normal padding inside
-
-            // DEFAULT TEXT
+            // NAVBAR setup
+            navBar1.Dock = DockStyle.None;
+            navBar1.Width = 1190;
+            navBar1.Height = 70;
+            navBar1.Left = 260;
+            navBar1.Top = 0;
+            navBar1.Padding = new Padding(20, 0, 30, 0);
             navBar1.PageTitle = "Dashboard";
             navBar1.UserName = "John Doe";
 
-            // SIDEBAR: FULL TOP TO BOTTOM
+            // SIDEBAR setup
             sidebar1.Dock = DockStyle.Left;
             sidebar1.Width = 260;
-            sidebar1.Height = this.ClientSize.Height; // full height
-            sidebar1.BringToFront(); // on top of navbar
+            sidebar1.Height = this.ClientSize.Height;
+            sidebar1.BringToFront();
 
-            // CONTENT: FILLS REMAINING SPACE
+            // CONTENT PANEL setup
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Left = 260; // after sidebar
-            pnlContent.Top = 70; // after navbar
-            pnlContent.Width = 1190;
+            pnlContent.Left = 260;
+            pnlContent.Top = 70;
+            pnlContent.Width = this.ClientSize.Width - 260;
             pnlContent.Height = this.ClientSize.Height - 70;
 
-            // AUTO-RESIZE ON WINDOW CHANGE
+            // AUTO RESIZE handler
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -48,11 +50,73 @@ namespace IT13
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
 
-            // UPDATED: SidebarItemClicked now passes SidebarItemClickedEventArgs
+            // Sidebar Item Click handler
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
-                navBar1.PageTitle = ev.Section;   // reads the real name
+                if (ev.Section == "Products")
+                {
+                    navBar1.PageTitle = "Products";
+                }
+                else if (ev.Section == "Product List")
+                {
+                    navBar1.PageTitle = "Product List";
+                    LoadProductListForm();
+                }
+                else if (ev.Section == "Product Categories") 
+                {
+                    navBar1.PageTitle = "Product Categories";
+                    LoadProductCategoryForm();
+                }
+                else if (ev.Section == "Inventory")
+                {
+                    navBar1.PageTitle = "Inventory";
+                    LoadInventoryForm();
+                }
+                else
+                {
+                    navBar1.PageTitle = ev.Section;
+                    pnlContent.Controls.Clear();
+                }
             };
+        }
+
+        private void LoadInventoryForm()
+        {
+            pnlContent.Controls.Clear();
+            inventoryForm = new inven
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(inventoryForm);
+            inventoryForm.Show();
+        }
+
+        private void LoadProductListForm()
+        {
+            pnlContent.Controls.Clear();
+            productListForm = new ProductList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(productListForm);
+            productListForm.Show();
+        }
+
+        private void LoadProductCategoryForm()
+        {
+            pnlContent.Controls.Clear();
+            productCategoryForm = new ProductCategory
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(productCategoryForm);
+            productCategoryForm.Show();
         }
     }
 }

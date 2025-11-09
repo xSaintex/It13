@@ -3,16 +3,13 @@
     partial class Form1
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             sidebar1 = new Sidebar();
@@ -35,9 +32,9 @@
             navBar1.Dock = DockStyle.Top;
             navBar1.Location = new Point(0, 0);
             navBar1.Name = "navBar1";
-            navBar1.NavWidth = 1468;
+            navBar1.NavWidth = 1857;
             navBar1.PageTitle = "Dashboard";
-            navBar1.Size = new Size(1468, 80);
+            navBar1.Size = new Size(1857, 80);
             navBar1.TabIndex = 2;
             navBar1.UserImage = null;
             navBar1.UserName = "Guest";
@@ -48,12 +45,12 @@
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Location = new Point(0, 0);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(1450, 800);
+            pnlContent.Size = new Size(1839, 963);
             pnlContent.TabIndex = 0;
             // 
             // Form1
             // 
-            ClientSize = new Size(1450, 800);
+            ClientSize = new Size(1839, 963);
             Controls.Add(navBar1);
             Controls.Add(sidebar1);
             Controls.Add(pnlContent);
@@ -65,11 +62,9 @@
             Load += Form1_Load;
             ResumeLayout(false);
         }
-
         #endregion
-
         private Sidebar sidebar1;
-        private NavBar navBar1;
-        private Panel pnlContent;
+        public NavBar navBar1;      // Changed to public
+        public Panel pnlContent;    // Changed to public
     }
 }
