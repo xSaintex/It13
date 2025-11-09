@@ -111,6 +111,7 @@
             // 
             // btnaddprod
             // 
+            btnaddprod.BorderRadius = 5;
             btnaddprod.CustomizableEdges = customizableEdges1;
             btnaddprod.DisabledState.BorderColor = Color.DarkGray;
             btnaddprod.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -127,6 +128,7 @@
             // 
             // btncancel
             // 
+            btncancel.BorderRadius = 5;
             btncancel.CustomizableEdges = customizableEdges3;
             btncancel.DisabledState.BorderColor = Color.DarkGray;
             btncancel.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -415,6 +417,7 @@
             // 
             // btnproductlist
             // 
+            btnproductlist.BorderRadius = 5;
             btnproductlist.CustomizableEdges = customizableEdges19;
             btnproductlist.DisabledState.BorderColor = Color.DarkGray;
             btnproductlist.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -431,6 +434,7 @@
             // 
             // btnadd
             // 
+            btnadd.BorderRadius = 5;
             btnadd.CustomizableEdges = customizableEdges21;
             btnadd.DisabledState.BorderColor = Color.DarkGray;
             btnadd.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -447,6 +451,7 @@
             // 
             // btnhome
             // 
+            btnhome.BorderRadius = 5;
             btnhome.CustomizableEdges = customizableEdges23;
             btnhome.DisabledState.BorderColor = Color.DarkGray;
             btnhome.DisabledState.CustomBorderColor = Color.DarkGray;

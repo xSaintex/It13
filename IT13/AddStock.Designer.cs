@@ -211,6 +211,7 @@
             // 
             // guna2Button3
             // 
+            guna2Button3.BorderRadius = 5;
             guna2Button3.CustomizableEdges = customizableEdges1;
             guna2Button3.DisabledState.BorderColor = Color.DarkGray;
             guna2Button3.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -227,6 +228,7 @@
             // 
             // btnsavestcok
             // 
+            btnsavestcok.BorderRadius = 5;
             btnsavestcok.CustomizableEdges = customizableEdges3;
             btnsavestcok.DisabledState.BorderColor = Color.DarkGray;
             btnsavestcok.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -253,6 +255,7 @@
             // 
             // btnsearchprod
             // 
+            btnsearchprod.BorderRadius = 5;
             btnsearchprod.CustomizableEdges = customizableEdges5;
             btnsearchprod.DisabledState.BorderColor = Color.DarkGray;
             btnsearchprod.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -270,6 +273,7 @@
             // 
             // btnaddincstock
             // 
+            btnaddincstock.BorderRadius = 5;
             btnaddincstock.CustomizableEdges = customizableEdges7;
             btnaddincstock.DisabledState.BorderColor = Color.DarkGray;
             btnaddincstock.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -288,6 +292,7 @@
             // 
             txtboxsearchproductname.BackColor = Color.White;
             txtboxsearchproductname.BorderColor = Color.LightGray;
+            txtboxsearchproductname.BorderRadius = 5;
             txtboxsearchproductname.CustomizableEdges = customizableEdges9;
             txtboxsearchproductname.DefaultText = "Search by product name";
             txtboxsearchproductname.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -310,6 +315,7 @@
             // 
             txtboxsearchcompany.BackColor = Color.White;
             txtboxsearchcompany.BorderColor = Color.LightGray;
+            txtboxsearchcompany.BorderRadius = 5;
             txtboxsearchcompany.CustomizableEdges = customizableEdges11;
             txtboxsearchcompany.DefaultText = "Select Company";
             txtboxsearchcompany.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -330,6 +336,7 @@
             // 
             // btnsearchcompany
             // 
+            btnsearchcompany.BorderRadius = 5;
             btnsearchcompany.CustomizableEdges = customizableEdges13;
             btnsearchcompany.DisabledState.BorderColor = Color.DarkGray;
             btnsearchcompany.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -377,6 +384,7 @@
             // 
             // btninventory
             // 
+            btninventory.BorderRadius = 5;
             btninventory.CustomizableEdges = customizableEdges15;
             btninventory.DisabledState.BorderColor = Color.DarkGray;
             btninventory.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -394,6 +402,7 @@
             // 
             // btnadd
             // 
+            btnadd.BorderRadius = 5;
             btnadd.CustomizableEdges = customizableEdges17;
             btnadd.DisabledState.BorderColor = Color.DarkGray;
             btnadd.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -411,6 +420,7 @@
             // 
             // btnhome
             // 
+            btnhome.BorderRadius = 5;
             btnhome.CustomizableEdges = customizableEdges19;
             btnhome.DisabledState.BorderColor = Color.DarkGray;
             btnhome.DisabledState.CustomBorderColor = Color.DarkGray;

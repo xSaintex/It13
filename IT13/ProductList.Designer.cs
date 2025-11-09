@@ -122,6 +122,7 @@
             // CombExport
             // 
             CombExport.BackColor = Color.Transparent;
+            CombExport.BorderRadius = 5;
             CombExport.CustomizableEdges = customizableEdges1;
             CombExport.DrawMode = DrawMode.OwnerDrawFixed;
             CombExport.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -480,6 +481,7 @@
             // 
             // btnaddstock
             // 
+            btnaddstock.BorderRadius = 5;
             btnaddstock.CustomizableEdges = customizableEdges27;
             btnaddstock.DisabledState.BorderColor = Color.DarkGray;
             btnaddstock.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -497,6 +499,7 @@
             // ComBoxFilters
             // 
             ComBoxFilters.BackColor = Color.Transparent;
+            ComBoxFilters.BorderRadius = 5;
             ComBoxFilters.CustomizableEdges = customizableEdges29;
             ComBoxFilters.DrawMode = DrawMode.OwnerDrawFixed;
             ComBoxFilters.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -514,6 +517,7 @@
             // 
             // btnsearch
             // 
+            btnsearch.BorderRadius = 5;
             btnsearch.CustomizableEdges = customizableEdges31;
             btnsearch.DisabledState.BorderColor = Color.DarkGray;
             btnsearch.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -532,6 +536,7 @@
             // 
             txtboxsearch.BackColor = Color.White;
             txtboxsearch.BorderColor = Color.LightGray;
+            txtboxsearch.BorderRadius = 5;
             txtboxsearch.CustomizableEdges = customizableEdges33;
             txtboxsearch.DefaultText = "Search for products";
             txtboxsearch.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);

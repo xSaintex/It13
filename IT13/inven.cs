@@ -38,25 +38,25 @@ namespace IT13
             ComBoxExporData.ForeColor = Color.Black;
 
             // Add checkbox column if it doesn't exist
-            if (datagridviewinventory.Columns.Count == 0 || datagridviewinventory.Columns[0].GetType() != typeof(DataGridViewCheckBoxColumn))
+            if (datagridviewcustorder.Columns.Count == 0 || datagridviewcustorder.Columns[0].GetType() != typeof(DataGridViewCheckBoxColumn))
             {
                 DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
                 checkBoxColumn.HeaderText = "";
                 checkBoxColumn.Name = "checkboxColumn";
                 checkBoxColumn.Width = 50;
-                datagridviewinventory.Columns.Insert(0, checkBoxColumn);
+                datagridviewcustorder.Columns.Insert(0, checkBoxColumn);
             }
 
             // Add sample data to datagridviewinventory
-            datagridviewinventory.Rows.Add(false, "1", "cctv", "Dome Cameras", "43 pcs.", "₱200.00", "₱8,600.00", "Verizon Communications Inc.", "Active");
-            datagridviewinventory.Rows.Add(false, "2", "cctv", "Bullet Cameras", "18 pcs.", "₱300.00", "₱5,400.00", "AT&T Inc.", "Active");
-            datagridviewinventory.Rows.Add(false, "3", "siriejir", "kisweksiwe", "18 pcs.", "₱400.00", "₱7,200.00", "AT&T Inc.", "Active");
-            datagridviewinventory.Rows.Add(false, "4", "cdsr", "krokro", "10 pcs.", "₱400.00", "₱4,000.00", "AT&T Inc.", "Active");
+            datagridviewcustorder.Rows.Add(false, "1", "cctv", "Dome Cameras", "43 pcs.", "₱200.00", "₱8,600.00", "Verizon Communications Inc.", "Active");
+            datagridviewcustorder.Rows.Add(false, "2", "cctv", "Bullet Cameras", "18 pcs.", "₱300.00", "₱5,400.00", "AT&T Inc.", "Active");
+            datagridviewcustorder.Rows.Add(false, "3", "siriejir", "kisweksiwe", "18 pcs.", "₱400.00", "₱7,200.00", "AT&T Inc.", "Active");
+            datagridviewcustorder.Rows.Add(false, "4", "cdsr", "krokro", "10 pcs.", "₱400.00", "₱4,000.00", "AT&T Inc.", "Active");
 
             // Add header checkbox for Select All
-            datagridviewinventory.CellPainting += DataGridView_CellPainting;
-            datagridviewinventory.CellClick += DataGridView_CellClick;
-            datagridviewinventory.CurrentCellDirtyStateChanged += DataGridView_CurrentCellDirtyStateChanged;
+            datagridviewcustorder.CellPainting += DataGridView_CellPainting;
+            datagridviewcustorder.CellClick += DataGridView_CellClick;
+            datagridviewcustorder.CurrentCellDirtyStateChanged += DataGridView_CurrentCellDirtyStateChanged;
 
             // Update labelshow with row count
             UpdateRowCount();
@@ -74,7 +74,7 @@ namespace IT13
                     headerCheckBox.Size = new Size(18, 18);
                     headerCheckBox.BackColor = Color.Transparent;
                     headerCheckBox.CheckedChanged += HeaderCheckBox_CheckedChanged;
-                    datagridviewinventory.Controls.Add(headerCheckBox);
+                    datagridviewcustorder.Controls.Add(headerCheckBox);
                 }
 
                 Point checkBoxLocation = new Point(
@@ -97,30 +97,30 @@ namespace IT13
 
         private void DataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (datagridviewinventory.IsCurrentCellDirty)
+            if (datagridviewcustorder.IsCurrentCellDirty)
             {
-                datagridviewinventory.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                datagridviewcustorder.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
 
         private void HeaderCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            datagridviewinventory.EndEdit();
+            datagridviewcustorder.EndEdit();
 
-            for (int i = 0; i < datagridviewinventory.Rows.Count; i++)
+            for (int i = 0; i < datagridviewcustorder.Rows.Count; i++)
             {
-                if (!datagridviewinventory.Rows[i].IsNewRow)
+                if (!datagridviewcustorder.Rows[i].IsNewRow)
                 {
-                    datagridviewinventory.Rows[i].Cells[0].Value = headerCheckBox.Checked;
+                    datagridviewcustorder.Rows[i].Cells[0].Value = headerCheckBox.Checked;
                 }
             }
 
-            datagridviewinventory.RefreshEdit();
+            datagridviewcustorder.RefreshEdit();
         }
 
         private void UpdateRowCount()
         {
-            labelshow.Text = $"Showing {datagridviewinventory.Rows.Count} items";
+            labelshow.Text = $"Showing {datagridviewcustorder.Rows.Count} items";
         }
 
         private void guna2ShadowPanel1_Paint(object sender, PaintEventArgs e)
