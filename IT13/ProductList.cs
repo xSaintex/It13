@@ -52,10 +52,33 @@ namespace IT13
                 CombExport.StartIndex = 0; // Select the first item
             }
 
-            // Apply radius 5 to btnaddstock
+            // Apply radius 5 to btnaddstock and wire up click event
             if (this.Controls.Find("btnaddstock", true).FirstOrDefault() is Guna.UI2.WinForms.Guna2Button btnaddstock)
             {
                 btnaddstock.BorderRadius = 5;
+                btnaddstock.Click += btnaddstock_Click;
+            }
+        }
+
+        private void btnaddstock_Click(object sender, EventArgs e)
+        {
+            // Get the parent form (Form1)
+            Form1 parentForm = this.ParentForm as Form1;
+            if (parentForm != null)
+            {
+                // Update the navbar title
+                parentForm.navBar1.PageTitle = "Add Product";
+
+                // Create AddProd form
+                AddProd addProdForm = new AddProd();
+                addProdForm.TopLevel = false;
+                addProdForm.FormBorderStyle = FormBorderStyle.None;
+                addProdForm.Dock = DockStyle.Fill;
+
+                // Clear the content panel and add AddProd
+                parentForm.pnlContent.Controls.Clear();
+                parentForm.pnlContent.Controls.Add(addProdForm);
+                addProdForm.Show();
             }
         }
 
@@ -73,7 +96,6 @@ namespace IT13
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
     }
 }
