@@ -8,7 +8,8 @@ namespace IT13
     {
         private inven inventoryForm;
         private ProductList productListForm;
-        private ProductCategory productCategoryForm; 
+        private ProductCategory productCategoryForm;
+        private CustOrder custOrderForm;
 
         public Form1()
         {
@@ -57,12 +58,12 @@ namespace IT13
                 {
                     navBar1.PageTitle = "Products";
                 }
-                else if (ev.Section == "Product List")
+                else if (ev.Section == "Product List") // This is the dropdown item under Products
                 {
                     navBar1.PageTitle = "Product List";
                     LoadProductListForm();
                 }
-                else if (ev.Section == "Product Categories") 
+                else if (ev.Section == "Product Categories")
                 {
                     navBar1.PageTitle = "Product Categories";
                     LoadProductCategoryForm();
@@ -71,6 +72,16 @@ namespace IT13
                 {
                     navBar1.PageTitle = "Inventory";
                     LoadInventoryForm();
+                }
+                else if (ev.Section == "Orders")
+                {
+                    // Just toggle dropdown, don't change content
+                    // Dropdown is handled internally by sidebar
+                }
+                else if (ev.Section == "Customer Order") // This is the dropdown item under Orders
+                {
+                    navBar1.PageTitle = "Customer Order";
+                    LoadCustomerOrderForm();
                 }
                 else
                 {
@@ -117,6 +128,19 @@ namespace IT13
             };
             pnlContent.Controls.Add(productCategoryForm);
             productCategoryForm.Show();
+        }
+
+        private void LoadCustomerOrderForm()
+        {
+            pnlContent.Controls.Clear();
+            custOrderForm = new CustOrder
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(custOrderForm);
+            custOrderForm.Show();
         }
     }
 }
