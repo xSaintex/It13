@@ -1,10 +1,8 @@
-﻿// ProductCategory.designer.cs
-namespace IT13
+﻿namespace IT13
 {
-    partial class ProductCategory
+    partial class StockAdjustment
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -37,22 +35,25 @@ namespace IT13
             btn1 = new Guna.UI2.WinForms.Guna2Button();
             btnlessthan = new Guna.UI2.WinForms.Guna2Button();
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            datagridviewcategory = new Guna.UI2.WinForms.Guna2DataGridView();
+            datagridviewadjustment = new Guna.UI2.WinForms.Guna2DataGridView();
             colID = new DataGridViewCheckBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
             colDate = new DataGridViewTextBoxColumn();
+            colProductName = new DataGridViewTextBoxColumn();
+            colAdjustmentType = new DataGridViewTextBoxColumn();
+            colPhysicalCount = new DataGridViewTextBoxColumn();
+            colRequestedBy = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colActions = new DataGridViewTextBoxColumn();
             Export = new Guna.UI2.WinForms.Guna2ComboBox();
-            btnaddcategory = new Guna.UI2.WinForms.Guna2Button();
+            btnaddadjustment = new Guna.UI2.WinForms.Guna2Button();
             Filter = new Guna.UI2.WinForms.Guna2ComboBox();
-            btnsearchcat = new Guna.UI2.WinForms.Guna2Button();
+            btnsearch = new Guna.UI2.WinForms.Guna2Button();
             txtboxsearch = new Guna.UI2.WinForms.Guna2TextBox();
 
             mainpanel.SuspendLayout();
             guna2Panel1.SuspendLayout();
             guna2ShadowPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)datagridviewcategory).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).BeginInit();
             SuspendLayout();
 
             // MAIN PANEL
@@ -60,9 +61,9 @@ namespace IT13
             mainpanel.Controls.Add(guna2Panel1);
             mainpanel.Controls.Add(guna2ShadowPanel1);
             mainpanel.Controls.Add(Export);
-            mainpanel.Controls.Add(btnaddcategory);
+            mainpanel.Controls.Add(btnaddadjustment);
             mainpanel.Controls.Add(Filter);
-            mainpanel.Controls.Add(btnsearchcat);
+            mainpanel.Controls.Add(btnsearch);
             mainpanel.Controls.Add(txtboxsearch);
             mainpanel.FillColor = Color.White;
             mainpanel.Location = new Point(300, 88);
@@ -110,7 +111,7 @@ namespace IT13
 
             // DATAGRIDVIEW PANEL
             guna2ShadowPanel1.BackColor = Color.Transparent;
-            guna2ShadowPanel1.Controls.Add(datagridviewcategory);
+            guna2ShadowPanel1.Controls.Add(datagridviewadjustment);
             guna2ShadowPanel1.FillColor = Color.White;
             guna2ShadowPanel1.Location = new Point(77, 104);
             guna2ShadowPanel1.Name = "guna2ShadowPanel1";
@@ -119,37 +120,41 @@ namespace IT13
             guna2ShadowPanel1.TabIndex = 5;
 
             // DATAGRIDVIEW
-            datagridviewcategory.AllowUserToAddRows = false;
-            datagridviewcategory.AllowUserToResizeColumns = false;
-            datagridviewcategory.AllowUserToResizeRows = false;
-            datagridviewcategory.ColumnHeadersDefaultCellStyle = headerStyle;
-            datagridviewcategory.ColumnHeadersHeight = 40;
-            datagridviewcategory.GridColor = Color.FromArgb(231, 229, 255);
-            datagridviewcategory.Location = new Point(22, 27);
-            datagridviewcategory.Name = "datagridviewcategory";
-            datagridviewcategory.RowHeadersVisible = false;
-            datagridviewcategory.Size = new Size(1412, 662);
-            datagridviewcategory.TabIndex = 0;
-            datagridviewcategory.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
-            datagridviewcategory.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            datagridviewcategory.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            datagridviewcategory.CellPainting += datagridviewcategory_CellPainting;
-            datagridviewcategory.CellClick += datagridviewcategory_CellClick;
+            datagridviewadjustment.AllowUserToAddRows = false;
+            datagridviewadjustment.AllowUserToResizeColumns = false;
+            datagridviewadjustment.AllowUserToResizeRows = false;
+            datagridviewadjustment.ColumnHeadersDefaultCellStyle = headerStyle;
+            datagridviewadjustment.ColumnHeadersHeight = 40;
+            datagridviewadjustment.GridColor = Color.FromArgb(231, 229, 255);
+            datagridviewadjustment.Location = new Point(22, 27);
+            datagridviewadjustment.Name = "datagridviewadjustment";
+            datagridviewadjustment.RowHeadersVisible = false;
+            datagridviewadjustment.Size = new Size(1412, 662);
+            datagridviewadjustment.TabIndex = 0;
+            datagridviewadjustment.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
+            datagridviewadjustment.ThemeStyle.HeaderStyle.ForeColor = Color.White;
+            datagridviewadjustment.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
+            datagridviewadjustment.CellPainting += datagridviewadjustment_CellPainting;
+            datagridviewadjustment.CellClick += datagridviewadjustment_CellClick;
 
             // COLUMNS
             colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
-            colName.HeaderText = "Category Name"; colName.Name = "colName"; colName.Width = 350;
-            colDate.HeaderText = "Date"; colDate.Name = "colDate"; colDate.Width = 150;
+            colDate.HeaderText = "Date"; colDate.Name = "colDate"; colDate.Width = 130;
+            colProductName.HeaderText = "Product Name"; colProductName.Name = "colProductName"; colProductName.Width = 280;
+            colAdjustmentType.HeaderText = "Adjustment Type"; colAdjustmentType.Name = "colAdjustmentType"; colAdjustmentType.Width = 150;
+            colPhysicalCount.HeaderText = "Physical Count"; colPhysicalCount.Name = "colPhysicalCount"; colPhysicalCount.Width = 130;
+            colRequestedBy.HeaderText = "Requested By"; colRequestedBy.Name = "colRequestedBy"; colRequestedBy.Width = 180;
             colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 120;
             colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 100;
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            datagridviewcategory.Columns.AddRange(new DataGridViewColumn[]
+            datagridviewadjustment.Columns.AddRange(new DataGridViewColumn[]
             {
-    colID, colName, colDate, colStatus, colActions
+                colID, colDate, colProductName, colAdjustmentType,
+                colPhysicalCount, colRequestedBy, colStatus, colActions
             });
 
-            // EXPORT COMBOBOX – SHIFTED RIGHT
+            // EXPORT COMBOBOX
             Export.Location = new Point(1400, 45);
             Export.Size = new Size(128, 36);
             Export.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -157,16 +162,16 @@ namespace IT13
             Export.ItemHeight = 30;
             Export.TabIndex = 4;
 
-            // ADD CATEGORY BUTTON
-            btnaddcategory.Location = new Point(1235, 45);
-            btnaddcategory.Size = new Size(155, 36);
-            btnaddcategory.Text = "+Add Category";
-            btnaddcategory.Click += btnaddcategory_Click;
-            btnaddcategory.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
-            btnaddcategory.Padding = new Padding(4, 0, 4, 0);
-            btnaddcategory.FillColor = Color.FromArgb(0, 123, 255);
-            btnaddcategory.ForeColor = Color.White;
-            btnaddcategory.BorderRadius = 8;
+            // ADD ADJUSTMENT BUTTON
+            btnaddadjustment.Location = new Point(1235, 45);
+            btnaddadjustment.Size = new Size(155, 36);
+            btnaddadjustment.Text = "+Add Adjustment";
+            btnaddadjustment.Click += btnaddadjustment_Click;
+            btnaddadjustment.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
+            btnaddadjustment.Padding = new Padding(4, 0, 4, 0);
+            btnaddadjustment.FillColor = Color.FromArgb(0, 123, 255);
+            btnaddadjustment.ForeColor = Color.White;
+            btnaddadjustment.BorderRadius = 8;
 
             // FILTER COMBOBOX
             Filter.Location = new Point(1100, 45);
@@ -177,33 +182,32 @@ namespace IT13
             Filter.TabIndex = 2;
 
             // SEARCH BUTTON
-            btnsearchcat.Location = new Point(537, 41);
-            btnsearchcat.Size = new Size(103, 40);
-            btnsearchcat.Text = "Search";
-            btnsearchcat.FillColor = Color.FromArgb(0, 123, 255);
-            btnsearchcat.ForeColor = Color.White;
-            btnsearchcat.BorderRadius = 8;
+            btnsearch.Location = new Point(537, 41);
+            btnsearch.Size = new Size(103, 40);
+            btnsearch.Text = "Search";
+            btnsearch.FillColor = Color.FromArgb(0, 123, 255);
+            btnsearch.ForeColor = Color.White;
+            btnsearch.BorderRadius = 8;
 
             txtboxsearch.Location = new Point(94, 41);
-            txtboxsearch.PlaceholderText = "Search Category";
+            txtboxsearch.PlaceholderText = "Search Adjustment";
             txtboxsearch.Size = new Size(437, 40);
             txtboxsearch.TextChanged += txtboxsearch_TextChanged;
 
             // FORM
             ClientSize = new Size(1914, 1055);
             Controls.Add(mainpanel);
-            Name = "ProductCategory";
-            Text = "Product Category";
-
+            Name = "StockAdjustment";
+            Text = "Stock Adjustment";
             mainpanel.ResumeLayout(false);
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
             guna2ShadowPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)datagridviewcategory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).EndInit();
             ResumeLayout(false);
         }
 
-        // PAGINATION BUTTONS (via SetupPaginationButton)
+        // PAGINATION BUTTONS (UPDATE SetupPaginationButton)
         private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
         {
             btn.Text = text;
@@ -211,7 +215,7 @@ namespace IT13
             btn.Size = new Size(30, 28);
             btn.FillColor = Color.WhiteSmoke;
             btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn.BorderRadius = 8;   
+            btn.BorderRadius = 8;   // ROUNDED
         }
 
         // CONTROL DECLARATIONS
@@ -230,16 +234,19 @@ namespace IT13
         private Guna.UI2.WinForms.Guna2Button btn1;
         private Guna.UI2.WinForms.Guna2Button btnlessthan;
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
-        private Guna.UI2.WinForms.Guna2DataGridView datagridviewcategory;
+        private Guna.UI2.WinForms.Guna2DataGridView datagridviewadjustment;
         private DataGridViewCheckBoxColumn colID;
-        private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colDate;
+        private DataGridViewTextBoxColumn colProductName;
+        private DataGridViewTextBoxColumn colAdjustmentType;
+        private DataGridViewTextBoxColumn colPhysicalCount;
+        private DataGridViewTextBoxColumn colRequestedBy;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colActions;
         private Guna.UI2.WinForms.Guna2ComboBox Export;
-        private Guna.UI2.WinForms.Guna2Button btnaddcategory;
+        private Guna.UI2.WinForms.Guna2Button btnaddadjustment;
         private Guna.UI2.WinForms.Guna2ComboBox Filter;
-        private Guna.UI2.WinForms.Guna2Button btnsearchcat;
+        private Guna.UI2.WinForms.Guna2Button btnsearch;
         private Guna.UI2.WinForms.Guna2TextBox txtboxsearch;
     }
 }

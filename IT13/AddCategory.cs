@@ -1,5 +1,4 @@
-﻿// AddCategory.cs
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace IT13
@@ -10,15 +9,13 @@ namespace IT13
         {
             InitializeComponent();
 
-            // Initialize fields
             txtName.Text = "";
             txtStatus.Text = "Active";
-            datePicker.Value = DateTime.Today;  // Default: today
+            datePicker.Value = DateTime.Today;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            // Validate required fields
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 MessageBox.Show("Category Name is required.", "Validation",

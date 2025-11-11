@@ -51,13 +51,13 @@ namespace IT13
             lblTitle.Location = new Point(77, 40);
             lblTitle.Text = "View Category Details";
 
-            // BACK BUTTON
-            btnBack.AutoSize = true;
-            btnBack.Font = new Font("Tahoma", 10F);
-            btnBack.ForeColor = Color.FromArgb(0, 123, 255);
-            btnBack.Location = new Point(1400, 40);
-            btnBack.Text = "Back to categories";
-            btnBack.FillColor = Color.Transparent;
+            // BACK BUTTON – NOW ROUNDED & SOLID
+            btnBack.Location = new Point(1300, 700);  // Match Add/Edit
+            btnBack.Size = new Size(200, 50);
+            btnBack.Text = "Back to Categories";
+            btnBack.FillColor = Color.FromArgb(0, 123, 255);
+            btnBack.ForeColor = Color.White;
+            btnBack.BorderRadius = 8;   // ← ROUNDED
             btnBack.Click += btnBack_Click;
 
             // ID

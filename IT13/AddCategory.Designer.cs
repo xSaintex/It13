@@ -1,4 +1,5 @@
-﻿// AddCategory.designer.cs
+﻿using Guna.UI2.WinForms;
+
 namespace IT13
 {
     partial class AddCategory
@@ -14,22 +15,22 @@ namespace IT13
 
         private void InitializeComponent()
         {
-            mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            mainpanel = new Guna2ShadowPanel();
             lblTitle = new Label();
             lblName = new Label();
-            txtName = new Guna.UI2.WinForms.Guna2TextBox();
+            txtName = new Guna2TextBox();
             lblStatus = new Label();
-            txtStatus = new Guna.UI2.WinForms.Guna2TextBox();
+            txtStatus = new Guna2TextBox();
             lblStatusNote = new Label();
             lblDate = new Label();
-            datePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            btnCancel = new Guna.UI2.WinForms.Guna2Button();
-            btnAdd = new Guna.UI2.WinForms.Guna2Button();
+            datePicker = new Guna2DateTimePicker();
+            btnCancel = new Guna2Button();
+            btnAdd = new Guna2Button();
 
             mainpanel.SuspendLayout();
             SuspendLayout();
 
-            // MAIN PANEL - EXACTLY LIKE ProductCategory
+            // MAIN PANEL
             mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(lblTitle);
             mainpanel.Controls.Add(lblName); mainpanel.Controls.Add(txtName);
@@ -55,16 +56,13 @@ namespace IT13
             lblName.AutoSize = true;
             lblName.Location = new Point(77, 120);
             lblName.Text = "Category Name *";
-
             txtName.Location = new Point(77, 150);
             txtName.Size = new Size(600, 45);
-            txtName.PlaceholderText = "";
 
             // STATUS
             lblStatus.AutoSize = true;
             lblStatus.Location = new Point(750, 120);
             lblStatus.Text = "Category Status *";
-
             txtStatus.Location = new Point(750, 150);
             txtStatus.Size = new Size(600, 45);
             txtStatus.Text = "Active";
@@ -75,7 +73,7 @@ namespace IT13
             lblStatusNote.Location = new Point(750, 200);
             lblStatusNote.Text = "Status is automatically set to \"Active\" and cannot be edited.";
 
-            // DATE
+            // DATE – CALENDAR PICKER (WHITE BG)
             lblDate.AutoSize = true;
             lblDate.Location = new Point(750, 260);
             lblDate.Text = "Date *";
@@ -86,8 +84,12 @@ namespace IT13
             datePicker.CustomFormat = "MM/dd/yyyy";
             datePicker.ShowUpDown = false;
             datePicker.Font = new Font("Tahoma", 10F);
+            datePicker.FillColor = Color.White;
+            datePicker.BorderColor = Color.FromArgb(200, 200, 200);
+            datePicker.BorderThickness = 1;
+            datePicker.BorderRadius = 8;
 
-            // BUTTONS
+            // CANCEL BUTTON
             btnCancel.Location = new Point(1150, 400);
             btnCancel.Size = new Size(140, 50);
             btnCancel.Text = "Cancel";
@@ -95,13 +97,16 @@ namespace IT13
             btnCancel.ForeColor = Color.Black;
             btnCancel.BorderColor = Color.Gray;
             btnCancel.BorderThickness = 1;
+            btnCancel.BorderRadius = 8;
             btnCancel.Click += btnCancel_Click;
 
+            // ADD BUTTON
             btnAdd.Location = new Point(1300, 400);
             btnAdd.Size = new Size(180, 50);
             btnAdd.Text = "Add Category";
             btnAdd.FillColor = Color.FromArgb(0, 123, 255);
             btnAdd.ForeColor = Color.White;
+            btnAdd.BorderRadius = 8;
             btnAdd.Click += btnAdd_Click;
 
             // FORM
@@ -109,21 +114,22 @@ namespace IT13
             Controls.Add(mainpanel);
             Name = "AddCategory";
             Text = "Add Category";
+
             mainpanel.ResumeLayout(false);
             mainpanel.PerformLayout();
             ResumeLayout(false);
         }
 
-        private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
+        private Guna2ShadowPanel mainpanel;
         private Label lblTitle;
         private Label lblName;
-        private Guna.UI2.WinForms.Guna2TextBox txtName;
+        private Guna2TextBox txtName;
         private Label lblStatus;
-        private Guna.UI2.WinForms.Guna2TextBox txtStatus;
+        private Guna2TextBox txtStatus;
         private Label lblStatusNote;
         private Label lblDate;
-        private Guna.UI2.WinForms.Guna2DateTimePicker datePicker;
-        private Guna.UI2.WinForms.Guna2Button btnCancel;
-        private Guna.UI2.WinForms.Guna2Button btnAdd;
+        private Guna2DateTimePicker datePicker;
+        private Guna2Button btnCancel;
+        private Guna2Button btnAdd;
     }
 }

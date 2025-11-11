@@ -1,5 +1,5 @@
-﻿// EditCategory.cs
-using System;
+﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace IT13
@@ -19,13 +19,38 @@ namespace IT13
         {
             txtId.Text = _categoryId;
             txtName.Text = "CCTV";
-            txtDate.Text = "10/11/2025";
-            comboStatus.SelectedIndex = 0;
+
+            // Set date from string
+            if (DateTime.TryParseExact("10/11/2025", "MM/dd/yyyy", null,
+                DateTimeStyles.None, out DateTime dt))
+            {
+                datePicker.Value = dt;
+            }
+            else
+            {
+                datePicker.Value = DateTime.Today;
+            }
+
+            comboStatus.SelectedIndex = 0; // "Active"
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Category updated!", "Success");
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Category Name is required.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string selectedDate = datePicker.Value.ToString("MM/dd/yyyy");
+
+            MessageBox.Show($"Category updated!\n" +
+                          $"Name: {txtName.Text}\n" +
+                          $"Date: {selectedDate}\n" +
+                          $"Status: {comboStatus.Text}",
+                          "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             ReturnToList();
         }
 

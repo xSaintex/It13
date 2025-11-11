@@ -10,6 +10,9 @@ namespace IT13
         private ProductList productListForm;
         private ProductCategory productCategoryForm;
         private CustOrder custOrderForm;
+        private StockAdjustment stockAdjustmentForm;
+        private OrderList orderListForm;
+        private SupplierOrderList supplierOrderListForm; // ← NEW
 
         public Form1()
         {
@@ -51,14 +54,14 @@ namespace IT13
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
 
-            // Sidebar Item Click handler
+            // SIDEBAR ITEM CLICK HANDLER
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
                 if (ev.Section == "Products")
                 {
                     navBar1.PageTitle = "Products";
                 }
-                else if (ev.Section == "Product List") // This is the dropdown item under Products
+                else if (ev.Section == "Product List")
                 {
                     navBar1.PageTitle = "Product List";
                     LoadProductListForm();
@@ -73,15 +76,29 @@ namespace IT13
                     navBar1.PageTitle = "Inventory";
                     LoadInventoryForm();
                 }
-                else if (ev.Section == "Orders")
+                else if (ev.Section == "Stock Adjustments")
                 {
-                    // Just toggle dropdown, don't change content
-                    // Dropdown is handled internally by sidebar
+                    navBar1.PageTitle = "Stock Adjustments";
+                    LoadStockAdjustmentForm();
                 }
-                else if (ev.Section == "Customer Order") // This is the dropdown item under Orders
+                else if (ev.Section == "Order List")
+                {
+                    navBar1.PageTitle = "Order List";
+                    LoadOrderListForm();
+                }
+                else if (ev.Section == "Supplier Order") // ← EXACT TEXT
+                {
+                    navBar1.PageTitle = "Supplier Order";
+                    LoadSupplierOrderListForm(); // ← THIS LOADS IT
+                }
+                else if (ev.Section == "Customer Order")
                 {
                     navBar1.PageTitle = "Customer Order";
                     LoadCustomerOrderForm();
+                }
+                else if (ev.Section == "Orders")
+                {
+                    // Just toggle dropdown
                 }
                 else
                 {
@@ -90,6 +107,8 @@ namespace IT13
                 }
             };
         }
+
+        #region Load Form Methods
 
         private void LoadInventoryForm()
         {
@@ -142,5 +161,46 @@ namespace IT13
             pnlContent.Controls.Add(custOrderForm);
             custOrderForm.Show();
         }
+
+        private void LoadStockAdjustmentForm()
+        {
+            pnlContent.Controls.Clear();
+            stockAdjustmentForm = new StockAdjustment
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(stockAdjustmentForm);
+            stockAdjustmentForm.Show();
+        }
+
+        private void LoadOrderListForm()
+        {
+            pnlContent.Controls.Clear();
+            orderListForm = new OrderList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(orderListForm);
+            orderListForm.Show();
+        }
+
+        private void LoadSupplierOrderListForm()
+        {
+            pnlContent.Controls.Clear();
+            supplierOrderListForm = new SupplierOrderList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(supplierOrderListForm);
+            supplierOrderListForm.Show();
+        }
+
+        #endregion
     }
 }
