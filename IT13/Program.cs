@@ -1,17 +1,26 @@
+﻿using System;
+using System.Windows.Forms;
+
 namespace IT13
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Show Login first
+            using (var login = new Login())
+            {
+                if (login.ShowDialog() == DialogResult.OK)
+                {
+                    // Login SUCCESS → Open Form1
+                    Application.Run(new Form1());
+                }
+                // Login failed or canceled → App closes
+            }
         }
     }
 }

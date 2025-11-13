@@ -9,8 +9,8 @@
                 components.Dispose();
             base.Dispose(disposing);
         }
-        #region Windows Form Designer generated code
-        private void InitializeComponent()
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
         {
             sidebar1 = new Sidebar();
             navBar1 = new NavBar();
@@ -23,7 +23,7 @@
             sidebar1.Location = new Point(0, 0);
             sidebar1.Margin = new Padding(0);
             sidebar1.Name = "sidebar1";
-            sidebar1.Size = new Size(260, 700);
+            sidebar1.Size = new Size(150, 700);
             sidebar1.TabIndex = 1;
             // 
             // navBar1
@@ -62,9 +62,9 @@
             Load += Form1_Load;
             ResumeLayout(false);
         }
-        #endregion
-        private Sidebar sidebar1;
-        public NavBar navBar1;      // Changed to public
-        public Panel pnlContent;    // Changed to public
-    }
+        #endregion
+        private Sidebar sidebar1;
+        public NavBar navBar1; // Changed to public
+        public Panel pnlContent; // Changed to public
+    }
 }

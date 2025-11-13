@@ -100,7 +100,6 @@
             // 
             // mainpanel
             // 
-            mainpanel.AutoScrollMargin = new Size(500, 500);
             mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(guna2ShadowPanel1);
             mainpanel.Controls.Add(guna2Button2);
@@ -113,7 +112,7 @@
             mainpanel.Name = "mainpanel";
             mainpanel.Radius = 8;
             mainpanel.ShadowColor = Color.Black;
-            mainpanel.Size = new Size(1602, 1900);
+            mainpanel.Size = new Size(1602, 950);
             mainpanel.TabIndex = 2;
             // 
             // guna2ShadowPanel1
@@ -125,7 +124,7 @@
             guna2ShadowPanel1.Location = new Point(108, 665);
             guna2ShadowPanel1.Name = "guna2ShadowPanel1";
             guna2ShadowPanel1.ShadowColor = Color.Black;
-            guna2ShadowPanel1.Size = new Size(1411, 1200);
+            guna2ShadowPanel1.Size = new Size(1411, 700);
             guna2ShadowPanel1.TabIndex = 11;
             // 
             // guna2ShadowPanel3
@@ -137,7 +136,7 @@
             guna2ShadowPanel3.Name = "guna2ShadowPanel3";
             guna2ShadowPanel3.Radius = 8;
             guna2ShadowPanel3.ShadowColor = Color.Black;
-            guna2ShadowPanel3.Size = new Size(1317, 600);
+            guna2ShadowPanel3.Size = new Size(1317, 530);
             guna2ShadowPanel3.TabIndex = 12;
             // 
             // panelDgvWrapper
@@ -152,7 +151,7 @@
             panelDgvWrapper.Name = "panelDgvWrapper";
             panelDgvWrapper.ShadowDecoration.BorderRadius = 8;
             panelDgvWrapper.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            panelDgvWrapper.Size = new Size(1272, 510);
+            panelDgvWrapper.Size = new Size(1272, 465);
             panelDgvWrapper.TabIndex = 2;
             // 
             // btnAddProduct
@@ -187,6 +186,8 @@
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(231, 229, 255);
             dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(71, 69, 94);
             dgvItems.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -214,7 +215,7 @@
             dgvItems.RowHeadersVisible = false;
             dgvItems.RowHeadersWidth = 51;
             dgvItems.RowTemplate.Height = 35;
-            dgvItems.Size = new Size(1209, 502);
+            dgvItems.Size = new Size(1209, 360);
             dgvItems.TabIndex = 1;
             dgvItems.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dgvItems.ThemeStyle.AlternatingRowsStyle.Font = new Font("Segoe UI", 9F);
@@ -354,6 +355,7 @@
             guna2Button2.TabIndex = 10;
             guna2Button2.Text = "Address";
             guna2Button2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            guna2Button2.Click += guna2Button2_Click;
             // 
             // guna2Button1
             // 
@@ -635,10 +637,12 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             ClientSize = new Size(1924, 1055);
             Controls.Add(mainpanel);
             Name = "AddCustOrder";
             Text = "AddCustOrder";
+            Load += AddCustOrder_Load;
             mainpanel.ResumeLayout(false);
             mainpanel.PerformLayout();
             guna2ShadowPanel1.ResumeLayout(false);

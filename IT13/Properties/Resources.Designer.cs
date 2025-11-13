@@ -93,6 +93,16 @@ namespace IT13.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap login_pic {
+            get {
+                object obj = ResourceManager.GetObject("login_pic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap view_icon {
             get {
                 object obj = ResourceManager.GetObject("view_icon", resourceCulture);

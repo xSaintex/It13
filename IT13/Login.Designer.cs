@@ -20,7 +20,7 @@ namespace IT13
         private void InitializeComponent()
         {
             this.panelLeft = new Panel();
-            this.lblLogo = new Label();
+            this.picLogo = new PictureBox();
             this.panelRight = new Panel();
             this.lblWelcome = new Label();
             this.lblLogin = new Label();
@@ -33,6 +33,7 @@ namespace IT13
             this.btnLogin = new Button();
             this.linkForgot = new LinkLabel();
 
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelLeft.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.SuspendLayout();
@@ -41,14 +42,13 @@ namespace IT13
             this.panelLeft.BackColor = Color.FromArgb(10, 25, 70);
             this.panelLeft.Dock = DockStyle.Left;
             this.panelLeft.Width = 380;
-            this.panelLeft.Controls.Add(this.lblLogo);
+            this.panelLeft.Controls.Add(this.picLogo);
 
-            this.lblLogo.AutoSize = true;
-            this.lblLogo.Font = new Font("Montserrat", 22F, FontStyle.Bold);
-            this.lblLogo.ForeColor = Color.White;
-            this.lblLogo.Location = new Point(70, 220);
-            this.lblLogo.Text = "Le Parisien";
-            this.lblLogo.TextAlign = ContentAlignment.MiddleCenter;
+            // ---- PICTUREBOX (FULL COVER - ZOOMED & CROPPED) ----
+            this.picLogo.Dock = DockStyle.Fill;
+            this.picLogo.Image = Properties.Resources.login_pic;
+            this.picLogo.Paint += PicLogo_Paint;  // Custom draw for "cover" effect
+            this.picLogo.TabStop = false;
 
             // ============== RIGHT PANEL (LOGIN FORM) ==============
             this.panelRight.BackColor = Color.White;
@@ -146,6 +146,7 @@ namespace IT13
             this.Font = new Font("Segoe UI", 9F);
             this.MaximizeBox = false;
 
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
             this.panelRight.ResumeLayout(false);
@@ -156,8 +157,8 @@ namespace IT13
         #endregion
 
         private Panel panelLeft;
+        private PictureBox picLogo;
         private Panel panelRight;
-        private Label lblLogo;
         private Label lblWelcome;
         private Label lblLogin;
         private Label lblUsername;

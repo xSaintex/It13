@@ -112,11 +112,11 @@
             mainpanel.Controls.Add(btnsearch);
             mainpanel.Controls.Add(txtboxsearch);
             mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(299, 92);
+            mainpanel.Location = new Point(228, 115);
             mainpanel.Name = "mainpanel";
             mainpanel.Radius = 8;
             mainpanel.ShadowColor = Color.Black;
-            mainpanel.Size = new Size(1602, 871);
+            mainpanel.Size = new Size(1592, 841);
             mainpanel.TabIndex = 2;
             // 
             // CombExport

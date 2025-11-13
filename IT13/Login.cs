@@ -9,16 +9,46 @@ namespace IT13
         public Login()
         {
             InitializeComponent();
-            this.KeyPreview = true; // Allow Enter key
+            this.KeyPreview = true;
             this.KeyDown += Login_KeyDown;
         }
 
+        #region Custom Paint for Full Cover Image
+        private void PicLogo_Paint(object sender, PaintEventArgs e)
+        {
+            if (picLogo.Image == null) return;
+
+            var img = picLogo.Image;
+            var pb = sender as PictureBox;
+            var g = e.Graphics;
+
+            // === ZOOM OUT: Use Min instead of Max ===
+            float scaleX = (float)pb.Width / img.Width;
+            float scaleY = (float)pb.Height / img.Height;
+            float scale = Math.Min(scaleX, scaleY);  // ← ZOOM OUT (was Max)
+
+            // Optional: Add padding to make it even more zoomed out
+            float paddingFactor = 0.85f; // 1.0 = full fit, 0.85 = 15% smaller (more zoomed out)
+            scale *= paddingFactor;
+
+            float newWidth = img.Width * scale;
+            float newHeight = img.Height * scale;
+
+            float x = (pb.Width - newWidth) / 2;
+            float y = (pb.Height - newHeight) / 2;
+
+            g.DrawImage(img, x, y, newWidth, newHeight);
+        }
+        #endregion
+
+        #region Event Handlers
         private void Login_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 btnLogin.PerformClick();
                 e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -33,11 +63,10 @@ namespace IT13
                     "Welcome back to Le Parisien Telecoms Portal!",
                     "Login Successful",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                    MessageBoxIcon.Information);
 
-                // new MainDashboard().Show();
-                // this.Hide();
+                this.DialogResult = DialogResult.OK;  // This tells Program.cs to open Form1
+                this.Close();                         // Close Login form
             }
             else
             {
@@ -45,8 +74,7 @@ namespace IT13
                     "Invalid credentials. Try admin / 1234",
                     "Access Denied",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                    MessageBoxIcon.Warning);
                 txtPassword.Clear();
                 txtUsername.Focus();
             }
@@ -66,5 +94,6 @@ namespace IT13
         {
             btnLogin.BackColor = Color.FromArgb(0, 51, 102);
         }
+        #endregion
     }
 }

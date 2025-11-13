@@ -113,7 +113,7 @@
             mainpanel.Controls.Add(btnsearchinv);
             mainpanel.Controls.Add(txtboxsearch);
             mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(300, 88);
+            mainpanel.Location = new Point(261, 121);
             mainpanel.Name = "mainpanel";
             mainpanel.Radius = 8;
             mainpanel.ShadowColor = Color.Black;

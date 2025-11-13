@@ -3,17 +3,14 @@
     partial class NavBar
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
             base.Dispose(disposing);
         }
-
-        #region Component Designer generated code
-
-        private void InitializeComponent()
+        #region Component Designer generated code
+        private void InitializeComponent()
         {
             pnlContainer = new Panel();
             lblTitle = new Label();
@@ -26,10 +23,10 @@
             ((System.ComponentModel.ISupportInitialize)picArrow).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picUser).BeginInit();
             SuspendLayout();
-            // 
-            // pnlContainer
-            // 
-            pnlContainer.BackColor = Color.White;
+            //
+            // pnlContainer
+            //
+            pnlContainer.BackColor = Color.White;
             pnlContainer.Controls.Add(lblTitle);
             pnlContainer.Controls.Add(pnlUser);
             pnlContainer.Dock = DockStyle.Fill;
@@ -38,10 +35,10 @@
             pnlContainer.Padding = new Padding(20, 10, 30, 10);
             pnlContainer.Size = new Size(1871, 60);
             pnlContainer.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            lblTitle.AutoSize = true;
+            //
+            // lblTitle
+            //
+            lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(0, 51, 102);
             lblTitle.Location = new Point(20, 15);
@@ -49,10 +46,10 @@
             lblTitle.Size = new Size(120, 30);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Dashboard";
-            // 
-            // pnlUser
-            // 
-            pnlUser.AutoSize = true;
+            //
+            // pnlUser
+            //
+            pnlUser.AutoSize = true;
             pnlUser.Controls.Add(picArrow);
             pnlUser.Controls.Add(lblUserName);
             pnlUser.Controls.Add(picUser);
@@ -62,10 +59,10 @@
             pnlUser.Padding = new Padding(0, 8, 0, 8);
             pnlUser.Size = new Size(59, 40);
             pnlUser.TabIndex = 1;
-            // 
-            // picArrow
-            // 
-            picArrow.Cursor = Cursors.Hand;
+            //
+            // picArrow
+            //
+            picArrow.Cursor = Cursors.Hand;
             picArrow.Location = new Point(0, 0);
             picArrow.Margin = new Padding(0, 18, 0, 0);
             picArrow.Name = "picArrow";
@@ -74,10 +71,10 @@
             picArrow.TabIndex = 0;
             picArrow.TabStop = false;
             picArrow.Click += PicUser_Click;
-            // 
-            // lblUserName
-            // 
-            lblUserName.AutoSize = true;
+            //
+            // lblUserName
+            //
+            lblUserName.AutoSize = true;
             lblUserName.Font = new Font("Segoe UI", 10F);
             lblUserName.ForeColor = Color.FromArgb(0, 51, 102);
             lblUserName.Location = new Point(0, 0);
@@ -87,10 +84,10 @@
             lblUserName.TabIndex = 1;
             lblUserName.Text = "Guest";
             lblUserName.Click += PicUser_Click;
-            // 
-            // picUser
-            // 
-            picUser.BackColor = Color.FromArgb(0, 89, 179);
+            //
+            // picUser
+            //
+            picUser.BackColor = Color.FromArgb(0, 89, 179);
             picUser.Cursor = Cursors.Hand;
             picUser.Location = new Point(0, 0);
             picUser.Name = "picUser";
@@ -99,10 +96,10 @@
             picUser.TabIndex = 2;
             picUser.TabStop = false;
             picUser.Click += PicUser_Click;
-            // 
-            // NavBar
-            // 
-            BackColor = Color.White;
+            //
+            // NavBar
+            //
+            BackColor = Color.White;
             Controls.Add(pnlContainer);
             Name = "NavBar";
             Size = new Size(1871, 60);
@@ -114,10 +111,8 @@
             ((System.ComponentModel.ISupportInitialize)picUser).EndInit();
             ResumeLayout(false);
         }
-
-        #endregion
-
-        private Panel pnlContainer;
+        #endregion
+        private Panel pnlContainer;
         private Label lblTitle;
         private Panel pnlUser;
         private PictureBox picUser;
