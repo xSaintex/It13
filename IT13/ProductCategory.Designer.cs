@@ -18,7 +18,7 @@ namespace IT13
             {
                 BackColor = Color.FromArgb(100, 88, 255),
                 ForeColor = Color.White,
-                Font = new Font("Tahoma", 10.2F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold), // Bigger header
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 
@@ -136,12 +136,26 @@ namespace IT13
             datagridviewcategory.CellPainting += datagridviewcategory_CellPainting;
             datagridviewcategory.CellClick += datagridviewcategory_CellClick;
 
-            // COLUMNS
-            colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
-            colName.HeaderText = "Category Name"; colName.Name = "colName"; colName.Width = 350;
-            colDate.HeaderText = "Date"; colDate.Name = "colDate"; colDate.Width = 150;
-            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 120;
-            colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 100;
+            // COLUMNS – WIDER & CLEAN
+            colID.HeaderText = "ID";
+            colID.Name = "colID";
+            colID.Width = 160;
+
+            colName.HeaderText = "Category Name";
+            colName.Name = "colName";
+            colName.Width = 500;
+
+            colDate.HeaderText = "Date";
+            colDate.Name = "colDate";
+            colDate.Width = 180;
+
+            colStatus.HeaderText = "Status";
+            colStatus.Name = "colStatus";
+            colStatus.Width = 140;
+
+            colActions.HeaderText = "Actions";
+            colActions.Name = "colActions";
+            colActions.Width = 120;
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             datagridviewcategory.Columns.AddRange(new DataGridViewColumn[]

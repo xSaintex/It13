@@ -14,11 +14,54 @@ namespace IT13
         public SupplierOrderList()
         {
             InitializeComponent();
-            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(16, 16));
-            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(16, 16));
-            _deleteIcon = new Bitmap(Properties.Resources.delete_icon, new Size(16, 16));
+
+            // === BIGGER ICONS: 24x24 ===
+            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
+            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
+            _deleteIcon = new Bitmap(Properties.Resources.delete_icon, new Size(24, 24));
+
+            // Setup dropdowns
             SetupFilterComboBox();
             SetupExportComboBox();
+
+            // === READ-ONLY + NO INTERACTION ===
+            dgvOrders.ReadOnly = true;
+            dgvOrders.AllowUserToAddRows = false;
+            dgvOrders.AllowUserToDeleteRows = false;
+            dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvOrders.MultiSelect = false;
+
+            // Disable sorting on headers
+            foreach (DataGridViewColumn col in dgvOrders.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            // Disable header visual feedback (no click, no hover)
+            dgvOrders.EnableHeadersVisualStyles = false;
+            dgvOrders.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                dgvOrders.ColumnHeadersDefaultCellStyle.BackColor;
+
+            // Remove row selection highlight
+            dgvOrders.DefaultCellStyle.SelectionBackColor =
+                dgvOrders.DefaultCellStyle.BackColor;
+            dgvOrders.DefaultCellStyle.SelectionForeColor =
+                dgvOrders.DefaultCellStyle.ForeColor;
+
+            // === BIGGER FONT + TALLER ROWS ===
+            dgvOrders.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
+            dgvOrders.RowTemplate.Height = 45;
+            dgvOrders.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
+            // === AUTO-FILL COLUMNS ===
+            dgvOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvOrders.Columns["colID"].FillWeight = 18;
+            dgvOrders.Columns["colDate"].FillWeight = 15;
+            dgvOrders.Columns["colSupplier"].FillWeight = 30;
+            dgvOrders.Columns["colTotal"].FillWeight = 15;
+            dgvOrders.Columns["colStatus"].FillWeight = 12;
+            dgvOrders.Columns["colActions"].FillWeight = 10;
+
+            dgvOrders.Columns["colSupplier"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             LoadSampleData();
         }
 
@@ -31,10 +74,10 @@ namespace IT13
             Filter.Items.Add("Delivered");
             Filter.Items.Add("Cancelled");
             Filter.SelectedIndex = 0;
-            Filter.ForeColor = Color.Gray;
+            Filter.ForeColor = Color.Black;  
             Filter.SelectedIndexChanged += (s, e) =>
             {
-                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
             };
         }
 
@@ -46,10 +89,10 @@ namespace IT13
             Export.Items.Add("PDF");
             Export.Items.Add("CSV");
             Export.SelectedIndex = 0;
-            Export.ForeColor = Color.Gray;
+            Export.ForeColor = Color.Black;
             Export.SelectedIndexChanged += (s, e) =>
             {
-                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
             };
         }
 
@@ -71,49 +114,68 @@ namespace IT13
         {
             int idx = dgvOrders.Rows.Add(false, date, supplier, total, status, null);
             var row = dgvOrders.Rows[idx];
-            row.Cells[0].Tag = id; // Store real ID
+            row.Cells[0].Tag = id;
+            row.Height = 45;
         }
 
+        // === CELL PAINTING: ID + CHECKBOX | 3 BIG ICONS + GAP ===
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // Paint Checkbox + ID
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            if (e.RowIndex < 0) return; // Skip header
+
+            // === colID: Checkbox + ID Text ===
+            if (e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                bool isChecked = Convert.ToBoolean(e.Value ?? false);
-                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 8, 16, 16);
+
+                bool isChecked = (bool)(e.Value ?? false);
+                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
                 ControlPaint.DrawCheckBox(e.Graphics, checkRect,
                     isChecked ? ButtonState.Checked : ButtonState.Normal);
 
                 string idText = dgvOrders.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
-                var textSize = e.Graphics.MeasureString(idText, e.CellStyle.Font);
-                var textRect = new Rectangle(
-                    e.CellBounds.X + 30,
-                    e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
-                    e.CellBounds.Width - 35,
-                    e.CellBounds.Height);
-                e.Graphics.DrawString(idText, e.CellStyle.Font, Brushes.Black, textRect);
+                if (!string.IsNullOrEmpty(idText))
+                {
+                    var textSize = e.Graphics.MeasureString(idText, new Font("Segoe UI", 11F));
+                    var textRect = new Rectangle(
+                        e.CellBounds.X + 30,
+                        e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
+                        e.CellBounds.Width - 35,
+                        e.CellBounds.Height);
+                    e.Graphics.DrawString(idText, new Font("Segoe UI", 11F), Brushes.Black, textRect);
+                }
                 e.Handled = true;
+                return;
             }
 
-            // Paint Edit + View + Delete Icons
-            if (e.ColumnIndex == dgvOrders.Columns["colActions"].Index && e.RowIndex >= 0)
+            // === colActions: Edit + View + Delete (24x24, 16px gap) ===
+            if (e.ColumnIndex == dgvOrders.Columns["colActions"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
-                int x = e.CellBounds.X + (e.CellBounds.Width - 60) / 2;
-                int y = e.CellBounds.Y + (e.CellBounds.Height - 16) / 2;
-                e.Graphics.DrawImage(_editIcon, x, y, 16, 16);
-                e.Graphics.DrawImage(_viewIcon, x + 20, y, 16, 16);
-                e.Graphics.DrawImage(_deleteIcon, x + 40, y, 16, 16);
+
+                int iconSize = 24;
+                int gap = 16;
+                int totalWidth = (iconSize * 3) + (gap * 2); // 24+16+24+16+24 = 108
+                int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
+                int y = e.CellBounds.Y + (e.CellBounds.Height - iconSize) / 2;
+
+                e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
+                e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
+                e.Graphics.DrawImage(_deleteIcon, x + (iconSize + gap) * 2, y, iconSize, iconSize);
+
                 e.Handled = true;
+                return;
             }
+
+            e.Handled = false;
         }
 
+        // === CELL CLICK: Only checkbox + 3 icons work ===
         private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            // Handle Checkbox
+            // Checkbox
             if (e.ColumnIndex == 0)
             {
                 var row = dgvOrders.Rows[e.RowIndex];
@@ -123,27 +185,26 @@ namespace IT13
                 return;
             }
 
-            // Handle Actions
+            // Actions: Edit, View, Delete
             if (e.ColumnIndex == dgvOrders.Columns["colActions"].Index)
             {
                 var cellRect = dgvOrders.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var mousePos = dgvOrders.PointToClient(Control.MousePosition);
                 int clickX = mousePos.X - cellRect.X;
-                int iconX = (cellRect.Width - 60) / 2;
+
+                int iconSize = 24;
+                int gap = 16;
+                int totalWidth = (iconSize * 3) + (gap * 2);
+                int iconX = (cellRect.Width - totalWidth) / 2;
+
                 string orderId = dgvOrders.Rows[e.RowIndex].Cells[0].Tag.ToString();
 
-                if (clickX >= iconX && clickX < iconX + 16)
-                {
+                if (clickX >= iconX && clickX < iconX + iconSize)
                     OpenEditOrder(orderId);
-                }
-                else if (clickX >= iconX + 20 && clickX < iconX + 36)
-                {
+                else if (clickX >= iconX + iconSize + gap && clickX < iconX + (iconSize + gap) * 2)
                     OpenViewOrder(orderId);
-                }
-                else if (clickX >= iconX + 40 && clickX < iconX + 56)
-                {
+                else if (clickX >= iconX + (iconSize + gap) * 2 && clickX < iconX + totalWidth)
                     DeleteOrder(orderId);
-                }
             }
         }
 
@@ -184,7 +245,6 @@ namespace IT13
             if (MessageBox.Show($"Delete order {orderId}?", "Confirm Delete",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                // Remove from DataGridView
                 for (int i = 0; i < dgvOrders.Rows.Count; i++)
                 {
                     if (dgvOrders.Rows[i].Cells[0].Tag?.ToString() == orderId)
@@ -215,14 +275,13 @@ namespace IT13
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string filter = txtSearch.Text.Trim();
-            var view = (dgvOrders.DataSource as DataTable)?.DefaultView;
-            if (view != null)
+            string filter = txtSearch.Text.Trim().ToLower();
+            foreach (DataGridViewRow row in dgvOrders.Rows)
             {
-                if (string.IsNullOrEmpty(filter))
-                    view.RowFilter = "";
-                else
-                    view.RowFilter = $"[Supplier] LIKE '%{filter}%' OR [Order ID] LIKE '%{filter}%'";
+                bool match = string.IsNullOrEmpty(filter) ||
+                    row.Cells["colSupplier"].Value?.ToString().ToLower().Contains(filter) == true ||
+                    row.Cells[0].Tag?.ToString().ToLower().Contains(filter) == true;
+                row.Visible = match;
             }
         }
     }

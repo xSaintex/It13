@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Guna.UI2.WinForms; // REQUIRED FOR GUNA2
 
 namespace IT13
 {
@@ -12,11 +13,51 @@ namespace IT13
         public StockAdjustment()
         {
             InitializeComponent();
-            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(16, 16));
-            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(16, 16));
+
+            // BIGGER ICONS
+            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
+            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
 
             SetupFilterComboBox();
             SetupExportComboBox();
+
+            // === GUNA2DATAGRIDVIEW SETTINGS ===
+            datagridviewadjustment.ReadOnly = true;
+            datagridviewadjustment.AllowUserToAddRows = false;
+            datagridviewadjustment.AllowUserToDeleteRows = false;
+            datagridviewadjustment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            datagridviewadjustment.MultiSelect = false;
+
+            foreach (DataGridViewColumn col in datagridviewadjustment.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            datagridviewadjustment.EnableHeadersVisualStyles = false;
+            datagridviewadjustment.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                datagridviewadjustment.ColumnHeadersDefaultCellStyle.BackColor;
+
+            datagridviewadjustment.DefaultCellStyle.SelectionBackColor =
+                datagridviewadjustment.DefaultCellStyle.BackColor;
+            datagridviewadjustment.DefaultCellStyle.SelectionForeColor =
+                datagridviewadjustment.DefaultCellStyle.ForeColor;
+
+            // BIGGER FONT + TALL ROWS
+            datagridviewadjustment.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
+            datagridviewadjustment.RowTemplate.Height = 45;
+            datagridviewadjustment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
+            // AUTO-FILL COLUMNS
+            datagridviewadjustment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            datagridviewadjustment.Columns["colID"].FillWeight = 15;
+            datagridviewadjustment.Columns["colDate"].FillWeight = 12;
+            datagridviewadjustment.Columns["colProductName"].FillWeight = 28;
+            datagridviewadjustment.Columns["colAdjustmentType"].FillWeight = 12;
+            datagridviewadjustment.Columns["colPhysicalCount"].FillWeight = 10;
+            datagridviewadjustment.Columns["colRequestedBy"].FillWeight = 18;
+            datagridviewadjustment.Columns["colStatus"].FillWeight = 12;
+            datagridviewadjustment.Columns["colActions"].FillWeight = 13;
+
+            datagridviewadjustment.Columns["colProductName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             LoadSampleData();
         }
 
@@ -29,10 +70,10 @@ namespace IT13
             Filter.Items.Add("Approved");
             Filter.Items.Add("Rejected");
             Filter.SelectedIndex = 0;
-            Filter.ForeColor = Color.Gray;
+            Filter.ForeColor = Color.Black;
             Filter.SelectedIndexChanged += (s, e) =>
             {
-                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
             };
         }
 
@@ -44,55 +85,74 @@ namespace IT13
             Export.Items.Add("PDF");
             Export.Items.Add("CSV");
             Export.SelectedIndex = 0;
-            Export.ForeColor = Color.Gray;
+            Export.ForeColor = Color.Black;
             Export.SelectedIndexChanged += (s, e) =>
             {
-                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
             };
         }
 
-        private void txtboxsearch_TextChanged(object sender, EventArgs e) { }
+        private void txtboxsearch_TextChanged(object sender, EventArgs e)
+        {
+            string filter = txtboxsearch.Text.Trim().ToLower();
+            foreach (DataGridViewRow row in datagridviewadjustment.Rows)
+            {
+                bool match = string.IsNullOrEmpty(filter) ||
+                    row.Cells["colProductName"].Value?.ToString().ToLower().Contains(filter) == true ||
+                    row.Cells["colID"].Tag?.ToString().ToLower().Contains(filter) == true;
+                row.Visible = match;
+            }
+        }
 
         private void datagridviewadjustment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // Paint Checkbox + ID
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            if (e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                bool isChecked = Convert.ToBoolean(e.Value ?? false);
-                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 8, 16, 16);
+                bool isChecked = (bool)(e.Value ?? false);
+                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
                 ControlPaint.DrawCheckBox(e.Graphics, checkRect,
                     isChecked ? ButtonState.Checked : ButtonState.Normal);
 
                 string idText = datagridviewadjustment.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
-                var textSize = e.Graphics.MeasureString(idText, e.CellStyle.Font);
-                var textRect = new Rectangle(
-                    e.CellBounds.X + 30,
-                    e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
-                    e.CellBounds.Width - 35,
-                    e.CellBounds.Height);
-
-                e.Graphics.DrawString(idText, e.CellStyle.Font, Brushes.Black, textRect);
+                if (!string.IsNullOrEmpty(idText))
+                {
+                    var textSize = e.Graphics.MeasureString(idText, new Font("Segoe UI", 11F));
+                    var textRect = new Rectangle(
+                        e.CellBounds.X + 30,
+                        e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
+                        e.CellBounds.Width - 35,
+                        e.CellBounds.Height);
+                    e.Graphics.DrawString(idText, new Font("Segoe UI", 11F), Brushes.Black, textRect);
+                }
                 e.Handled = true;
+                return;
             }
 
-            // Paint Edit + View Icons
-            if (e.ColumnIndex == datagridviewadjustment.Columns["colActions"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == datagridviewadjustment.Columns["colActions"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
-                int x = e.CellBounds.X + (e.CellBounds.Width - 40) / 2;
-                int y = e.CellBounds.Y + (e.CellBounds.Height - 16) / 2;
-                e.Graphics.DrawImage(_editIcon, x, y, 16, 16);
-                e.Graphics.DrawImage(_viewIcon, x + 20, y, 16, 16);
+                int iconSize = 24;
+                int gap = 16;
+                int totalWidth = (iconSize * 2) + gap;
+                int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
+                int y = e.CellBounds.Y + (e.CellBounds.Height - iconSize) / 2;
+
+                e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
+                e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
                 e.Handled = true;
+                return;
             }
+
+            e.Handled = false;
         }
 
         private void datagridviewadjustment_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            // Handle Checkbox Click
             if (e.ColumnIndex == 0)
             {
                 var row = datagridviewadjustment.Rows[e.RowIndex];
@@ -102,30 +162,29 @@ namespace IT13
                 return;
             }
 
-            // Handle Actions (Edit/View)
             if (e.ColumnIndex == datagridviewadjustment.Columns["colActions"].Index)
             {
                 var cellRect = datagridviewadjustment.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var mousePos = datagridviewadjustment.PointToClient(Control.MousePosition);
                 int clickX = mousePos.X - cellRect.X;
-                int iconX = (cellRect.Width - 40) / 2;
+
+                int iconSize = 24;
+                int gap = 16;
+                int totalWidth = (iconSize * 2) + gap;
+                int iconX = (cellRect.Width - totalWidth) / 2;
 
                 string adjustmentId = datagridviewadjustment.Rows[e.RowIndex].Cells[0].Tag.ToString();
 
-                if (clickX >= iconX && clickX < iconX + 16)
-                {
+                if (clickX >= iconX && clickX < iconX + iconSize)
                     OpenEditAdjustment(adjustmentId);
-                }
-                else if (clickX >= iconX + 20 && clickX < iconX + 36)
-                {
+                else if (clickX >= iconX + iconSize + gap && clickX < iconX + totalWidth)
                     OpenViewAdjustment(adjustmentId);
-                }
             }
         }
 
         private void OpenEditAdjustment(string adjustmentId)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = "Edit Stock Adjustment";
             var editForm = new EditStockAdjustment(adjustmentId)
@@ -141,7 +200,7 @@ namespace IT13
 
         private void OpenViewAdjustment(string adjustmentId)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = "View Stock Adjustment";
             var viewForm = new ViewStockAdjustment(adjustmentId)
@@ -157,7 +216,7 @@ namespace IT13
 
         private void btnaddadjustment_Click(object sender, EventArgs e)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = "Add Stock Adjustment";
             var addForm = new AddStockAdjustment
@@ -182,7 +241,8 @@ namespace IT13
         {
             int idx = datagridviewadjustment.Rows.Add(false, date, productName, adjType, physicalCount, requestedBy, status, null);
             var row = datagridviewadjustment.Rows[idx];
-            row.Cells[0].Tag = id; // Store actual ID in Tag
+            row.Cells[0].Tag = id;
+            row.Height = 45;
         }
     }
 }

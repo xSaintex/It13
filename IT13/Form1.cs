@@ -12,7 +12,8 @@ namespace IT13
         private CustOrder custOrderForm;
         private StockAdjustment stockAdjustmentForm;
         private OrderList orderListForm;
-        private SupplierOrderList supplierOrderListForm; // ← NEW
+        private SupplierOrderList supplierOrderListForm;
+        private CustomerList customerListForm;
 
         public Form1()
         {
@@ -21,7 +22,6 @@ namespace IT13
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // NAVBAR setup
             navBar1.Dock = DockStyle.None;
             navBar1.Width = 1190;
             navBar1.Height = 70;
@@ -31,20 +31,17 @@ namespace IT13
             navBar1.PageTitle = "Dashboard";
             navBar1.UserName = "John Doe";
 
-            // SIDEBAR setup
             sidebar1.Dock = DockStyle.Left;
             sidebar1.Width = 260;
             sidebar1.Height = this.ClientSize.Height;
             sidebar1.BringToFront();
 
-            // CONTENT PANEL setup
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Left = 260;
             pnlContent.Top = 70;
             pnlContent.Width = this.ClientSize.Width - 260;
             pnlContent.Height = this.ClientSize.Height - 70;
 
-            // AUTO RESIZE handler
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -54,13 +51,9 @@ namespace IT13
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
 
-            // SIDEBAR ITEM CLICK HANDLER
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
-                if (ev.Section == "Products")
-                {
-                    navBar1.PageTitle = "Products";
-                }
+                if (ev.Section == "Products") navBar1.PageTitle = "Products";
                 else if (ev.Section == "Product List")
                 {
                     navBar1.PageTitle = "Product List";
@@ -86,19 +79,20 @@ namespace IT13
                     navBar1.PageTitle = "Order List";
                     LoadOrderListForm();
                 }
-                else if (ev.Section == "Supplier Order") // ← EXACT TEXT
+                else if (ev.Section == "Supplier Order")
                 {
                     navBar1.PageTitle = "Supplier Order";
-                    LoadSupplierOrderListForm(); // ← THIS LOADS IT
+                    LoadSupplierOrderListForm();
                 }
                 else if (ev.Section == "Customer Order")
                 {
                     navBar1.PageTitle = "Customer Order";
                     LoadCustomerOrderForm();
                 }
-                else if (ev.Section == "Orders")
+                else if (ev.Section == "Customer List")
                 {
-                    // Just toggle dropdown
+                    navBar1.PageTitle = "Customer List";
+                    LoadCustomerListForm();
                 }
                 else
                 {
@@ -201,6 +195,26 @@ namespace IT13
             supplierOrderListForm.Show();
         }
 
+        private void LoadCustomerListForm()
+        {
+            pnlContent.Controls.Clear();
+            customerListForm = new CustomerList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(customerListForm);
+            customerListForm.Show();
+        }
+
         #endregion
+
+        // PUBLIC METHOD FOR ADD/EDIT/VIEW TO CALL
+        public void NavigateToCustomerList()
+        {
+            navBar1.PageTitle = "Customer List";
+            LoadCustomerListForm();
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace IT13
             txtStatus.ReadOnly = true;
 
             lblStatusNote.AutoSize = true;
-            lblStatusNote.ForeColor = Color.Gray;
+            lblStatusNote.ForeColor = Color.Black;
             lblStatusNote.Location = new Point(750, 200);
             lblStatusNote.Text = "Status is automatically set to \"Active\" and cannot be edited.";
 
@@ -95,7 +95,7 @@ namespace IT13
             btnCancel.Text = "Cancel";
             btnCancel.FillColor = Color.FromArgb(240, 240, 240);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.BorderColor = Color.Gray;
+            btnCancel.BorderColor = Color.Black; 
             btnCancel.BorderThickness = 1;
             btnCancel.BorderRadius = 8;
             btnCancel.Click += btnCancel_Click;

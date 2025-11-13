@@ -1,5 +1,4 @@
-﻿// ProductCategory.cs
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,12 +12,49 @@ namespace IT13
         public ProductCategory()
         {
             InitializeComponent();
-            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(16, 16));
-            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(16, 16));
 
-            // === SETUP FILTER & EXPORT DROPDOWNS ===
+            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
+            _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
+
             SetupFilterComboBox();
             SetupExportComboBox();
+
+            // === READ-ONLY + NO INTERACTION ===
+            datagridviewcategory.ReadOnly = true;
+            datagridviewcategory.AllowUserToAddRows = false;
+            datagridviewcategory.AllowUserToDeleteRows = false;
+            datagridviewcategory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            datagridviewcategory.MultiSelect = false;
+
+            // DISABLE COLUMN SORTING
+            foreach (DataGridViewColumn col in datagridviewcategory.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            // DISABLE HEADER VISUAL FEEDBACK (NO CLICK, NO HOVER)
+            datagridviewcategory.EnableHeadersVisualStyles = false;
+            datagridviewcategory.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                datagridviewcategory.ColumnHeadersDefaultCellStyle.BackColor;
+
+            // NO ROW SELECTION HIGHLIGHT
+            datagridviewcategory.DefaultCellStyle.SelectionBackColor =
+                datagridviewcategory.DefaultCellStyle.BackColor;
+            datagridviewcategory.DefaultCellStyle.SelectionForeColor =
+                datagridviewcategory.DefaultCellStyle.ForeColor;
+
+            // BIGGER FONT + TALL ROWS
+            datagridviewcategory.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
+            datagridviewcategory.RowTemplate.Height = 45;
+            datagridviewcategory.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
+            // AUTO-FILL COLUMNS
+            datagridviewcategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            datagridviewcategory.Columns["colID"].FillWeight = 15;
+            datagridviewcategory.Columns["colName"].FillWeight = 45;
+            datagridviewcategory.Columns["colDate"].FillWeight = 15;
+            datagridviewcategory.Columns["colStatus"].FillWeight = 12;
+            datagridviewcategory.Columns["colActions"].FillWeight = 13;
+
+            datagridviewcategory.Columns["colName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             LoadSampleData();
         }
@@ -26,78 +62,105 @@ namespace IT13
         private void SetupFilterComboBox()
         {
             Filter.Items.Clear();
-            Filter.Items.Add("Filter");           // Default label
+            Filter.Items.Add("Filter");
             Filter.Items.Add("All");
             Filter.Items.Add("Active");
             Filter.Items.Add("Inactive");
             Filter.SelectedIndex = 0;
-            Filter.ForeColor = Color.Gray;
-
+            Filter.ForeColor = Color.Black;
             Filter.SelectedIndexChanged += (s, e) =>
             {
-                if (Filter.SelectedIndex == 0)
-                    Filter.ForeColor = Color.Gray;
-                else
-                    Filter.ForeColor = Color.FromArgb(68, 88, 112);
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
             };
         }
 
         private void SetupExportComboBox()
         {
             Export.Items.Clear();
-            Export.Items.Add("Export");           // Default label
+            Export.Items.Add("Export");
             Export.Items.Add("Excel");
             Export.Items.Add("PDF");
             Export.Items.Add("CSV");
             Export.SelectedIndex = 0;
-            Export.ForeColor = Color.Gray;
-
+            Export.ForeColor = Color.Black;
             Export.SelectedIndexChanged += (s, e) =>
             {
-                if (Export.SelectedIndex == 0)
-                    Export.ForeColor = Color.Gray;
-                else
-                    Export.ForeColor = Color.FromArgb(68, 88, 112);
+                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
             };
         }
 
-        private void txtboxsearch_TextChanged(object sender, EventArgs e) { }
+        private void txtboxsearch_TextChanged(object sender, EventArgs e)
+        {
+            string filter = txtboxsearch.Text.Trim().ToLower();
+            foreach (DataGridViewRow row in datagridviewcategory.Rows)
+            {
+                bool match = string.IsNullOrEmpty(filter) ||
+                    row.Cells["colName"].Value?.ToString().ToLower().Contains(filter) == true ||
+                    row.Cells["colID"].Tag?.ToString().ToLower().Contains(filter) == true;
+                row.Visible = match;
+            }
+        }
 
+        // FIXED: ID HEADER + ID TEXT VISIBLE
         private void datagridviewcategory_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            // Skip header row
+            if (e.RowIndex < 0) return;
+
+            // === CUSTOM PAINT: colID (Checkbox + ID Text) ===
+            if (e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
+
+                // Draw checkbox
                 bool isChecked = (bool)(e.Value ?? false);
-                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 8, 16, 16);
+                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
                 ControlPaint.DrawCheckBox(e.Graphics, checkRect,
                     isChecked ? ButtonState.Checked : ButtonState.Normal);
+
+                // Draw ID from Tag
                 string idText = datagridviewcategory.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
-                var textSize = e.Graphics.MeasureString(idText, e.CellStyle.Font);
-                var textRect = new Rectangle(
-                    e.CellBounds.X + 30,
-                    e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
-                    e.CellBounds.Width - 35,
-                    e.CellBounds.Height);
-                e.Graphics.DrawString(idText, e.CellStyle.Font, Brushes.Black, textRect);
+                if (!string.IsNullOrEmpty(idText))
+                {
+                    var textSize = e.Graphics.MeasureString(idText, new Font("Segoe UI", 11F));
+                    var textRect = new Rectangle(
+                        e.CellBounds.X + 30,
+                        e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
+                        e.CellBounds.Width - 35,
+                        e.CellBounds.Height);
+                    e.Graphics.DrawString(idText, new Font("Segoe UI", 11F), Brushes.Black, textRect);
+                }
+
                 e.Handled = true;
+                return;
             }
 
-            if (e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index && e.RowIndex >= 0)
+            // === CUSTOM PAINT: colActions (Edit + View Icons) ===
+            if (e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
-                int x = e.CellBounds.X + (e.CellBounds.Width - 40) / 2;
-                int y = e.CellBounds.Y + (e.CellBounds.Height - 16) / 2;
-                e.Graphics.DrawImage(_editIcon, x, y, 16, 16);
-                e.Graphics.DrawImage(_viewIcon, x + 20, y, 16, 16);
+
+                // Total width for icons: 24 + 16 + 24 = 64px
+                int totalWidth = 64;
+                int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
+                int y = e.CellBounds.Y + (e.CellBounds.Height - 24) / 2;
+
+                e.Graphics.DrawImage(_editIcon, x, y, 24, 24);
+                e.Graphics.DrawImage(_viewIcon, x + 24 + 16, y, 24, 24); // 16px gap
+
                 e.Handled = true;
+                return;
             }
+
+            // Let default paint handle all other cells (headers, normal text)
+            e.Handled = false;
         }
 
         private void datagridviewcategory_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
+            // Allow checkbox toggle
             if (e.ColumnIndex == 0)
             {
                 var row = datagridviewcategory.Rows[e.RowIndex];
@@ -107,29 +170,30 @@ namespace IT13
                 return;
             }
 
+            // Only allow icon clicks in Actions column
             if (e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index)
             {
                 var cellRect = datagridviewcategory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var mousePos = datagridviewcategory.PointToClient(Control.MousePosition);
                 int clickX = mousePos.X - cellRect.X;
-                int iconX = (cellRect.Width - 40) / 2;
+
+                int totalWidth = 64;
+                int iconX = (cellRect.Width - totalWidth) / 2;
+
                 string categoryId = datagridviewcategory.Rows[e.RowIndex].Cells[0].Tag.ToString();
 
-                if (clickX >= iconX && clickX < iconX + 16)
-                {
+                if (clickX >= iconX && clickX < iconX + 24)
                     OpenEditCategory(categoryId);
-                }
-                else if (clickX >= iconX + 20 && clickX < iconX + 36)
-                {
+                else if (clickX >= iconX + 40 && clickX < iconX + 64) // 24 + 16 gap
                     OpenViewProdCategory(categoryId);
-                }
             }
         }
 
         private void OpenEditCategory(string categoryId)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
+
             parent.navBar1.PageTitle = "Edit Category";
             var editForm = new EditCategory(categoryId)
             {
@@ -144,8 +208,9 @@ namespace IT13
 
         private void OpenViewProdCategory(string categoryId)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
+
             parent.navBar1.PageTitle = "View Category Details";
             var viewForm = new ViewProdCategory(categoryId)
             {
@@ -160,8 +225,9 @@ namespace IT13
 
         private void btnaddcategory_Click(object sender, EventArgs e)
         {
-            Form1 parent = this.ParentForm as Form1;
+            var parent = this.ParentForm as Form1;
             if (parent == null) return;
+
             parent.navBar1.PageTitle = "Add Category";
             var addForm = new AddCategory
             {
@@ -176,16 +242,19 @@ namespace IT13
 
         private void LoadSampleData()
         {
-            AddRow("1", "CCTV", "2025-04-05", "Active");
-            AddRow("2", "Speaker", "2025-04-02", "Active");
-            AddRow("3", "Dual Speaker", "2025-03-20", "Inactive");
+            AddRow("CAT-001", "High-Resolution CCTV Security Camera System", "2025-04-05", "Active");
+            AddRow("CAT-002", "Wireless Bluetooth Speaker with Subwoofer", "2025-04-02", "Active");
+            AddRow("CAT-003", "Dual Stereo Speaker Set for Home Theater", "2025-03-20", "Inactive");
+            AddRow("CAT-004", "Portable Mini Speaker with LED Lights", "2025-03-15", "Active");
+            AddRow("CAT-005", "Professional Studio Monitor Speakers", "2025-02-28", "Active");
         }
 
         private void AddRow(string id, string name, string date, string status)
         {
             int idx = datagridviewcategory.Rows.Add(false, name, date, status, null);
             var row = datagridviewcategory.Rows[idx];
-            row.Cells[0].Tag = id; // Store actual ID in Tag
+            row.Cells[0].Tag = id;
+            row.Height = 45;
         }
     }
 }
