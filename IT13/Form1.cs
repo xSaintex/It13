@@ -14,6 +14,7 @@ namespace IT13
         private OrderList orderListForm;
         private SupplierOrderList supplierOrderListForm;
         private CustomerList customerListForm;
+        private SupplierList supplierListForm; // Your form
 
         public Form1()
         {
@@ -22,8 +23,9 @@ namespace IT13
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // === LAYOUT SETUP ===
             navBar1.Dock = DockStyle.None;
-            navBar1.Width = 1190;
+            navBar1.Width = this.ClientSize.Width - 260;
             navBar1.Height = 70;
             navBar1.Left = 260;
             navBar1.Top = 0;
@@ -42,6 +44,7 @@ namespace IT13
             pnlContent.Width = this.ClientSize.Width - 260;
             pnlContent.Height = this.ClientSize.Height - 70;
 
+            // Responsive resize
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -51,53 +54,66 @@ namespace IT13
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
 
+            // === SIDEBAR CLICK HANDLER (NO AddItem() CALLS!) ===
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
-                if (ev.Section == "Products") navBar1.PageTitle = "Products";
-                else if (ev.Section == "Product List")
+                string section = ev.Section?.Trim() ?? "";
+
+                switch (section)
                 {
-                    navBar1.PageTitle = "Product List";
-                    LoadProductListForm();
-                }
-                else if (ev.Section == "Product Categories")
-                {
-                    navBar1.PageTitle = "Product Categories";
-                    LoadProductCategoryForm();
-                }
-                else if (ev.Section == "Inventory")
-                {
-                    navBar1.PageTitle = "Inventory";
-                    LoadInventoryForm();
-                }
-                else if (ev.Section == "Stock Adjustments")
-                {
-                    navBar1.PageTitle = "Stock Adjustments";
-                    LoadStockAdjustmentForm();
-                }
-                else if (ev.Section == "Order List")
-                {
-                    navBar1.PageTitle = "Order List";
-                    LoadOrderListForm();
-                }
-                else if (ev.Section == "Supplier Order")
-                {
-                    navBar1.PageTitle = "Supplier Order";
-                    LoadSupplierOrderListForm();
-                }
-                else if (ev.Section == "Customer Order")
-                {
-                    navBar1.PageTitle = "Customer Order";
-                    LoadCustomerOrderForm();
-                }
-                else if (ev.Section == "Customer List")
-                {
-                    navBar1.PageTitle = "Customer List";
-                    LoadCustomerListForm();
-                }
-                else
-                {
-                    navBar1.PageTitle = ev.Section;
-                    pnlContent.Controls.Clear();
+                    case "Dashboard":
+                        navBar1.PageTitle = "Dashboard";
+                        pnlContent.Controls.Clear();
+                        break;
+
+                    case "Product List":
+                        navBar1.PageTitle = "Product List";
+                        LoadProductListForm();
+                        break;
+
+                    case "Product Categories":
+                        navBar1.PageTitle = "Product Categories";
+                        LoadProductCategoryForm();
+                        break;
+
+                    case "Inventory":
+                        navBar1.PageTitle = "Inventory";
+                        LoadInventoryForm();
+                        break;
+
+                    case "Stock Adjustments":
+                        navBar1.PageTitle = "Stock Adjustments";
+                        LoadStockAdjustmentForm();
+                        break;
+
+                    case "Order List":
+                        navBar1.PageTitle = "Order List";
+                        LoadOrderListForm();
+                        break;
+
+                    case "Supplier Order":
+                        navBar1.PageTitle = "Supplier Order";
+                        LoadSupplierOrderListForm();
+                        break;
+
+                    case "Customer Order":
+                        navBar1.PageTitle = "Customer Order";
+                        LoadCustomerOrderForm();
+                        break;
+
+                    case "Customer List":
+                        navBar1.PageTitle = "Customer List";
+                        LoadCustomerListForm();
+                        break;
+
+                    case "Supplier List":
+                        navBar1.PageTitle = "Supplier List";
+                        LoadSupplierListForm(); // WORKS 100%
+                        break;
+
+                    default:
+                        navBar1.PageTitle = section;
+                        break;
                 }
             };
         }
@@ -208,13 +224,32 @@ namespace IT13
             customerListForm.Show();
         }
 
+        private void LoadSupplierListForm()
+        {
+            pnlContent.Controls.Clear();
+            supplierListForm = new SupplierList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(supplierListForm);
+            supplierListForm.Show();
+        }
+
         #endregion
 
-        // PUBLIC METHOD FOR ADD/EDIT/VIEW TO CALL
+        // PUBLIC METHODS — used by Add/Edit/View forms
         public void NavigateToCustomerList()
         {
             navBar1.PageTitle = "Customer List";
             LoadCustomerListForm();
+        }
+
+        public void NavigateToSupplierList()
+        {
+            navBar1.PageTitle = "Supplier List";
+            LoadSupplierListForm();
         }
     }
 }

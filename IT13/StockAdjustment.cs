@@ -1,27 +1,30 @@
-﻿using System;
+﻿// ---------------------------------------------------------------------
+// StockAdjustment.cs - FINAL (Matches CustomerList + Header Select All)
+// ---------------------------------------------------------------------
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms; // REQUIRED FOR GUNA2
+using Guna.UI2.WinForms;
 
 namespace IT13
 {
     public partial class StockAdjustment : Form
     {
-        private readonly Image _editIcon;
-        private readonly Image _viewIcon;
+        private readonly Image _editIcon, _viewIcon;
+        private bool? _headerCheckState = false; // true = all, false = none, null = mixed
 
         public StockAdjustment()
         {
             InitializeComponent();
 
-            // BIGGER ICONS
+            // === BIGGER ICONS ===
             _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
 
             SetupFilterComboBox();
             SetupExportComboBox();
 
-            // === GUNA2DATAGRIDVIEW SETTINGS ===
+            // === GRID SETTINGS ===
             datagridviewadjustment.ReadOnly = true;
             datagridviewadjustment.AllowUserToAddRows = false;
             datagridviewadjustment.AllowUserToDeleteRows = false;
@@ -34,33 +37,38 @@ namespace IT13
             datagridviewadjustment.EnableHeadersVisualStyles = false;
             datagridviewadjustment.ColumnHeadersDefaultCellStyle.SelectionBackColor =
                 datagridviewadjustment.ColumnHeadersDefaultCellStyle.BackColor;
-
             datagridviewadjustment.DefaultCellStyle.SelectionBackColor =
                 datagridviewadjustment.DefaultCellStyle.BackColor;
             datagridviewadjustment.DefaultCellStyle.SelectionForeColor =
                 datagridviewadjustment.DefaultCellStyle.ForeColor;
 
-            // BIGGER FONT + TALL ROWS
             datagridviewadjustment.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
             datagridviewadjustment.RowTemplate.Height = 45;
             datagridviewadjustment.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-            // AUTO-FILL COLUMNS
+            // === COLUMN LAYOUT ===
             datagridviewadjustment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            datagridviewadjustment.Columns["colID"].FillWeight = 15;
+
+            // Fix ID column width
+            datagridviewadjustment.Columns["colID"].MinimumWidth = 160;
+            datagridviewadjustment.Columns["colID"].Width = 160;
+            datagridviewadjustment.Columns["colID"].FillWeight = 10;
+
             datagridviewadjustment.Columns["colDate"].FillWeight = 12;
-            datagridviewadjustment.Columns["colProductName"].FillWeight = 28;
+            datagridviewadjustment.Columns["colProductName"].FillWeight = 30;
             datagridviewadjustment.Columns["colAdjustmentType"].FillWeight = 12;
             datagridviewadjustment.Columns["colPhysicalCount"].FillWeight = 10;
             datagridviewadjustment.Columns["colRequestedBy"].FillWeight = 18;
             datagridviewadjustment.Columns["colStatus"].FillWeight = 12;
-            datagridviewadjustment.Columns["colActions"].FillWeight = 13;
+            datagridviewadjustment.Columns["colActions"].FillWeight = 14;
 
             datagridviewadjustment.Columns["colProductName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             LoadSampleData();
+            UpdateHeaderCheckState();
         }
 
+        #region ComboBox Setup
         private void SetupFilterComboBox()
         {
             Filter.Items.Clear();
@@ -72,9 +80,7 @@ namespace IT13
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Black;
             Filter.SelectedIndexChanged += (s, e) =>
-            {
                 Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
-            };
         }
 
         private void SetupExportComboBox()
@@ -87,27 +93,85 @@ namespace IT13
             Export.SelectedIndex = 0;
             Export.ForeColor = Color.Black;
             Export.SelectedIndexChanged += (s, e) =>
-            {
                 Export.ForeColor = Export.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
-            };
+        }
+        #endregion
+
+        #region Sample Data
+        private void LoadSampleData()
+        {
+            AddRow("ADJ001", "2025-04-10", "CCTV Camera Pro", "Increase", "50", "John Doe", "Pending");
+            AddRow("ADJ002", "2025-04-08", "Wireless Speaker", "Decrease", "20", "Jane Smith", "Approved");
+            AddRow("ADJ003", "2025-04-05", "Dual Monitor", "Increase", "15", "Mike Tan", "Rejected");
         }
 
-        private void txtboxsearch_TextChanged(object sender, EventArgs e)
+        private void AddRow(string id, string date, string productName, string adjType,
+                           string physicalCount, string requestedBy, string status)
         {
-            string filter = txtboxsearch.Text.Trim().ToLower();
+            int idx = datagridviewadjustment.Rows.Add(false, date, productName, adjType, physicalCount, requestedBy, status, null);
+            var row = datagridviewadjustment.Rows[idx];
+            row.Cells[0].Tag = id;
+            row.Height = 45;
+        }
+        #endregion
+
+        #region Header Checkbox State
+        private void UpdateHeaderCheckState()
+        {
+            int checkedCount = 0;
+            int visibleCount = 0;
+
             foreach (DataGridViewRow row in datagridviewadjustment.Rows)
             {
-                bool match = string.IsNullOrEmpty(filter) ||
-                    row.Cells["colProductName"].Value?.ToString().ToLower().Contains(filter) == true ||
-                    row.Cells["colID"].Tag?.ToString().ToLower().Contains(filter) == true;
-                row.Visible = match;
+                if (row.Visible && !row.IsNewRow)
+                {
+                    visibleCount++;
+                    if ((bool)row.Cells[0].Value) checkedCount++;
+                }
             }
-        }
 
+            _headerCheckState = visibleCount == 0 ? false :
+                                checkedCount == 0 ? false :
+                                checkedCount == visibleCount ? true : (bool?)null;
+
+            datagridviewadjustment.InvalidateCell(0, -1);
+        }
+        #endregion
+
+        #region Cell Painting (Header + Row + Icons)
         private void datagridviewadjustment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
+            // === HEADER CHECKBOX ===
+            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+
+                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
+                ControlPaint.DrawCheckBox(e.Graphics, checkRect, ButtonState.Normal);
+
+                if (_headerCheckState == true)
+                    ControlPaint.DrawCheckBox(e.Graphics, checkRect, ButtonState.Checked);
+                else if (_headerCheckState == null)
+                    e.Graphics.FillRectangle(Brushes.Gray, checkRect.X + 2, checkRect.Y + 2, 12, 12);
+
+                // Draw "ID" text
+                string headerText = "ID";
+                var headerFont = datagridviewadjustment.ColumnHeadersDefaultCellStyle.Font;
+                var textSize = e.Graphics.MeasureString(headerText, headerFont);
+                var textRect = new Rectangle(
+                    e.CellBounds.X + 30,
+                    e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
+                    e.CellBounds.Width - 35,
+                    e.CellBounds.Height);
+                e.Graphics.DrawString(headerText, headerFont, Brushes.White, textRect);
+
+                e.Handled = true;
+                return;
+            }
+
             if (e.RowIndex < 0) return;
 
+            // === ROW: Checkbox + ID ===
             if (e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -131,6 +195,7 @@ namespace IT13
                 return;
             }
 
+            // === ACTIONS: Edit + View ===
             if (e.ColumnIndex == datagridviewadjustment.Columns["colActions"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -142,26 +207,55 @@ namespace IT13
 
                 e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
                 e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
+
                 e.Handled = true;
                 return;
             }
 
             e.Handled = false;
         }
+        #endregion
 
+        #region Cell Click (Header + Row + Icons)
         private void datagridviewadjustment_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < -1) return;
 
-            if (e.ColumnIndex == 0)
+            // === HEADER CHECKBOX CLICK ===
+            if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
-                var row = datagridviewadjustment.Rows[e.RowIndex];
-                bool current = Convert.ToBoolean(row.Cells[0].Value ?? false);
-                row.Cells[0].Value = !current;
-                datagridviewadjustment.InvalidateCell(0, e.RowIndex);
+                var cellRect = datagridviewadjustment.GetCellDisplayRectangle(0, -1, false);
+                var mousePos = datagridviewadjustment.PointToClient(Control.MousePosition);
+                int clickX = mousePos.X - cellRect.X;
+
+                if (clickX >= 8 && clickX <= 24)
+                {
+                    bool newState = !_headerCheckState.GetValueOrDefault(true);
+                    foreach (DataGridViewRow row in datagridviewadjustment.Rows)
+                    {
+                        if (row.Visible && !row.IsNewRow)
+                            row.Cells[0].Value = newState;
+                    }
+                    UpdateHeaderCheckState();
+                    datagridviewadjustment.InvalidateColumn(0);
+                }
                 return;
             }
 
+            if (e.RowIndex < 0) return;
+
+            // === ROW CHECKBOX TOGGLE ===
+            if (e.ColumnIndex == 0)
+            {
+                var row = datagridviewadjustment.Rows[e.RowIndex];
+                bool cur = (bool)(row.Cells[0].Value ?? false);
+                row.Cells[0].Value = !cur;
+                datagridviewadjustment.InvalidateCell(0, e.RowIndex);
+                UpdateHeaderCheckState();
+                return;
+            }
+
+            // === ACTION ICONS ===
             if (e.ColumnIndex == datagridviewadjustment.Columns["colActions"].Index)
             {
                 var cellRect = datagridviewadjustment.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
@@ -173,15 +267,17 @@ namespace IT13
                 int totalWidth = (iconSize * 2) + gap;
                 int iconX = (cellRect.Width - totalWidth) / 2;
 
-                string adjustmentId = datagridviewadjustment.Rows[e.RowIndex].Cells[0].Tag.ToString();
+                string adjId = datagridviewadjustment.Rows[e.RowIndex].Cells[0].Tag.ToString();
 
                 if (clickX >= iconX && clickX < iconX + iconSize)
-                    OpenEditAdjustment(adjustmentId);
+                    OpenEditAdjustment(adjId);
                 else if (clickX >= iconX + iconSize + gap && clickX < iconX + totalWidth)
-                    OpenViewAdjustment(adjustmentId);
+                    OpenViewAdjustment(adjId);
             }
         }
+        #endregion
 
+        #region Navigation
         private void OpenEditAdjustment(string adjustmentId)
         {
             var parent = this.ParentForm as Form1;
@@ -229,20 +325,27 @@ namespace IT13
             parent.pnlContent.Controls.Add(addForm);
             addForm.Show();
         }
+        #endregion
 
-        private void LoadSampleData()
+        #region Search (Updates Header State)
+        private void txtboxsearch_TextChanged(object sender, EventArgs e)
         {
-            AddRow("ADJ001", "2025-04-10", "CCTV Camera Pro", "Increase", "50", "John Doe", "Pending");
-            AddRow("ADJ002", "2025-04-08", "Wireless Speaker", "Decrease", "20", "Jane Smith", "Approved");
-            AddRow("ADJ003", "2025-04-05", "Dual Monitor", "Increase", "15", "Mike Tan", "Rejected");
-        }
+            string filter = txtboxsearch.Text.Trim().ToLower();
+            foreach (DataGridViewRow row in datagridviewadjustment.Rows)
+            {
+                if (row.IsNewRow) continue;
 
-        private void AddRow(string id, string date, string productName, string adjType, string physicalCount, string requestedBy, string status)
-        {
-            int idx = datagridviewadjustment.Rows.Add(false, date, productName, adjType, physicalCount, requestedBy, status, null);
-            var row = datagridviewadjustment.Rows[idx];
-            row.Cells[0].Tag = id;
-            row.Height = 45;
+                string id = row.Cells[0].Tag?.ToString().ToLower() ?? "";
+                string product = row.Cells["colProductName"].Value?.ToString().ToLower() ?? "";
+
+                bool match = string.IsNullOrEmpty(filter) ||
+                             id.Contains(filter) ||
+                             product.Contains(filter);
+
+                row.Visible = match;
+            }
+            UpdateHeaderCheckState(); // Essential!
         }
+        #endregion
     }
 }

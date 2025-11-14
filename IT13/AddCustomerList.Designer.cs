@@ -104,7 +104,7 @@ namespace IT13
             txtEmail.Location = new Point(837, y + 25); txtEmail.Size = new Size(500, 36); txtEmail.BorderRadius = 5;
 
             y += 80;
-            lblCompany.Text = "Company Name *"; lblCompany.Location = new Point(77, y); lblCompany.AutoSize = true;
+            lblCompany.Text = "Company Name"; lblCompany.Location = new Point(77, y); lblCompany.AutoSize = true;
             txtCompany.Location = new Point(77, y + 25); txtCompany.Size = new Size(600, 36); txtCompany.BorderRadius = 5;
 
             lblPhone.Text = "Phone number *"; lblPhone.Location = new Point(697, y); lblPhone.AutoSize = true;
