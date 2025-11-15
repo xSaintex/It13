@@ -21,7 +21,6 @@
         }
 
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -81,7 +80,7 @@
             btnlessthan = new Guna.UI2.WinForms.Guna2Button();
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             datagridviewinventory = new Guna.UI2.WinForms.Guna2DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewCheckBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
@@ -98,9 +97,9 @@
             guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)datagridviewinventory).BeginInit();
             SuspendLayout();
-            // 
+            //
             // mainpanel
-            // 
+            //
             mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(guna2Panel1);
             mainpanel.Controls.Add(guna2ShadowPanel1);
@@ -116,9 +115,9 @@
             mainpanel.ShadowColor = Color.Black;
             mainpanel.Size = new Size(1602, 878);
             mainpanel.TabIndex = 2;
-            // 
+            //
             // guna2Panel1
-            // 
+            //
             guna2Panel1.Controls.Add(labelshow);
             guna2Panel1.Controls.Add(btngreaterthan);
             guna2Panel1.Controls.Add(btn9);
@@ -137,9 +136,9 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges58;
             guna2Panel1.Size = new Size(1458, 36);
             guna2Panel1.TabIndex = 7;
-            // 
+            //
             // labelshow
-            // 
+            //
             labelshow.AutoSize = true;
             labelshow.Font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelshow.Location = new Point(16, 8);
@@ -147,9 +146,9 @@
             labelshow.Size = new Size(165, 18);
             labelshow.TabIndex = 8;
             labelshow.Text = "Showing 1-10 of 100";
-            // 
+            //
             // btngreaterthan
-            // 
+            //
             btngreaterthan.CustomizableEdges = customizableEdges35;
             btngreaterthan.DisabledState.BorderColor = Color.DarkGray;
             btngreaterthan.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -164,9 +163,9 @@
             btngreaterthan.Size = new Size(30, 28);
             btngreaterthan.TabIndex = 3;
             btngreaterthan.Text = ">";
-            // 
+            //
             // btn9
-            // 
+            //
             btn9.CustomizableEdges = customizableEdges37;
             btn9.DisabledState.BorderColor = Color.DarkGray;
             btn9.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -181,9 +180,9 @@
             btn9.Size = new Size(30, 28);
             btn9.TabIndex = 7;
             btn9.Text = "9";
-            // 
+            //
             // btn8
-            // 
+            //
             btn8.CustomizableEdges = customizableEdges39;
             btn8.DisabledState.BorderColor = Color.DarkGray;
             btn8.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -198,9 +197,9 @@
             btn8.Size = new Size(30, 28);
             btn8.TabIndex = 7;
             btn8.Text = "8";
-            // 
+            //
             // btn7
-            // 
+            //
             btn7.CustomizableEdges = customizableEdges41;
             btn7.DisabledState.BorderColor = Color.DarkGray;
             btn7.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -215,9 +214,9 @@
             btn7.Size = new Size(30, 28);
             btn7.TabIndex = 7;
             btn7.Text = "7";
-            // 
+            //
             // btn6
-            // 
+            //
             btn6.CustomizableEdges = customizableEdges43;
             btn6.DisabledState.BorderColor = Color.DarkGray;
             btn6.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -232,9 +231,9 @@
             btn6.Size = new Size(30, 28);
             btn6.TabIndex = 7;
             btn6.Text = "6";
-            // 
+            //
             // btn5
-            // 
+            //
             btn5.CustomizableEdges = customizableEdges45;
             btn5.DisabledState.BorderColor = Color.DarkGray;
             btn5.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -249,9 +248,9 @@
             btn5.Size = new Size(30, 28);
             btn5.TabIndex = 6;
             btn5.Text = "5";
-            // 
+            //
             // btn4
-            // 
+            //
             btn4.CustomizableEdges = customizableEdges47;
             btn4.DisabledState.BorderColor = Color.DarkGray;
             btn4.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -266,9 +265,9 @@
             btn4.Size = new Size(30, 28);
             btn4.TabIndex = 5;
             btn4.Text = "4";
-            // 
+            //
             // btn3
-            // 
+            //
             btn3.CustomizableEdges = customizableEdges49;
             btn3.DisabledState.BorderColor = Color.DarkGray;
             btn3.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -283,9 +282,9 @@
             btn3.Size = new Size(30, 28);
             btn3.TabIndex = 4;
             btn3.Text = "3";
-            // 
+            //
             // btn2
-            // 
+            //
             btn2.CustomizableEdges = customizableEdges51;
             btn2.DisabledState.BorderColor = Color.DarkGray;
             btn2.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -300,9 +299,9 @@
             btn2.Size = new Size(30, 28);
             btn2.TabIndex = 3;
             btn2.Text = "2";
-            // 
+            //
             // btn1
-            // 
+            //
             btn1.CustomizableEdges = customizableEdges53;
             btn1.DisabledState.BorderColor = Color.DarkGray;
             btn1.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -317,9 +316,9 @@
             btn1.Size = new Size(30, 28);
             btn1.TabIndex = 2;
             btn1.Text = "1";
-            // 
+            //
             // btnlessthan
-            // 
+            //
             btnlessthan.CustomizableEdges = customizableEdges55;
             btnlessthan.DisabledState.BorderColor = Color.DarkGray;
             btnlessthan.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -334,9 +333,9 @@
             btnlessthan.Size = new Size(30, 28);
             btnlessthan.TabIndex = 1;
             btnlessthan.Text = "<";
-            // 
+            //
             // guna2ShadowPanel1
-            // 
+            //
             guna2ShadowPanel1.BackColor = Color.Transparent;
             guna2ShadowPanel1.Controls.Add(datagridviewinventory);
             guna2ShadowPanel1.FillColor = Color.White;
@@ -346,9 +345,9 @@
             guna2ShadowPanel1.ShadowColor = Color.Black;
             guna2ShadowPanel1.Size = new Size(1458, 716);
             guna2ShadowPanel1.TabIndex = 5;
-            // 
+            //
             // datagridviewinventory
-            // 
+            //
             datagridviewinventory.AllowUserToAddRows = false;
             datagridviewinventory.AllowUserToResizeColumns = false;
             datagridviewinventory.AllowUserToResizeRows = false;
@@ -402,51 +401,51 @@
             datagridviewinventory.ThemeStyle.RowsStyle.Height = 29;
             datagridviewinventory.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             datagridviewinventory.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            // 
+            //
             // Column1
-            // 
+            //
             Column1.HeaderText = "ID";
             Column1.MinimumWidth = 6;
             Column1.Name = "Column1";
-            // 
+            //
             // Column2
-            // 
+            //
             Column2.HeaderText = "Company name";
             Column2.MinimumWidth = 6;
             Column2.Name = "Column2";
-            // 
+            //
             // Column3
-            // 
+            //
             Column3.HeaderText = "QTY";
             Column3.MinimumWidth = 6;
             Column3.Name = "Column3";
-            // 
+            //
             // Column4
-            // 
+            //
             Column4.HeaderText = "Total Cost";
             Column4.MinimumWidth = 6;
             Column4.Name = "Column4";
-            // 
+            //
             // Column5
-            // 
+            //
             Column5.HeaderText = "Status";
             Column5.MinimumWidth = 6;
             Column5.Name = "Column5";
-            // 
+            //
             // Column6
-            // 
+            //
             Column6.HeaderText = "Delivery Date";
             Column6.MinimumWidth = 6;
             Column6.Name = "Column6";
-            // 
+            //
             // Column7
-            // 
+            //
             Column7.HeaderText = "Actions";
             Column7.MinimumWidth = 6;
             Column7.Name = "Column7";
-            // 
+            //
             // ComBoxExporData
-            // 
+            //
             ComBoxExporData.BackColor = Color.Transparent;
             ComBoxExporData.BorderRadius = 5;
             ComBoxExporData.CustomizableEdges = customizableEdges59;
@@ -455,18 +454,17 @@
             ComBoxExporData.FocusedColor = Color.FromArgb(94, 148, 255);
             ComBoxExporData.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             ComBoxExporData.Font = new Font("Segoe UI", 10F);
-            ComBoxExporData.ForeColor = Color.Black;
+            ComBoxExporData.ForeColor = Color.Silver;
             ComBoxExporData.ItemHeight = 30;
-            ComBoxExporData.Items.AddRange(new object[] { "Export Data" });
             ComBoxExporData.Location = new Point(1371, 45);
             ComBoxExporData.Name = "ComBoxExporData";
             ComBoxExporData.ShadowDecoration.CustomizableEdges = customizableEdges60;
             ComBoxExporData.Size = new Size(162, 36);
             ComBoxExporData.TabIndex = 4;
             ComBoxExporData.SelectedIndexChanged += ComBoxExporData_SelectedIndexChanged;
-            // 
+            //
             // btnaddorder
-            // 
+            //
             btnaddorder.BorderRadius = 5;
             btnaddorder.CustomizableEdges = customizableEdges61;
             btnaddorder.DisabledState.BorderColor = Color.DarkGray;
@@ -481,10 +479,10 @@
             btnaddorder.Size = new Size(113, 36);
             btnaddorder.TabIndex = 3;
             btnaddorder.Text = "+Add Order";
-            btnaddorder.Click += btnaddstock_Click;
-            // 
+            btnaddorder.Click += btnaddorder_Click;
+            //
             // ComBoxFilters
-            // 
+            //
             ComBoxFilters.BackColor = Color.Transparent;
             ComBoxFilters.BorderRadius = 5;
             ComBoxFilters.CustomizableEdges = customizableEdges63;
@@ -493,18 +491,17 @@
             ComBoxFilters.FocusedColor = Color.FromArgb(94, 148, 255);
             ComBoxFilters.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             ComBoxFilters.Font = new Font("Tahoma", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ComBoxFilters.ForeColor = Color.Black;
+            ComBoxFilters.ForeColor = Color.Silver;
             ComBoxFilters.ItemHeight = 30;
-            ComBoxFilters.Items.AddRange(new object[] { "Filter" });
             ComBoxFilters.Location = new Point(1118, 45);
             ComBoxFilters.Name = "ComBoxFilters";
             ComBoxFilters.ShadowDecoration.CustomizableEdges = customizableEdges64;
             ComBoxFilters.Size = new Size(128, 36);
             ComBoxFilters.TabIndex = 2;
             ComBoxFilters.SelectedIndexChanged += ComBoxFilters_SelectedIndexChanged;
-            // 
+            //
             // btnsearch
-            // 
+            //
             btnsearch.BorderRadius = 5;
             btnsearch.CustomizableEdges = customizableEdges65;
             btnsearch.DisabledState.BorderColor = Color.DarkGray;
@@ -519,33 +516,39 @@
             btnsearch.Size = new Size(103, 40);
             btnsearch.TabIndex = 1;
             btnsearch.Text = "Search";
-            // 
+            btnsearch.Click += btnsearch_Click;
+            //
             // txtboxsearch
-            // 
+            //
             txtboxsearch.BackColor = Color.White;
             txtboxsearch.BorderColor = Color.LightGray;
             txtboxsearch.BorderRadius = 5;
             txtboxsearch.CustomizableEdges = customizableEdges67;
-            txtboxsearch.DefaultText = "Search Product";
             txtboxsearch.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtboxsearch.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtboxsearch.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtboxsearch.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtboxsearch.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtboxsearch.Font = new Font("Segoe UI", 9F);
+            txtboxsearch.ForeColor = Color.Gray;
             txtboxsearch.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             txtboxsearch.Location = new Point(82, 41);
             txtboxsearch.Margin = new Padding(3, 4, 3, 4);
             txtboxsearch.Name = "txtboxsearch";
-            txtboxsearch.PlaceholderText = "";
+            txtboxsearch.PlaceholderForeColor = Color.Gray;
+            txtboxsearch.PlaceholderText = "Search Product";
             txtboxsearch.SelectedText = "";
             txtboxsearch.ShadowDecoration.CustomizableEdges = customizableEdges68;
             txtboxsearch.Size = new Size(437, 40);
             txtboxsearch.TabIndex = 0;
+            txtboxsearch.Text = "Search Product";
+            txtboxsearch.Click += txtboxsearch_Click;
+            txtboxsearch.Enter += txtboxsearch_Enter;
+            txtboxsearch.Leave += txtboxsearch_Leave;
             txtboxsearch.TextChanged += txtboxsearch_TextChanged;
-            // 
+            //
             // CustOrder
-            // 
+            //
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1055);
@@ -559,7 +562,6 @@
             ((System.ComponentModel.ISupportInitialize)datagridviewinventory).EndInit();
             ResumeLayout(false);
         }
-
         #endregion
 
         private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
@@ -583,7 +585,7 @@
         private Guna.UI2.WinForms.Guna2ComboBox ComBoxFilters;
         private Guna.UI2.WinForms.Guna2Button btnsearch;
         private Guna.UI2.WinForms.Guna2TextBox txtboxsearch;
-        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewCheckBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
