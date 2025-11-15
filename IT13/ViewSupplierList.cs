@@ -14,23 +14,27 @@ namespace IT13
             _supplierId = supplierId;
             InitializeComponent();
 
-            btnOther.Click += (s, e) => ShowPanel(pnlOther, pnlAddress);
-            btnAddress.Click += (s, e) => ShowPanel(pnlAddress, pnlOther);
+            btnOther.Click += (s, e) => ShowPanel(pnlOther, pnlAddress, pnlRemarks);
+            btnAddress.Click += (s, e) => ShowPanel(pnlAddress, pnlOther, pnlRemarks);
+            btnRemarks.Click += (s, e) => ShowPanel(pnlRemarks, pnlOther, pnlAddress);
             btnBack.Click += (s, e) => CloseForm();
 
-            ShowPanel(pnlOther, pnlAddress); // Default tab
+            ShowPanel(pnlOther, pnlAddress, pnlRemarks); // default tab
             LoadSupplierData();
-            MakeFieldsReadOnly();
         }
 
-        private void ShowPanel(Guna2ShadowPanel show, Guna2ShadowPanel hide)
+        private void ShowPanel(Guna2ShadowPanel show, Guna2ShadowPanel hide1, Guna2ShadowPanel hide2)
         {
+            hide1.Visible = hide2.Visible = false;
             show.Visible = true;
-            hide.Visible = false;
-            btnOther.FillColor = show == pnlOther ? Color.FromArgb(0, 123, 255) : Color.WhiteSmoke;
-            btnAddress.FillColor = show == pnlAddress ? Color.FromArgb(0, 123, 255) : Color.WhiteSmoke;
-            btnOther.ForeColor = show == pnlOther ? Color.White : Color.Black;
-            btnAddress.ForeColor = show == pnlAddress ? Color.White : Color.Black;
+
+            btnOther.FillColor = Color.WhiteSmoke; btnOther.ForeColor = Color.Black;
+            btnAddress.FillColor = Color.WhiteSmoke; btnAddress.ForeColor = Color.Black;
+            btnRemarks.FillColor = Color.WhiteSmoke; btnRemarks.ForeColor = Color.Black;
+
+            if (show == pnlOther) { btnOther.FillColor = Color.FromArgb(0, 123, 255); btnOther.ForeColor = Color.White; }
+            if (show == pnlAddress) { btnAddress.FillColor = Color.FromArgb(0, 123, 255); btnAddress.ForeColor = Color.White; }
+            if (show == pnlRemarks) { btnRemarks.FillColor = Color.FromArgb(0, 123, 255); btnRemarks.ForeColor = Color.White; }
         }
 
         private void LoadSupplierData()
@@ -58,21 +62,12 @@ namespace IT13
             txtSZip.Text = "1550";
             txtSLine1.Text = "Shaw Boulevard";
             txtSLine2.Text = "Greenfield District";
-        }
 
-        private void MakeFieldsReadOnly()
-        {
-            txtTitle.ReadOnly = txtFName.ReadOnly = txtLName.ReadOnly = true;
-            txtEmail.ReadOnly = txtCompany.ReadOnly = txtPhone.ReadOnly = true;
-            txtContactPerson.ReadOnly = txtContactNum.ReadOnly = true;
-            txtBCity.ReadOnly = txtBZip.ReadOnly = txtBLine1.ReadOnly = txtBLine2.ReadOnly = true;
-            txtSCity.ReadOnly = txtSZip.ReadOnly = txtSLine1.ReadOnly = txtSLine2.ReadOnly = true;
-
-            cmbPayment.Enabled = false;
-            cmbStatus.Enabled = false;
-            cmbBCountry.Enabled = false;
-            cmbSCountry.Enabled = false;
-            lnkCopy.Enabled = false;
+            txtRemarks.Text =
+                "Reliable supplier for office supplies and equipment.\r\n" +
+                "• Offers 5% discount for bulk orders over ₱50,000\r\n" +
+                "• Contact Robert Tan for quotations and delivery schedule\r\n" +
+                "• Preferred payment: Bank transfer within Net 30";
         }
 
         private void CloseForm()

@@ -13,18 +13,26 @@ namespace IT13
             SetupPhoneFields();
             SetupNumberOnlyFields();
 
-            btnOther.Click += (s, e) => ShowPanel(pnlOther, pnlAddress);
-            btnAddress.Click += (s, e) => ShowPanel(pnlAddress, pnlOther);
+            // Tab button clicks
+            btnOther.Click += (s, e) => ShowPanel(pnlOther, pnlAddress, pnlRemarks);
+            btnAddress.Click += (s, e) => ShowPanel(pnlAddress, pnlOther, pnlRemarks);
+            btnRemarks.Click += (s, e) => ShowPanel(pnlRemarks, pnlOther, pnlAddress);
+
             lnkCopy.LinkClicked += LnkCopy_LinkClicked;
             btnCancel.Click += (s, e) => CloseForm();
             btnSave.Click += (s, e) => SaveSupplier();
 
+            // Initial state: Other Details open
             pnlOther.Visible = true;
             pnlAddress.Visible = false;
+            pnlRemarks.Visible = false;
+
             btnOther.FillColor = Color.FromArgb(0, 123, 255);
             btnOther.ForeColor = Color.White;
             btnAddress.FillColor = Color.WhiteSmoke;
             btnAddress.ForeColor = Color.Black;
+            btnRemarks.FillColor = Color.WhiteSmoke;
+            btnRemarks.ForeColor = Color.Black;
         }
 
         private void SetupPhoneFields()
@@ -47,14 +55,21 @@ namespace IT13
                 e.Handled = true;
         }
 
-        private void ShowPanel(Guna2ShadowPanel show, Guna2ShadowPanel hide)
+        private void ShowPanel(Guna2ShadowPanel show, Guna2ShadowPanel hide1, Guna2ShadowPanel hide2)
         {
+            hide1.Visible = false;
+            hide2.Visible = false;
             show.Visible = true;
-            hide.Visible = false;
-            btnOther.FillColor = show == pnlOther ? Color.FromArgb(0, 123, 255) : Color.WhiteSmoke;
-            btnAddress.FillColor = show == pnlAddress ? Color.FromArgb(0, 123, 255) : Color.WhiteSmoke;
-            btnOther.ForeColor = show == pnlOther ? Color.White : Color.Black;
-            btnAddress.ForeColor = show == pnlAddress ? Color.White : Color.Black;
+
+            // Reset all buttons
+            btnOther.FillColor = Color.WhiteSmoke; btnOther.ForeColor = Color.Black;
+            btnAddress.FillColor = Color.WhiteSmoke; btnAddress.ForeColor = Color.Black;
+            btnRemarks.FillColor = Color.WhiteSmoke; btnRemarks.ForeColor = Color.Black;
+
+            // Highlight active
+            if (show == pnlOther) { btnOther.FillColor = Color.FromArgb(0, 123, 255); btnOther.ForeColor = Color.White; }
+            if (show == pnlAddress) { btnAddress.FillColor = Color.FromArgb(0, 123, 255); btnAddress.ForeColor = Color.White; }
+            if (show == pnlRemarks) { btnRemarks.FillColor = Color.FromArgb(0, 123, 255); btnRemarks.ForeColor = Color.White; }
         }
 
         private void LnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -74,7 +89,9 @@ namespace IT13
 
         private void SaveSupplier()
         {
-            MessageBox.Show("Supplier saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string remarks = string.IsNullOrWhiteSpace(txtRemarks.Text) ? "None" : txtRemarks.Text.Trim();
+            MessageBox.Show($"Supplier saved successfully!\n\nRemarks:\n{remarks}",
+                          "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             CloseForm();
         }
     }
