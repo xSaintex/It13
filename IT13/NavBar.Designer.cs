@@ -1,127 +1,101 @@
-﻿namespace IT13
+﻿using Guna.UI2.WinForms;
+
+namespace IT13
 {
     partial class NavBar
     {
         private System.ComponentModel.IContainer components = null;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-                components.Dispose();
-            base.Dispose(disposing);
-        }
-
-        #region Component Designer generated code
-
         private void InitializeComponent()
         {
-            pnlContainer = new Panel();
-            lblTitle = new Label();
-            pnlUser = new Panel();
-            picArrow = new PictureBox();
-            lblUserName = new Label();
-            picUser = new PictureBox();
-            pnlContainer.SuspendLayout();
-            pnlUser.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picArrow).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picUser).BeginInit();
-            SuspendLayout();
-            // 
-            // pnlContainer
-            // 
-            pnlContainer.BackColor = Color.White;
-            pnlContainer.Controls.Add(lblTitle);
-            pnlContainer.Controls.Add(pnlUser);
-            pnlContainer.Dock = DockStyle.Fill;
-            pnlContainer.Location = new Point(0, 0);
-            pnlContainer.Name = "pnlContainer";
-            pnlContainer.Padding = new Padding(20, 10, 30, 10);
-            pnlContainer.Size = new Size(1871, 60);
-            pnlContainer.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(0, 51, 102);
-            lblTitle.Location = new Point(20, 15);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(120, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "Dashboard";
-            // 
-            // pnlUser
-            // 
-            pnlUser.AutoSize = true;
-            pnlUser.Controls.Add(picArrow);
-            pnlUser.Controls.Add(lblUserName);
-            pnlUser.Controls.Add(picUser);
-            pnlUser.Dock = DockStyle.Right;
-            pnlUser.Location = new Point(1782, 10);
-            pnlUser.Name = "pnlUser";
-            pnlUser.Padding = new Padding(0, 8, 0, 8);
-            pnlUser.Size = new Size(59, 40);
-            pnlUser.TabIndex = 1;
-            // 
-            // picArrow
-            // 
-            picArrow.Cursor = Cursors.Hand;
-            picArrow.Location = new Point(0, 0);
-            picArrow.Margin = new Padding(0, 18, 0, 0);
-            picArrow.Name = "picArrow";
-            picArrow.Size = new Size(12, 12);
-            picArrow.SizeMode = PictureBoxSizeMode.Zoom;
-            picArrow.TabIndex = 0;
-            picArrow.TabStop = false;
-            picArrow.Click += PicUser_Click;
-            // 
-            // lblUserName
-            // 
-            lblUserName.AutoSize = true;
-            lblUserName.Font = new Font("Segoe UI", 10F);
-            lblUserName.ForeColor = Color.FromArgb(0, 51, 102);
-            lblUserName.Location = new Point(0, 0);
-            lblUserName.Margin = new Padding(10, 12, 5, 0);
-            lblUserName.Name = "lblUserName";
-            lblUserName.Size = new Size(54, 23);
-            lblUserName.TabIndex = 1;
-            lblUserName.Text = "Guest";
-            lblUserName.Click += PicUser_Click;
-            // 
-            // picUser
-            // 
-            picUser.BackColor = Color.FromArgb(0, 89, 179);
-            picUser.Cursor = Cursors.Hand;
-            picUser.Location = new Point(0, 0);
-            picUser.Name = "picUser";
-            picUser.Size = new Size(36, 36);
-            picUser.SizeMode = PictureBoxSizeMode.Zoom;
-            picUser.TabIndex = 2;
-            picUser.TabStop = false;
-            picUser.Click += PicUser_Click;
-            // 
-            // NavBar
-            // 
-            BackColor = Color.White;
-            Controls.Add(pnlContainer);
-            Name = "NavBar";
-            Size = new Size(1871, 60);
-            pnlContainer.ResumeLayout(false);
-            pnlContainer.PerformLayout();
-            pnlUser.ResumeLayout(false);
-            pnlUser.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picArrow).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picUser).EndInit();
-            ResumeLayout(false);
-        }
+            this.components = new System.ComponentModel.Container();
+            this.pnlContainer = new Panel();
+            this.lblTitle = new Label();
+            this.pnlRight = new Panel();
+            this.btnPOS = new Guna2Button();
+            this.lblDate = new Label();
+            this.picAdmin = new PictureBox();
+            this.lblAdmin = new Label();
 
-        #endregion
+            this.pnlContainer.SuspendLayout();
+            this.pnlRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAdmin)).BeginInit();
+            this.SuspendLayout();
+
+            // pnlContainer
+            this.pnlContainer.BackColor = Color.White;
+            this.pnlContainer.Dock = DockStyle.Fill;
+            this.pnlContainer.Padding = new Padding(20, 10, 20, 10);
+            this.pnlContainer.Controls.Add(this.lblTitle);
+            this.pnlContainer.Controls.Add(this.pnlRight);
+
+            // lblTitle
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold);
+            this.lblTitle.ForeColor = Color.FromArgb(30, 30, 60);
+            this.lblTitle.Location = new Point(20, 22);
+            this.lblTitle.Text = "Dashboard";
+
+            // pnlRight — Perfect group with consistent 20px spacing
+            this.pnlRight.Size = new Size(460, 80);
+            this.pnlRight.Dock = DockStyle.Right;
+
+            // btnPOS — First item
+            this.btnPOS.FillColor = Color.FromArgb(0, 102, 204);
+            this.btnPOS.ForeColor = Color.White;
+            this.btnPOS.BorderRadius = 10;
+            this.btnPOS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.btnPOS.Text = "POS";
+            this.btnPOS.Size = new Size(85, 38);
+            this.btnPOS.Location = new Point(20, 21);
+            this.btnPOS.Cursor = Cursors.Hand;
+
+            // lblDate — 20px after POS
+            this.lblDate.AutoSize = true;
+            this.lblDate.Font = new Font("Segoe UI", 10F);
+            this.lblDate.ForeColor = Color.Gray;
+            this.lblDate.Location = new Point(125, 28);   // 85 + 20 = 105 → 125 (with padding)
+            this.lblDate.Text = "November 15, 2025";
+
+            // picAdmin — 20px after date
+            this.picAdmin.Size = new Size(36, 36);
+            this.picAdmin.Location = new Point(305, 22);  // 125 + 140 ≈ 265 → 285 (aligned)
+            this.picAdmin.SizeMode = PictureBoxSizeMode.Zoom;
+            this.picAdmin.Cursor = Cursors.Hand;
+            this.picAdmin.Image = Properties.Resources.pfp_icon;
+
+            // lblAdmin — 20px after icon
+            this.lblAdmin.AutoSize = true;
+            this.lblAdmin.Font = new Font("Segoe UI", 11F);
+            this.lblAdmin.ForeColor = Color.FromArgb(60, 60, 60);
+            this.lblAdmin.Text = "Admin";
+            this.lblAdmin.Location = new Point(345, 28);  // 285 + 36 + 14 = ~335
+            this.lblAdmin.Cursor = Cursors.Hand;
+
+            this.pnlRight.Controls.Add(this.btnPOS);
+            this.pnlRight.Controls.Add(this.lblDate);
+            this.pnlRight.Controls.Add(this.picAdmin);
+            this.pnlRight.Controls.Add(this.lblAdmin);
+
+            // NavBar
+            this.BackColor = Color.White;
+            this.Controls.Add(this.pnlContainer);
+            this.Size = new Size(1600, 80);
+
+            this.pnlContainer.ResumeLayout(false);
+            this.pnlContainer.PerformLayout();
+            this.pnlRight.ResumeLayout(false);
+            this.pnlRight.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAdmin)).EndInit();
+            this.ResumeLayout(false);
+        }
 
         private Panel pnlContainer;
         private Label lblTitle;
-        private Panel pnlUser;
-        private PictureBox picUser;
-        private Label lblUserName;
-        private PictureBox picArrow;
+        private Panel pnlRight;
+        private Guna2Button btnPOS;
+        private Label lblDate;
+        private PictureBox picAdmin;
+        private Label lblAdmin;
     }
 }

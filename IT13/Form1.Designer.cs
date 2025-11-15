@@ -32,12 +32,9 @@
             navBar1.Dock = DockStyle.Top;
             navBar1.Location = new Point(0, 0);
             navBar1.Name = "navBar1";
-            navBar1.NavWidth = 1857;
             navBar1.PageTitle = "Dashboard";
             navBar1.Size = new Size(1857, 80);
             navBar1.TabIndex = 2;
-            navBar1.UserImage = null;
-            navBar1.UserName = "Guest";
             // 
             // pnlContent
             // 

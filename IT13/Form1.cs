@@ -25,13 +25,11 @@ namespace IT13
         {
             // === LAYOUT SETUP ===
             navBar1.Dock = DockStyle.None;
-            navBar1.Width = this.ClientSize.Width - 260;
-            navBar1.Height = 70;
             navBar1.Left = 260;
             navBar1.Top = 0;
-            navBar1.Padding = new Padding(20, 0, 30, 0);
+            navBar1.NavHeight = 80;
             navBar1.PageTitle = "Dashboard";
-            navBar1.UserName = "John Doe";
+            navBar1.UserName = "Admin";
 
             sidebar1.Dock = DockStyle.Left;
             sidebar1.Width = 260;
@@ -43,6 +41,15 @@ namespace IT13
             pnlContent.Top = 70;
             pnlContent.Width = this.ClientSize.Width - 260;
             pnlContent.Height = this.ClientSize.Height - 70;
+
+            this.Resize += (s, ev) =>
+            {
+                navBar1.ApplySize();                                 // Auto-resize navbar width safely
+                pnlContent.Left = 260;
+                pnlContent.Top = navBar1.Height;
+                pnlContent.Width = this.ClientSize.Width - 260;
+                pnlContent.Height = this.ClientSize.Height - navBar1.Height;
+            };
 
             // Responsive resize
             this.Resize += (s, ev) =>
@@ -71,8 +78,8 @@ namespace IT13
                         LoadProductListForm();
                         break;
 
-                    case "Product Categories":
-                        navBar1.PageTitle = "Product Categories";
+                    case "Categories":
+                        navBar1.PageTitle = "Categories";
                         LoadProductCategoryForm();
                         break;
 

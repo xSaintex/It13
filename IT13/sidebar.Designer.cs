@@ -21,8 +21,6 @@ namespace IT13
         {
             this.components = new System.ComponentModel.Container();
             this.panelSidebar = new System.Windows.Forms.Panel();
-
-            // Replace IconButtons with normal Buttons
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
             this.btnUsers = new System.Windows.Forms.Button();
@@ -38,19 +36,15 @@ namespace IT13
             this.btnProducts = new System.Windows.Forms.Button();
             this.btnInventory = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
-
             this.panelLogo = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.lblLogo = new System.Windows.Forms.Label();
 
             this.panelSidebar.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
 
-            // 
             // panelSidebar
-            // 
             this.panelSidebar.AutoScroll = true;
             this.panelSidebar.BackColor = System.Drawing.Color.White;
             this.panelSidebar.Controls.Add(this.btnHelp);
@@ -73,33 +67,21 @@ namespace IT13
             this.panelSidebar.Size = new System.Drawing.Size(260, 800);
             this.panelSidebar.Name = "panelSidebar";
 
-            // 
-            // panelLogo
-            // 
-            this.panelLogo.BackColor = System.Drawing.Color.FromArgb(0, 89, 179);
+            // panelLogo — Same height (80px), now VERY LIGHT GRAY
+            this.panelLogo.BackColor = Color.FromArgb(248, 249, 250);  // Very light gray
             this.panelLogo.Controls.Add(this.pictureBoxLogo);
-            this.panelLogo.Controls.Add(this.lblLogo);
             this.panelLogo.Dock = DockStyle.Top;
-            this.panelLogo.Size = new System.Drawing.Size(260, 80);
+            this.panelLogo.Size = new System.Drawing.Size(260, 80);    // ← SAME HEIGHT AS BEFORE
 
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.Image = Properties.Resources.le_parisien_logo;
-            this.pictureBoxLogo.Location = new System.Drawing.Point(20, 20);
-            this.pictureBoxLogo.Size = new System.Drawing.Size(40, 40);
+            // pictureBoxLogo — BIGGER logo (70×70), perfectly centered
+            this.pictureBoxLogo.Image = Properties.Resources.leparisienlogo;
+            this.pictureBoxLogo.Size = new Size(70, 70);
+            this.pictureBoxLogo.Location = new Point(95, 5);  // Perfectly centered in 260×80 panel
             this.pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBoxLogo.BackColor = Color.Transparent;
+            this.pictureBoxLogo.TabStop = false;
 
-            // 
-            // lblLogo
-            // 
-            this.lblLogo.AutoSize = true;
-            this.lblLogo.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            this.lblLogo.ForeColor = Color.White;
-            this.lblLogo.Location = new Point(70, 25);
-            this.lblLogo.Text = "LE PARISIEN";
-
-            // 🔹 Default style for all buttons
+            // Default button style (unchanged)
             Action<Button> setupBtn = btn =>
             {
                 btn.Dock = DockStyle.Top;
@@ -111,6 +93,7 @@ namespace IT13
                 btn.Font = new Font("Segoe UI", 10F);
                 btn.ForeColor = Color.FromArgb(80, 80, 80);
                 btn.BackColor = Color.Transparent;
+                btn.Cursor = Cursors.Hand;
             };
 
             setupBtn(this.btnDashboard);
@@ -129,11 +112,9 @@ namespace IT13
             setupBtn(this.btnReports);
             setupBtn(this.btnHelp);
 
-            this.btnSuppliers.Visible = false; // merged into Customers section
+            this.btnSuppliers.Visible = false;
 
-            // 
-            // Sidebar (UserControl)
-            // 
+            // Sidebar UserControl
             this.Controls.Add(this.panelSidebar);
             this.Name = "Sidebar";
             this.Size = new System.Drawing.Size(260, 800);
@@ -141,7 +122,6 @@ namespace IT13
 
             this.panelSidebar.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
-            this.panelLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
         }
@@ -151,9 +131,7 @@ namespace IT13
         private Panel panelSidebar;
         private Panel panelLogo;
         private PictureBox pictureBoxLogo;
-        private Label lblLogo;
 
-        // ✅ Standard WinForms Buttons (no FontAwesome)
         private Button btnDashboard;
         private Button btnInventory;
         private Button btnProducts;

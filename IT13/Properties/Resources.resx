@@ -124,8 +124,14 @@
   <data name="edit_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="leparisienlogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leparisienlogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="le_parisien_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\le_parisien_logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pfp_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pfp_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
