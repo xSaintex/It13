@@ -9,7 +9,6 @@
                 components.Dispose();
             base.Dispose(disposing);
         }
-
         private void InitializeComponent()
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
@@ -19,7 +18,6 @@
                 Font = new Font("Tahoma", 10.2F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
-
             mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             label1 = new Label();
@@ -49,13 +47,11 @@
             Filter = new Guna.UI2.WinForms.Guna2ComboBox();
             btnsearch = new Guna.UI2.WinForms.Guna2Button();
             txtboxsearch = new Guna.UI2.WinForms.Guna2TextBox();
-
             mainpanel.SuspendLayout();
             guna2Panel1.SuspendLayout();
             guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).BeginInit();
             SuspendLayout();
-
             // MAIN PANEL
             mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(guna2Panel1);
@@ -72,7 +68,6 @@
             mainpanel.ShadowColor = Color.Black;
             mainpanel.Size = new Size(1602, 878);
             mainpanel.TabIndex = 1;
-
             // PAGINATION PANEL
             guna2Panel1.Controls.Add(label1);
             guna2Panel1.Controls.Add(btngreaterthan);
@@ -90,12 +85,10 @@
             guna2Panel1.Name = "guna2Panel1";
             guna2Panel1.Size = new Size(1458, 36);
             guna2Panel1.TabIndex = 7;
-
             label1.AutoSize = true;
             label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
             label1.Location = new Point(16, 8);
             label1.Text = "Showing 1-10 of 100";
-
             // PAGINATION BUTTONS
             SetupPaginationButton(btngreaterthan, ">", 1408);
             SetupPaginationButton(btn9, "9", 1378);
@@ -108,7 +101,6 @@
             SetupPaginationButton(btn2, "2", 1168);
             SetupPaginationButton(btn1, "1", 1138);
             SetupPaginationButton(btnlessthan, "<", 1108);
-
             // DATAGRIDVIEW PANEL
             guna2ShadowPanel1.BackColor = Color.Transparent;
             guna2ShadowPanel1.Controls.Add(datagridviewadjustment);
@@ -118,7 +110,6 @@
             guna2ShadowPanel1.Radius = 5;
             guna2ShadowPanel1.Size = new Size(1458, 716);
             guna2ShadowPanel1.TabIndex = 5;
-
             // DATAGRIDVIEW
             datagridviewadjustment.AllowUserToAddRows = false;
             datagridviewadjustment.AllowUserToResizeColumns = false;
@@ -136,24 +127,21 @@
             datagridviewadjustment.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             datagridviewadjustment.CellPainting += datagridviewadjustment_CellPainting;
             datagridviewadjustment.CellClick += datagridviewadjustment_CellClick;
-
             // COLUMNS
             colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
             colDate.HeaderText = "Date"; colDate.Name = "colDate"; colDate.Width = 130;
-            colProductName.HeaderText = "Product Name"; colProductName.Name = "colProductName"; colProductName.Width = 280;
-            colAdjustmentType.HeaderText = "Adjustment Type"; colAdjustmentType.Name = "colAdjustmentType"; colAdjustmentType.Width = 150;
-            colPhysicalCount.HeaderText = "Physical Count"; colPhysicalCount.Name = "colPhysicalCount"; colPhysicalCount.Width = 130;
+            colProductName.HeaderText = "Product Name"; colProductName.Name = "colProductName"; colProductName.Width = 220;
+            colAdjustmentType.HeaderText = "Adjust Type"; colAdjustmentType.Name = "colAdjustmentType"; colAdjustmentType.Width = 150;
+            colPhysicalCount.HeaderText = "Phys Count"; colPhysicalCount.Name = "colPhysicalCount"; colPhysicalCount.Width = 130;
             colRequestedBy.HeaderText = "Requested By"; colRequestedBy.Name = "colRequestedBy"; colRequestedBy.Width = 180;
             colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 120;
             colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 100;
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
             datagridviewadjustment.Columns.AddRange(new DataGridViewColumn[]
             {
                 colID, colDate, colProductName, colAdjustmentType,
                 colPhysicalCount, colRequestedBy, colStatus, colActions
             });
-
             // EXPORT COMBOBOX
             Export.Location = new Point(1400, 45);
             Export.Size = new Size(128, 36);
@@ -161,7 +149,6 @@
             Export.Font = new Font("Segoe UI", 10F);
             Export.ItemHeight = 30;
             Export.TabIndex = 4;
-
             // ADD ADJUSTMENT BUTTON
             btnaddadjustment.Location = new Point(1235, 45);
             btnaddadjustment.Size = new Size(155, 36);
@@ -172,7 +159,6 @@
             btnaddadjustment.FillColor = Color.FromArgb(0, 123, 255);
             btnaddadjustment.ForeColor = Color.White;
             btnaddadjustment.BorderRadius = 8;
-
             // FILTER COMBOBOX
             Filter.Location = new Point(1100, 45);
             Filter.Size = new Size(128, 36);
@@ -180,7 +166,6 @@
             Filter.Font = new Font("Segoe UI", 10F);
             Filter.ItemHeight = 30;
             Filter.TabIndex = 2;
-
             // SEARCH BUTTON
             btnsearch.Location = new Point(537, 41);
             btnsearch.Size = new Size(103, 40);
@@ -188,12 +173,10 @@
             btnsearch.FillColor = Color.FromArgb(0, 123, 255);
             btnsearch.ForeColor = Color.White;
             btnsearch.BorderRadius = 8;
-
             txtboxsearch.Location = new Point(94, 41);
             txtboxsearch.PlaceholderText = "Search Adjustment";
             txtboxsearch.Size = new Size(437, 40);
             txtboxsearch.TextChanged += txtboxsearch_TextChanged;
-
             // FORM
             ClientSize = new Size(1914, 1055);
             Controls.Add(mainpanel);
@@ -206,19 +189,19 @@
             ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).EndInit();
             ResumeLayout(false);
         }
-
-        // PAGINATION BUTTONS (UPDATE SetupPaginationButton)
         private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
         {
             btn.Text = text;
             btn.Location = new Point(left, 5);
-            btn.Size = new Size(30, 28);
-            btn.FillColor = Color.WhiteSmoke;
-            btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn.BorderRadius = 8;   // ROUNDED
+            btn.Size = new Size(36, 32);
+            btn.FillColor = Color.FromArgb(248, 248, 248);
+            btn.ForeColor = Color.Black;
+            btn.BorderRadius = 8;
+            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
+            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
+            btn.DisabledState.ForeColor = Color.Gray;
         }
-
-        // CONTROL DECLARATIONS
         private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Label label1;

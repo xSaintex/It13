@@ -14,7 +14,9 @@ namespace IT13
         private OrderList orderListForm;
         private SupplierOrderList supplierOrderListForm;
         private CustomerList customerListForm;
-        private SupplierList supplierListForm; // Your form
+        private SupplierList supplierListForm;
+        private DeliveryVehicleList deliveryVehicleListForm;
+        private DeliveryList deliveryListForm;  // ← NEW: DeliveryList form instance
 
         public Form1()
         {
@@ -28,7 +30,7 @@ namespace IT13
             navBar1.Left = 260;
             navBar1.Top = 0;
             navBar1.NavHeight = 80;
-            navBar1.PageTitle = "Dashboard";
+            navBar1.PageTitle = "Dashboard"; // Default
             navBar1.UserName = "Admin";
 
             sidebar1.Dock = DockStyle.Left;
@@ -42,16 +44,15 @@ namespace IT13
             pnlContent.Width = this.ClientSize.Width - 260;
             pnlContent.Height = this.ClientSize.Height - 70;
 
+            // === RESIZE HANDLERS ===
             this.Resize += (s, ev) =>
             {
-                navBar1.ApplySize();                                 // Auto-resize navbar width safely
+                navBar1.ApplySize();
                 pnlContent.Left = 260;
                 pnlContent.Top = navBar1.Height;
                 pnlContent.Width = this.ClientSize.Width - 260;
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
-
-            // Responsive resize
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -61,11 +62,10 @@ namespace IT13
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
 
-            // === SIDEBAR CLICK HANDLER (NO AddItem() CALLS!) ===
+            // === SIDEBAR CLICK HANDLER ===
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
                 string section = ev.Section?.Trim() ?? "";
-
                 switch (section)
                 {
                     case "Dashboard":
@@ -115,7 +115,18 @@ namespace IT13
 
                     case "Supplier List":
                         navBar1.PageTitle = "Supplier List";
-                        LoadSupplierListForm(); // WORKS 100%
+                        LoadSupplierListForm();
+                        break;
+
+                    case "Delivery Vehicles":
+                        navBar1.PageTitle = "Delivery Vehicles";
+                        LoadDeliveryVehicleListForm();
+                        break;
+
+                    // ← NEW: Delivery List
+                    case "Delivery List":
+                        navBar1.PageTitle = "Delivery List";
+                        LoadDeliveryListForm();
                         break;
 
                     default:
@@ -123,6 +134,7 @@ namespace IT13
                         break;
                 }
             };
+            // NO DEFAULT LOAD — only on click
         }
 
         #region Load Form Methods
@@ -244,9 +256,36 @@ namespace IT13
             supplierListForm.Show();
         }
 
+        private void LoadDeliveryVehicleListForm()
+        {
+            pnlContent.Controls.Clear();
+            deliveryVehicleListForm = new DeliveryVehicleList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(deliveryVehicleListForm);
+            deliveryVehicleListForm.Show();
+        }
+
+        // ← NEW: Load DeliveryList
+        private void LoadDeliveryListForm()
+        {
+            pnlContent.Controls.Clear();
+            deliveryListForm = new DeliveryList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(deliveryListForm);
+            deliveryListForm.Show();
+        }
+
         #endregion
 
-        // PUBLIC METHODS — used by Add/Edit/View forms
+        // === NAVIGATION HELPERS ===
         public void NavigateToCustomerList()
         {
             navBar1.PageTitle = "Customer List";
@@ -257,6 +296,19 @@ namespace IT13
         {
             navBar1.PageTitle = "Supplier List";
             LoadSupplierListForm();
+        }
+
+        public void NavigateToDeliveryVehicles()
+        {
+            navBar1.PageTitle = "Delivery Vehicles";
+            LoadDeliveryVehicleListForm();
+        }
+
+        // ← NEW: Public navigation to Delivery List
+        public void NavigateToDeliveryList()
+        {
+            navBar1.PageTitle = "Delivery List";
+            LoadDeliveryListForm();
         }
     }
 }

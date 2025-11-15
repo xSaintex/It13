@@ -1,6 +1,5 @@
 ﻿// ---------------------------------------------------------------------
-// CustomerList.designer.cs
-// MATCHES SupplierOrderList EXACTLY | NO HEADER | 3 ACTION ICONS
+// DeliveryVehicleList.designer.cs - Same layout as CustomerList (No Export)
 // ---------------------------------------------------------------------
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -8,7 +7,7 @@ using System.Drawing;
 
 namespace IT13
 {
-    partial class CustomerList
+    partial class DeliveryVehicleList
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -31,23 +30,20 @@ namespace IT13
             mainpanel = new Guna2ShadowPanel();
             guna2Panel1 = new Guna2Panel();
             label1 = new Label();
-            btngreaterthan = new Guna2Button();
-            btn9 = new Guna2Button(); btn8 = new Guna2Button(); btn7 = new Guna2Button();
-            btn6 = new Guna2Button(); btn5 = new Guna2Button(); btn4 = new Guna2Button();
-            btn3 = new Guna2Button(); btn2 = new Guna2Button(); btn1 = new Guna2Button();
-            btnlessthan = new Guna2Button();
+            btngreaterthan = new Guna2Button(); btn9 = new Guna2Button(); btn8 = new Guna2Button();
+            btn7 = new Guna2Button(); btn6 = new Guna2Button(); btn5 = new Guna2Button();
+            btn4 = new Guna2Button(); btn3 = new Guna2Button(); btn2 = new Guna2Button();
+            btn1 = new Guna2Button(); btnlessthan = new Guna2Button();
             guna2ShadowPanel1 = new Guna2ShadowPanel();
-            dgvCustomers = new Guna2DataGridView();
+            dgvVehicles = new Guna2DataGridView();
             colID = new DataGridViewCheckBoxColumn();
-            colCompany = new DataGridViewTextBoxColumn();
-            colContact = new DataGridViewTextBoxColumn();
-            colPhone = new DataGridViewTextBoxColumn();
-            colEmail = new DataGridViewTextBoxColumn();
-            colPayment = new DataGridViewTextBoxColumn();
+            colVehicleName = new DataGridViewTextBoxColumn();
+            colPlateNumber = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
+            colCreatedAt = new DataGridViewTextBoxColumn();
+            colUpdatedAt = new DataGridViewTextBoxColumn();
             colActions = new DataGridViewTextBoxColumn();
-            Export = new Guna2ComboBox();
-            btnAddCustomer = new Guna2Button();
+            btnAddVehicle = new Guna2Button();
             Filter = new Guna2ComboBox();
             btnSearch = new Guna2Button();
             txtSearch = new Guna2TextBox();
@@ -55,23 +51,22 @@ namespace IT13
             mainpanel.SuspendLayout();
             guna2Panel1.SuspendLayout();
             guna2ShadowPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvVehicles).BeginInit();
             SuspendLayout();
 
-            // MAIN PANEL
+            // mainpanel
             mainpanel.FillColor = Color.White;
             mainpanel.Location = new Point(300, 88);
             mainpanel.Radius = 8;
             mainpanel.Size = new Size(1602, 878);
             mainpanel.Controls.Add(guna2Panel1);
             mainpanel.Controls.Add(guna2ShadowPanel1);
-            mainpanel.Controls.Add(Export);
-            mainpanel.Controls.Add(btnAddCustomer);
+            mainpanel.Controls.Add(btnAddVehicle);
             mainpanel.Controls.Add(Filter);
             mainpanel.Controls.Add(btnSearch);
             mainpanel.Controls.Add(txtSearch);
 
-            // PAGINATION PANEL
+            // Pagination Panel
             guna2Panel1.Location = new Point(77, 826);
             guna2Panel1.Size = new Size(1458, 36);
             guna2Panel1.Controls.Add(label1);
@@ -86,7 +81,6 @@ namespace IT13
             label1.Location = new Point(16, 8);
             label1.Text = "Showing 1-10 of 100";
 
-            // PAGINATION BUTTONS
             SetupPaginationButton(btngreaterthan, ">", 1408);
             SetupPaginationButton(btn9, "9", 1378); SetupPaginationButton(btn8, "8", 1348);
             SetupPaginationButton(btn7, "7", 1318); SetupPaginationButton(btn6, "6", 1288);
@@ -94,66 +88,58 @@ namespace IT13
             SetupPaginationButton(btn3, "3", 1198); SetupPaginationButton(btn2, "2", 1168);
             SetupPaginationButton(btn1, "1", 1138); SetupPaginationButton(btnlessthan, "<", 1108);
 
-            // DATAGRIDVIEW PANEL
+            // DataGridView Panel
             guna2ShadowPanel1.FillColor = Color.White;
             guna2ShadowPanel1.Location = new Point(77, 104);
             guna2ShadowPanel1.Radius = 5;
             guna2ShadowPanel1.Size = new Size(1458, 716);
-            guna2ShadowPanel1.Controls.Add(dgvCustomers);
+            guna2ShadowPanel1.Controls.Add(dgvVehicles);
 
-            // DATAGRIDVIEW
-            dgvCustomers.AllowUserToAddRows = false;
-            dgvCustomers.AllowUserToResizeColumns = false;
-            dgvCustomers.AllowUserToResizeRows = false;
-            dgvCustomers.ColumnHeadersDefaultCellStyle = headerStyle;
-            dgvCustomers.ColumnHeadersHeight = 40;
-            dgvCustomers.GridColor = Color.FromArgb(231, 229, 255);
-            dgvCustomers.Location = new Point(22, 27);
-            dgvCustomers.Size = new Size(1412, 662);
-            dgvCustomers.RowHeadersVisible = false;
-            dgvCustomers.CellPainting += dgvCustomers_CellPainting;
-            dgvCustomers.CellClick += dgvCustomers_CellClick;
+            // DataGridView
+            dgvVehicles.AllowUserToAddRows = false;
+            dgvVehicles.AllowUserToResizeColumns = false;
+            dgvVehicles.AllowUserToResizeRows = false;
+            dgvVehicles.ColumnHeadersDefaultCellStyle = headerStyle;
+            dgvVehicles.ColumnHeadersHeight = 40;
+            dgvVehicles.GridColor = Color.FromArgb(231, 229, 255);
+            dgvVehicles.Location = new Point(22, 27);
+            dgvVehicles.Size = new Size(1412, 662);
+            dgvVehicles.RowHeadersVisible = false;
+            dgvVehicles.CellPainting += dgvVehicles_CellPainting;
+            dgvVehicles.CellClick += dgvVehicles_CellClick;
 
-            // COLUMNS
-            colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
-            colCompany.HeaderText = "Company"; colCompany.Name = "colCompany"; colCompany.Width = 280;
-            colContact.HeaderText = "Contact"; colContact.Name = "colContact"; colContact.Width = 200;
-            colPhone.HeaderText = "Phone"; colPhone.Name = "colPhone"; colPhone.Width = 150;
-            colEmail.HeaderText = "Email"; colEmail.Name = "colEmail"; colEmail.Width = 220;
-            colPayment.HeaderText = "Payment"; colPayment.Name = "colPayment"; colPayment.Width = 120;
-            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 100;
-            colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 120;
+            // Columns
+            colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 160;
+            colVehicleName.HeaderText = "Vehicle Name"; colVehicleName.Name = "colVehicleName";
+            colPlateNumber.HeaderText = "Plate Number"; colPlateNumber.Name = "colPlateNumber";
+            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus";
+            colCreatedAt.HeaderText = "Created At"; colCreatedAt.Name = "colCreatedAt";
+            colUpdatedAt.HeaderText = "Updated At"; colUpdatedAt.Name = "colUpdatedAt";
+            colActions.HeaderText = "Actions"; colActions.Name = "colActions";
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dgvCustomers.Columns.AddRange(new DataGridViewColumn[]
+            dgvVehicles.Columns.AddRange(new DataGridViewColumn[]
             {
-                colID, colCompany, colContact, colPhone, colEmail, colPayment, colStatus, colActions
+                colID, colVehicleName, colPlateNumber, colStatus, colCreatedAt, colUpdatedAt, colActions
             });
 
-            // EXPORT
-            Export.Location = new Point(1400, 45);
-            Export.Size = new Size(128, 36);
-            Export.DropDownStyle = ComboBoxStyle.DropDownList;
-            Export.Font = new Font("Segoe UI", 10F);
-            Export.ItemHeight = 30;
+            // Add Vehicle Button
+            btnAddVehicle.Location = new Point(1370, 45);
+            btnAddVehicle.Size = new Size(160, 36);
+            btnAddVehicle.Text = "+ Add Vehicle";
+            btnAddVehicle.FillColor = Color.FromArgb(0, 123, 255);
+            btnAddVehicle.ForeColor = Color.White;
+            btnAddVehicle.BorderRadius = 8;
+            btnAddVehicle.Click += btnAddVehicle_Click;
 
-            // ADD CUSTOMER
-            btnAddCustomer.Location = new Point(1235, 45);
-            btnAddCustomer.Size = new Size(155, 36);
-            btnAddCustomer.Text = "+ Add Customer";
-            btnAddCustomer.FillColor = Color.FromArgb(0, 123, 255);
-            btnAddCustomer.ForeColor = Color.White;
-            btnAddCustomer.BorderRadius = 8;
-            btnAddCustomer.Click += btnAddCustomer_Click;
-
-            // FILTER
-            Filter.Location = new Point(1100, 45);
+            // Filter
+            Filter.Location = new Point(1230, 45);
             Filter.Size = new Size(128, 36);
             Filter.DropDownStyle = ComboBoxStyle.DropDownList;
             Filter.Font = new Font("Segoe UI", 10F);
             Filter.ItemHeight = 30;
 
-            // SEARCH
+            // Search
             btnSearch.Location = new Point(537, 41);
             btnSearch.Size = new Size(103, 40);
             btnSearch.Text = "Search";
@@ -163,51 +149,48 @@ namespace IT13
             btnSearch.Click += btnSearch_Click;
 
             txtSearch.Location = new Point(94, 41);
-            txtSearch.PlaceholderText = "Search company, email, or phone...";
+            txtSearch.PlaceholderText = "Search vehicle name, plate number...";
             txtSearch.Size = new Size(437, 40);
 
-            // FORM
+            // Form
             ClientSize = new Size(1914, 1055);
             Controls.Add(mainpanel);
-            Name = "CustomerList";
-            Load += CustomerList_Load;
+            Name = "DeliveryVehicleList";
+            Load += DeliveryVehicleList_Load;
             mainpanel.ResumeLayout(false);
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
             guna2ShadowPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvVehicles).EndInit();
             ResumeLayout(false);
         }
 
-        private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
+        private void SetupPaginationButton(Guna2Button btn, string text, int left)
         {
             btn.Text = text;
             btn.Location = new Point(left, 5);
-            btn.Size = new Size(36, 32);                    // Slightly bigger & square
-            btn.FillColor = Color.FromArgb(248, 248, 248);  // Light gray background
-            btn.ForeColor = Color.Black;                    // Black text
+            btn.Size = new Size(36, 32);
+            btn.FillColor = Color.FromArgb(248, 248, 248);
+            btn.ForeColor = Color.Black;
             btn.BorderRadius = 8;
             btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
-            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
-            btn.DisabledState.ForeColor = Color.Gray;
         }
 
-        // CONTROLS
+        private void DeliveryVehicleList_Load(object sender, EventArgs e) { }
+
+        // Controls
         private Guna2ShadowPanel mainpanel;
         private Guna2Panel guna2Panel1;
         private Label label1;
         private Guna2Button btngreaterthan, btn9, btn8, btn7, btn6, btn5, btn4, btn3, btn2, btn1, btnlessthan;
         private Guna2ShadowPanel guna2ShadowPanel1;
-        private Guna2DataGridView dgvCustomers;
+        private Guna2DataGridView dgvVehicles;
         private DataGridViewCheckBoxColumn colID;
-        private DataGridViewTextBoxColumn colCompany, colContact, colPhone, colEmail, colPayment, colStatus, colActions;
-        private Guna2ComboBox Export;
-        private Guna2Button btnAddCustomer;
+        private DataGridViewTextBoxColumn colVehicleName, colPlateNumber, colStatus, colCreatedAt, colUpdatedAt, colActions;
+        private Guna2Button btnAddVehicle;
         private Guna2ComboBox Filter;
         private Guna2Button btnSearch;
         private Guna2TextBox txtSearch;
-
-        private void CustomerList_Load(object sender, EventArgs e) { }
     }
 }

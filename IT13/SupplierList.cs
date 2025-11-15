@@ -63,6 +63,14 @@ namespace IT13
             dgvSuppliers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvSuppliers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
+            dgvSuppliers.Columns["colContact"].DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
+            dgvSuppliers.Columns["colEmail"].DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
+            dgvSuppliers.Columns["colPayment"].DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
+            dgvSuppliers.Columns["colStatus"].DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
             LoadSampleData();
             UpdateHeaderCheckState();
         }

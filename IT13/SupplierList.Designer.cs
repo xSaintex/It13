@@ -61,7 +61,10 @@ namespace IT13
             guna2Panel1.Controls.Add(btn3); guna2Panel1.Controls.Add(btn2); guna2Panel1.Controls.Add(btn1);
             guna2Panel1.Controls.Add(btnlessthan);
 
-            label1.Text = "Showing 1-10 of 100"; label1.Location = new Point(16, 8); label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
+            label1.AutoSize = true;
+            label1.Text = "Showing 1-10 of 100";
+            label1.Location = new Point(20, 9);
+            label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
 
             SetupPaginationButton(btngreaterthan, ">", 1408); SetupPaginationButton(btn9, "9", 1378);
             SetupPaginationButton(btn8, "8", 1348); SetupPaginationButton(btn7, "7", 1318);
@@ -122,10 +125,18 @@ namespace IT13
             ResumeLayout(false);
         }
 
-        private void SetupPaginationButton(Guna2Button btn, string text, int left)
+        private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
         {
-            btn.Text = text; btn.Location = new Point(left, 5); btn.Size = new Size(30, 28);
-            btn.FillColor = Color.WhiteSmoke; btn.BorderRadius = 8;
+            btn.Text = text;
+            btn.Location = new Point(left, 5);
+            btn.Size = new Size(36, 32);                    // Slightly bigger & square
+            btn.FillColor = Color.FromArgb(248, 248, 248);  // Light gray background
+            btn.ForeColor = Color.Black;                    // Black text
+            btn.BorderRadius = 8;
+            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
+            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
+            btn.DisabledState.ForeColor = Color.Gray;
         }
 
         private Guna2ShadowPanel mainpanel, guna2ShadowPanel1;

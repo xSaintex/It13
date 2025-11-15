@@ -1,9 +1,4 @@
-﻿// ---------------------------------------------------------------------
-// ViewSupplierList.designer.cs
-// READ-ONLY | Same Layout as ViewCustomerList | Title = TextBox
-// Rounded Shadow Panels | Back Button Only | No Exceptions
-// ---------------------------------------------------------------------
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using System.Drawing;
 
@@ -22,6 +17,7 @@ namespace IT13
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+
             mainPanel = new Guna2ShadowPanel();
             scrollPanel = new Guna2Panel();
             contentPanel = new Guna2Panel();
@@ -37,26 +33,31 @@ namespace IT13
             lblPayment = new Label(); cmbPayment = new Guna2ComboBox();
             lblStatus = new Label(); cmbStatus = new Guna2ComboBox();
 
-            btnOther = new Guna2Button(); btnAddress = new Guna2Button();
+            btnOther = new Guna2Button();
+            btnAddress = new Guna2Button();
+            btnRemarks = new Guna2Button();
 
             pnlOther = new Guna2ShadowPanel();
+            pnlAddress = new Guna2ShadowPanel();
+            pnlRemarks = new Guna2ShadowPanel();
+
             lblContactPerson = new Label(); txtContactPerson = new Guna2TextBox();
             lblContactNum = new Label(); txtContactNum = new Guna2TextBox();
 
-            pnlAddress = new Guna2ShadowPanel();
             lblBilling = new Label(); lblShip = new Label(); lnkCopy = new LinkLabel();
-
             lblBCountry = new Label(); cmbBCountry = new Guna2ComboBox();
             lblBCity = new Label(); txtBCity = new Guna2TextBox();
             lblBZip = new Label(); txtBZip = new Guna2TextBox();
             lblBLine1 = new Label(); txtBLine1 = new Guna2TextBox();
             lblBLine2 = new Label(); txtBLine2 = new Guna2TextBox();
-
             lblSCountry = new Label(); cmbSCountry = new Guna2ComboBox();
             lblSCity = new Label(); txtSCity = new Guna2TextBox();
             lblSZip = new Label(); txtSZip = new Guna2TextBox();
             lblSLine1 = new Label(); txtSLine1 = new Guna2TextBox();
             lblSLine2 = new Label(); txtSLine2 = new Guna2TextBox();
+
+            lblRemarksTitle = new Label();
+            txtRemarks = new Guna2TextBox();
 
             btnBack = new Guna2Button();
 
@@ -66,34 +67,40 @@ namespace IT13
             bottomPanel.SuspendLayout();
             pnlOther.SuspendLayout();
             pnlAddress.SuspendLayout();
+            pnlRemarks.SuspendLayout();
             this.SuspendLayout();
 
-            // MAIN PANEL — EXACT SAME
+            // ====================== MAIN LAYOUT (NO EXTRA SCROLL) ======================
             mainPanel.Location = new Point(300, 88);
-            mainPanel.Size = new Size(1602, 878);
+            mainPanel.Size = new Size(1602, 860);
             mainPanel.FillColor = Color.White;
             mainPanel.Radius = 8;
             mainPanel.Controls.Add(scrollPanel);
             mainPanel.Controls.Add(bottomPanel);
 
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 800);
+            scrollPanel.Size = new Size(1602, 780);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
-            contentPanel.Size = new Size(1458, 2000);
+            contentPanel.AutoSize = true;
+            contentPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
-            // HEADER — Changed to Supplier
-            lblHeader.Text = "Supplier Information";
+            bottomPanel.Location = new Point(0, 780);
+            bottomPanel.Size = new Size(1602, 80);
+            bottomPanel.BackColor = Color.White;
+
+            // ====================== HEADER ======================
+            lblHeader.Text = "View Supplier";
             lblHeader.Font = new Font("Tahoma", 18F, FontStyle.Bold);
             lblHeader.Location = new Point(77, 20);
             lblHeader.AutoSize = true;
 
-            lblRequired.Text = "Fields marked with an asterisk (*) are required.";
+            lblRequired.Text = "Read-only view. Click 'Back to List' to return.";
             lblRequired.ForeColor = Color.Gray;
             lblRequired.Location = new Point(77, 56);
             lblRequired.AutoSize = true;
 
-            lblNote.Text = "Note: Supplier's Email and Phone number must be unique.";
+            lblNote.Text = "Supplier information is displayed below.";
             lblNote.Font = new Font("Tahoma", 9F);
             lblNote.ForeColor = Color.Gray;
             lblNote.Location = new Point(77, 80);
@@ -101,106 +108,109 @@ namespace IT13
 
             int y = 120;
 
-            lblTitle.Text = "Title"; lblTitle.Location = new Point(77, y); lblTitle.AutoSize = true;
+            // ====================== BASIC INFO (READ-ONLY) ======================
+            lblTitle.Text = "Title"; lblTitle.Location = new Point(77, y);
             txtTitle.Location = new Point(77, y + 25); txtTitle.Size = new Size(100, 36); txtTitle.BorderRadius = 5;
             txtTitle.ReadOnly = true;
 
-            lblFName.Text = "First Name *"; lblFName.Location = new Point(197, y); lblFName.AutoSize = true;
+            lblFName.Text = "First Name"; lblFName.Location = new Point(197, y);
             txtFName.Location = new Point(197, y + 25); txtFName.Size = new Size(300, 36); txtFName.BorderRadius = 5;
+            txtFName.ReadOnly = true;
 
-            lblLName.Text = "Last Name *"; lblLName.Location = new Point(517, y); lblLName.AutoSize = true;
+            lblLName.Text = "Last Name"; lblLName.Location = new Point(517, y);
             txtLName.Location = new Point(517, y + 25); txtLName.Size = new Size(300, 36); txtLName.BorderRadius = 5;
+            txtLName.ReadOnly = true;
 
-            lblEmail.Text = "Email *"; lblEmail.Location = new Point(837, y); lblEmail.AutoSize = true;
+            lblEmail.Text = "Email"; lblEmail.Location = new Point(837, y);
             txtEmail.Location = new Point(837, y + 25); txtEmail.Size = new Size(500, 36); txtEmail.BorderRadius = 5;
+            txtEmail.ReadOnly = true;
 
             y += 80;
 
-            lblCompany.Text = "Company Name *"; lblCompany.Location = new Point(77, y); lblCompany.AutoSize = true;
+            lblCompany.Text = "Company Name"; lblCompany.Location = new Point(77, y);
             txtCompany.Location = new Point(77, y + 25); txtCompany.Size = new Size(600, 36); txtCompany.BorderRadius = 5;
+            txtCompany.ReadOnly = true;
 
-            lblPhone.Text = "Phone number *"; lblPhone.Location = new Point(697, y); lblPhone.AutoSize = true;
+            lblPhone.Text = "Phone number"; lblPhone.Location = new Point(697, y);
             txtPhone.Location = new Point(697, y + 25); txtPhone.Size = new Size(300, 36); txtPhone.BorderRadius = 5;
+            txtPhone.ReadOnly = true;
 
-            lblPayment.Text = "Payment Terms *"; lblPayment.Location = new Point(77, y + 80); lblPayment.AutoSize = true;
+            lblPayment.Text = "Payment Terms"; lblPayment.Location = new Point(77, y + 80);
             cmbPayment.Location = new Point(77, y + 105); cmbPayment.Size = new Size(300, 36); cmbPayment.BorderRadius = 5;
-            cmbPayment.Items.AddRange(new[] { "Cash", "Net 15", "Net 30", "Net 60" });
+            cmbPayment.Enabled = false;
 
-            lblStatus.Text = "Status"; lblStatus.Location = new Point(397, y + 80); lblStatus.AutoSize = true;
+            lblStatus.Text = "Status"; lblStatus.Location = new Point(397, y + 80);
             cmbStatus.Location = new Point(397, y + 105); cmbStatus.Size = new Size(150, 36); cmbStatus.BorderRadius = 5;
-            cmbStatus.Items.AddRange(new[] { "Active", "Inactive" });
+            cmbStatus.Enabled = false;
 
             y += 180;
 
+            // ====================== TAB BUTTONS ======================
             btnOther.Text = "Other Details"; btnOther.Location = new Point(77, y); btnOther.Size = new Size(150, 36); btnOther.BorderRadius = 5;
             btnOther.FillColor = Color.FromArgb(0, 123, 255); btnOther.ForeColor = Color.White;
 
             btnAddress.Text = "Address"; btnAddress.Location = new Point(237, y); btnAddress.Size = new Size(150, 36); btnAddress.BorderRadius = 5;
             btnAddress.FillColor = Color.WhiteSmoke; btnAddress.ForeColor = Color.Black;
 
-            // OTHER DETAILS — EXACT SAME
-            pnlOther.Location = new Point(77, y + 50);
-            pnlOther.Size = new Size(1300, 200);
-            pnlOther.FillColor = Color.FromArgb(248, 249, 252);
-            pnlOther.ShadowColor = Color.FromArgb(100, 100, 100);
-            pnlOther.Radius = 20;
-            pnlOther.Visible = true;
+            btnRemarks.Text = "Remarks"; btnRemarks.Location = new Point(397, y); btnRemarks.Size = new Size(150, 36); btnRemarks.BorderRadius = 5;
+            btnRemarks.FillColor = Color.WhiteSmoke; btnRemarks.ForeColor = Color.Black;
 
-            lblContactPerson.Text = "Contact Person *"; lblContactPerson.Location = new Point(40, 25); lblContactPerson.AutoSize = true;
+            int panelY = y + 50;
+
+            // ====================== OTHER DETAILS ======================
+            pnlOther.Location = new Point(77, panelY); pnlOther.Size = new Size(1300, 200);
+            pnlOther.FillColor = Color.FromArgb(248, 249, 252); pnlOther.Radius = 20; pnlOther.Visible = true;
+
+            lblContactPerson.Text = "Contact Person"; lblContactPerson.Location = new Point(40, 25);
             txtContactPerson.Location = new Point(40, 50); txtContactPerson.Size = new Size(600, 36); txtContactPerson.BorderRadius = 5;
+            txtContactPerson.ReadOnly = true;
 
-            lblContactNum.Text = "Contact number *"; lblContactNum.Location = new Point(40, 105); lblContactNum.AutoSize = true;
+            lblContactNum.Text = "Contact number"; lblContactNum.Location = new Point(40, 105);
             txtContactNum.Location = new Point(40, 130); txtContactNum.Size = new Size(300, 36); txtContactNum.BorderRadius = 5;
+            txtContactNum.ReadOnly = true;
 
             pnlOther.Controls.AddRange(new Control[] { lblContactPerson, txtContactPerson, lblContactNum, txtContactNum });
 
-            // ADDRESS PANEL — EXACT SAME
-            pnlAddress.Location = new Point(77, y + 50);
-            pnlAddress.Size = new Size(1300, 520);
-            pnlAddress.FillColor = Color.FromArgb(248, 249, 252);
-            pnlAddress.ShadowColor = Color.FromArgb(100, 100, 100);
-            pnlAddress.Radius = 20;
-            pnlAddress.Visible = false;
+            // ====================== ADDRESS PANEL ======================
+            pnlAddress.Location = new Point(77, panelY); pnlAddress.Size = new Size(1300, 520);
+            pnlAddress.FillColor = Color.FromArgb(248, 249, 252); pnlAddress.Radius = 20; pnlAddress.Visible = false;
 
-            int leftX = 40, rightX = 760, fieldY = 70;
+            int lx = 40, rx = 760, fy = 70;
+            lblBilling.Text = "Billing Address"; lblBilling.Font = new Font("Segoe UI", 12F, FontStyle.Bold); lblBilling.Location = new Point(lx, 25);
+            lblShip.Text = "Shipping Address"; lblShip.Font = new Font("Segoe UI", 12F, FontStyle.Bold); lblShip.Location = new Point(rx, 25);
+            lnkCopy.Text = "Copy billing address"; lnkCopy.Location = new Point(rx, 25); lnkCopy.Enabled = false;
 
-            lblBilling.Text = "Billing Address"; lblBilling.Font = new Font("Segoe UI", 12F, FontStyle.Bold); lblBilling.Location = new Point(leftX, 25); lblBilling.AutoSize = true;
-            lblShip.Text = "Shipping Address"; lblShip.Font = new Font("Segoe UI", 12F, FontStyle.Bold); lblShip.Location = new Point(rightX, 25); lblShip.AutoSize = true;
-            lnkCopy.Text = "Copy billing address"; lnkCopy.Location = new Point(rightX, 25); lnkCopy.AutoSize = true; lnkCopy.LinkColor = Color.FromArgb(0, 123, 255);
+            // All address fields (same as Add/Edit)
+            lblBCountry.Text = "Country"; lblBCountry.Location = new Point(lx, fy);
+            cmbBCountry.Location = new Point(lx, fy + 25); cmbBCountry.Size = new Size(300, 36); cmbBCountry.Enabled = false;
 
-            // Billing
-            lblBCountry.Text = "Country *"; lblBCountry.Location = new Point(leftX, fieldY); lblBCountry.AutoSize = true;
-            cmbBCountry.Location = new Point(leftX, fieldY + 25); cmbBCountry.Size = new Size(300, 36); cmbBCountry.BorderRadius = 5;
-            cmbBCountry.Items.AddRange(new[] { "Philippines", "United States", "Canada", "United Kingdom", "Australia" });
+            lblBCity.Text = "City"; lblBCity.Location = new Point(lx, fy + 80);
+            txtBCity.Location = new Point(lx, fy + 105); txtBCity.Size = new Size(300, 36); txtBCity.ReadOnly = true;
 
-            lblBCity.Text = "City *"; lblBCity.Location = new Point(leftX, fieldY + 80); lblBCity.AutoSize = true;
-            txtBCity.Location = new Point(leftX, fieldY + 105); txtBCity.Size = new Size(300, 36); txtBCity.BorderRadius = 5;
+            lblBZip.Text = "Zip Code"; lblBZip.Location = new Point(lx, fy + 160);
+            txtBZip.Location = new Point(lx, fy + 185); txtBZip.Size = new Size(150, 36); txtBZip.ReadOnly = true;
 
-            lblBZip.Text = "Zip Code *"; lblBZip.Location = new Point(leftX, fieldY + 160); lblBZip.AutoSize = true;
-            txtBZip.Location = new Point(leftX, fieldY + 185); txtBZip.Size = new Size(150, 36); txtBZip.BorderRadius = 5;
+            lblBLine1.Text = "Address Line 1"; lblBLine1.Location = new Point(lx, fy + 240);
+            txtBLine1.Location = new Point(lx, fy + 265); txtBLine1.Size = new Size(500, 36); txtBLine1.ReadOnly = true;
 
-            lblBLine1.Text = "Address Line 1 *"; lblBLine1.Location = new Point(leftX, fieldY + 240); lblBLine1.AutoSize = true;
-            txtBLine1.Location = new Point(leftX, fieldY + 265); txtBLine1.Size = new Size(500, 36); txtBLine1.BorderRadius = 5;
+            lblBLine2.Text = "Address Line 2"; lblBLine2.Location = new Point(lx, fy + 320);
+            txtBLine2.Location = new Point(lx, fy + 345); txtBLine2.Size = new Size(500, 36); txtBLine2.ReadOnly = true;
 
-            lblBLine2.Text = "Address Line 2"; lblBLine2.Location = new Point(leftX, fieldY + 320); lblBLine2.AutoSize = true;
-            txtBLine2.Location = new Point(leftX, fieldY + 345); txtBLine2.Size = new Size(500, 36); txtBLine2.BorderRadius = 5;
+            // Shipping fields (same)
+            lblSCountry.Text = "Country"; lblSCountry.Location = new Point(rx, fy);
+            cmbSCountry.Location = new Point(rx, fy + 25); cmbSCountry.Size = new Size(300, 36); cmbSCountry.Enabled = false;
 
-            // Shipping
-            lblSCountry.Text = "Country *"; lblSCountry.Location = new Point(rightX, fieldY); lblSCountry.AutoSize = true;
-            cmbSCountry.Location = new Point(rightX, fieldY + 25); cmbSCountry.Size = new Size(300, 36); cmbSCountry.BorderRadius = 5;
-            cmbSCountry.Items.AddRange(new[] { "Philippines", "United States", "Canada", "United Kingdom", "Australia" });
+            lblSCity.Text = "City"; lblSCity.Location = new Point(rx, fy + 80);
+            txtSCity.Location = new Point(rx, fy + 105); txtSCity.Size = new Size(300, 36); txtSCity.ReadOnly = true;
 
-            lblSCity.Text = "City *"; lblSCity.Location = new Point(rightX, fieldY + 80); lblSCity.AutoSize = true;
-            txtSCity.Location = new Point(rightX, fieldY + 105); txtSCity.Size = new Size(300, 36); txtSCity.BorderRadius = 5;
+            lblSZip.Text = "Zip Code"; lblSZip.Location = new Point(rx, fy + 160);
+            txtSZip.Location = new Point(rx, fy + 185); txtSZip.Size = new Size(150, 36); txtSZip.ReadOnly = true;
 
-            lblSZip.Text = "Zip Code *"; lblSZip.Location = new Point(rightX, fieldY + 160); lblSZip.AutoSize = true;
-            txtSZip.Location = new Point(rightX, fieldY + 185); txtSZip.Size = new Size(150, 36); txtSZip.BorderRadius = 5;
+            lblSLine1.Text = "Address Line 1"; lblSLine1.Location = new Point(rx, fy + 240);
+            txtSLine1.Location = new Point(rx, fy + 265); txtSLine1.Size = new Size(500, 36); txtSLine1.ReadOnly = true;
 
-            lblSLine1.Text = "Address Line 1 *"; lblSLine1.Location = new Point(rightX, fieldY + 240); lblSLine1.AutoSize = true;
-            txtSLine1.Location = new Point(rightX, fieldY + 265); txtSLine1.Size = new Size(500, 36); txtSLine1.BorderRadius = 5;
-
-            lblSLine2.Text = "Address Line 2"; lblSLine2.Location = new Point(rightX, fieldY + 320); lblSLine2.AutoSize = true;
-            txtSLine2.Location = new Point(rightX, fieldY + 345); txtSLine2.Size = new Size(500, 36); txtSLine2.BorderRadius = 5;
+            lblSLine2.Text = "Address Line 2"; lblSLine2.Location = new Point(rx, fy + 320);
+            txtSLine2.Location = new Point(rx, fy + 345); txtSLine2.Size = new Size(500, 36); txtSLine2.ReadOnly = true;
 
             pnlAddress.Controls.AddRange(new Control[] {
                 lblBilling, lblShip, lnkCopy,
@@ -208,30 +218,48 @@ namespace IT13
                 lblSCountry, cmbSCountry, lblSCity, txtSCity, lblSZip, txtSZip, lblSLine1, txtSLine1, lblSLine2, txtSLine2
             });
 
-            // BOTTOM — Only Back Button
-            bottomPanel.Location = new Point(0, 800);
-            bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            // ====================== REMARKS PANEL ======================
+            pnlRemarks.Location = new Point(77, panelY); pnlRemarks.Size = new Size(1300, 320);
+            pnlRemarks.FillColor = Color.FromArgb(248, 249, 252); pnlRemarks.Radius = 20; pnlRemarks.Visible = false;
 
+            lblRemarksTitle.Text = "Remarks / Additional Notes";
+            lblRemarksTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblRemarksTitle.Location = new Point(40, 30);
+
+            txtRemarks.Location = new Point(40, 70);
+            txtRemarks.Size = new Size(1220, 220);
+            txtRemarks.Multiline = true;
+            txtRemarks.BorderRadius = 8;
+            txtRemarks.Font = new Font("Segoe UI", 10F);
+            txtRemarks.ScrollBars = ScrollBars.Vertical;
+            txtRemarks.ReadOnly = true;
+            txtRemarks.BackColor = Color.WhiteSmoke;
+
+            pnlRemarks.Controls.Add(lblRemarksTitle);
+            pnlRemarks.Controls.Add(txtRemarks);
+
+            // ====================== BACK BUTTON ======================
             btnBack.Text = "Back to List";
             btnBack.Location = new Point(1330, 20);
             btnBack.Size = new Size(180, 40);
-            btnBack.BorderRadius = 8;
             btnBack.FillColor = Color.FromArgb(100, 88, 255);
             btnBack.ForeColor = Color.White;
-
+            btnBack.BorderRadius = 8;
             bottomPanel.Controls.Add(btnBack);
 
+            // ====================== ADD ALL TO CONTENT ======================
             contentPanel.Controls.AddRange(new Control[] {
                 lblHeader, lblRequired, lblNote,
                 lblTitle, txtTitle, lblFName, txtFName, lblLName, txtLName, lblEmail, txtEmail,
                 lblCompany, txtCompany, lblPhone, txtPhone, lblPayment, cmbPayment, lblStatus, cmbStatus,
-                btnOther, btnAddress, pnlOther, pnlAddress
+                btnOther, btnAddress, btnRemarks,
+                pnlOther, pnlAddress, pnlRemarks
             });
 
-            this.ClientSize = new Size(1914, 1055);
             this.Controls.Add(mainPanel);
+            this.ClientSize = new Size(1914, 1020);
             this.Text = "View Supplier";
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             mainPanel.ResumeLayout(false);
             scrollPanel.ResumeLayout(false);
@@ -239,16 +267,18 @@ namespace IT13
             bottomPanel.ResumeLayout(false);
             pnlOther.ResumeLayout(false);
             pnlAddress.ResumeLayout(false);
+            pnlRemarks.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
-        private Guna2ShadowPanel mainPanel, pnlOther, pnlAddress;
+        // ====================== ALL CONTROLS ======================
+        private Guna2ShadowPanel mainPanel, pnlOther, pnlAddress, pnlRemarks;
         private Guna2Panel scrollPanel, contentPanel, bottomPanel;
         private Label lblHeader, lblRequired, lblNote, lblTitle, lblFName, lblLName, lblEmail, lblCompany, lblPhone, lblPayment, lblStatus;
-        private Guna2TextBox txtTitle, txtFName, txtLName, txtEmail, txtCompany, txtPhone;
+        private Guna2TextBox txtTitle, txtFName, txtLName, txtEmail, txtCompany, txtPhone, txtRemarks;
         private Guna2ComboBox cmbPayment, cmbStatus;
-        private Guna2Button btnOther, btnAddress, btnBack;
-        private Label lblContactPerson, lblContactNum, lblBilling, lblShip;
+        private Guna2Button btnOther, btnAddress, btnRemarks, btnBack;
+        private Label lblContactPerson, lblContactNum, lblBilling, lblShip, lblRemarksTitle;
         private Guna2TextBox txtContactPerson, txtContactNum;
         private LinkLabel lnkCopy;
         private Label lblBCountry, lblBCity, lblBZip, lblBLine1, lblBLine2, lblSCountry, lblSCity, lblSZip, lblSLine1, lblSLine2;

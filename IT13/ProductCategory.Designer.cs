@@ -4,14 +4,12 @@ namespace IT13
     partial class ProductCategory
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
             base.Dispose(disposing);
         }
-
         private void InitializeComponent()
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
@@ -19,9 +17,8 @@ namespace IT13
                 BackColor = Color.FromArgb(100, 88, 255),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 12F, FontStyle.Bold), // Bigger header
-                Alignment = DataGridViewContentAlignment.MiddleCenter
+                Alignment = DataGridViewContentAlignment.MiddleCenter
             };
-
             mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             label1 = new Label();
@@ -48,15 +45,13 @@ namespace IT13
             Filter = new Guna.UI2.WinForms.Guna2ComboBox();
             btnsearchcat = new Guna.UI2.WinForms.Guna2Button();
             txtboxsearch = new Guna.UI2.WinForms.Guna2TextBox();
-
             mainpanel.SuspendLayout();
             guna2Panel1.SuspendLayout();
             guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)datagridviewcategory).BeginInit();
             SuspendLayout();
-
-            // MAIN PANEL
-            mainpanel.BackColor = Color.Transparent;
+            // MAIN PANEL
+            mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(guna2Panel1);
             mainpanel.Controls.Add(guna2ShadowPanel1);
             mainpanel.Controls.Add(Export);
@@ -71,9 +66,8 @@ namespace IT13
             mainpanel.ShadowColor = Color.Black;
             mainpanel.Size = new Size(1602, 878);
             mainpanel.TabIndex = 1;
-
-            // PAGINATION PANEL
-            guna2Panel1.Controls.Add(label1);
+            // PAGINATION PANEL
+            guna2Panel1.Controls.Add(label1);
             guna2Panel1.Controls.Add(btngreaterthan);
             guna2Panel1.Controls.Add(btn9);
             guna2Panel1.Controls.Add(btn8);
@@ -89,14 +83,12 @@ namespace IT13
             guna2Panel1.Name = "guna2Panel1";
             guna2Panel1.Size = new Size(1458, 36);
             guna2Panel1.TabIndex = 7;
-
             label1.AutoSize = true;
             label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
             label1.Location = new Point(16, 8);
             label1.Text = "Showing 1-10 of 100";
-
-            // PAGINATION BUTTONS
-            SetupPaginationButton(btngreaterthan, ">", 1408);
+            // PAGINATION BUTTONS
+            SetupPaginationButton(btngreaterthan, ">", 1408);
             SetupPaginationButton(btn9, "9", 1378);
             SetupPaginationButton(btn8, "8", 1348);
             SetupPaginationButton(btn7, "7", 1318);
@@ -107,9 +99,8 @@ namespace IT13
             SetupPaginationButton(btn2, "2", 1168);
             SetupPaginationButton(btn1, "1", 1138);
             SetupPaginationButton(btnlessthan, "<", 1108);
-
-            // DATAGRIDVIEW PANEL
-            guna2ShadowPanel1.BackColor = Color.Transparent;
+            // DATAGRIDVIEW PANEL
+            guna2ShadowPanel1.BackColor = Color.Transparent;
             guna2ShadowPanel1.Controls.Add(datagridviewcategory);
             guna2ShadowPanel1.FillColor = Color.White;
             guna2ShadowPanel1.Location = new Point(77, 104);
@@ -117,9 +108,8 @@ namespace IT13
             guna2ShadowPanel1.Radius = 5;
             guna2ShadowPanel1.Size = new Size(1458, 716);
             guna2ShadowPanel1.TabIndex = 5;
-
-            // DATAGRIDVIEW
-            datagridviewcategory.AllowUserToAddRows = false;
+            // DATAGRIDVIEW
+            datagridviewcategory.AllowUserToAddRows = false;
             datagridviewcategory.AllowUserToResizeColumns = false;
             datagridviewcategory.AllowUserToResizeRows = false;
             datagridviewcategory.ColumnHeadersDefaultCellStyle = headerStyle;
@@ -135,44 +125,36 @@ namespace IT13
             datagridviewcategory.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             datagridviewcategory.CellPainting += datagridviewcategory_CellPainting;
             datagridviewcategory.CellClick += datagridviewcategory_CellClick;
-
-            // COLUMNS – WIDER & CLEAN
-            colID.HeaderText = "ID";
+            // COLUMNS – WIDER & CLEAN
+            colID.HeaderText = "ID";
             colID.Name = "colID";
             colID.Width = 160;
-
             colName.HeaderText = "Category Name";
             colName.Name = "colName";
             colName.Width = 500;
-
             colDate.HeaderText = "Date";
             colDate.Name = "colDate";
             colDate.Width = 180;
-
             colStatus.HeaderText = "Status";
             colStatus.Name = "colStatus";
             colStatus.Width = 140;
-
             colActions.HeaderText = "Actions";
             colActions.Name = "colActions";
             colActions.Width = 120;
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
             datagridviewcategory.Columns.AddRange(new DataGridViewColumn[]
             {
-    colID, colName, colDate, colStatus, colActions
+colID, colName, colDate, colStatus, colActions
             });
-
-            // EXPORT COMBOBOX – SHIFTED RIGHT
-            Export.Location = new Point(1400, 45);
+            // EXPORT COMBOBOX – SHIFTED RIGHT
+            Export.Location = new Point(1400, 45);
             Export.Size = new Size(128, 36);
             Export.DropDownStyle = ComboBoxStyle.DropDownList;
             Export.Font = new Font("Segoe UI", 10F);
             Export.ItemHeight = 30;
             Export.TabIndex = 4;
-
-            // ADD CATEGORY BUTTON
-            btnaddcategory.Location = new Point(1235, 45);
+            // ADD CATEGORY BUTTON
+            btnaddcategory.Location = new Point(1235, 45);
             btnaddcategory.Size = new Size(155, 36);
             btnaddcategory.Text = "+Add Category";
             btnaddcategory.Click += btnaddcategory_Click;
@@ -181,34 +163,29 @@ namespace IT13
             btnaddcategory.FillColor = Color.FromArgb(0, 123, 255);
             btnaddcategory.ForeColor = Color.White;
             btnaddcategory.BorderRadius = 8;
-
-            // FILTER COMBOBOX
-            Filter.Location = new Point(1100, 45);
+            // FILTER COMBOBOX
+            Filter.Location = new Point(1100, 45);
             Filter.Size = new Size(128, 36);
             Filter.DropDownStyle = ComboBoxStyle.DropDownList;
             Filter.Font = new Font("Segoe UI", 10F);
             Filter.ItemHeight = 30;
             Filter.TabIndex = 2;
-
-            // SEARCH BUTTON
-            btnsearchcat.Location = new Point(537, 41);
+            // SEARCH BUTTON
+            btnsearchcat.Location = new Point(537, 41);
             btnsearchcat.Size = new Size(103, 40);
             btnsearchcat.Text = "Search";
             btnsearchcat.FillColor = Color.FromArgb(0, 123, 255);
             btnsearchcat.ForeColor = Color.White;
             btnsearchcat.BorderRadius = 8;
-
             txtboxsearch.Location = new Point(94, 41);
             txtboxsearch.PlaceholderText = "Search Category";
             txtboxsearch.Size = new Size(437, 40);
             txtboxsearch.TextChanged += txtboxsearch_TextChanged;
-
-            // FORM
-            ClientSize = new Size(1914, 1055);
+            // FORM
+            ClientSize = new Size(1914, 1055);
             Controls.Add(mainpanel);
             Name = "ProductCategory";
             Text = "Product Category";
-
             mainpanel.ResumeLayout(false);
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
@@ -216,20 +193,22 @@ namespace IT13
             ((System.ComponentModel.ISupportInitialize)datagridviewcategory).EndInit();
             ResumeLayout(false);
         }
-
-        // PAGINATION BUTTONS (via SetupPaginationButton)
-        private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
+        // PAGINATION BUTTONS (via SetupPaginationButton)
+        private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
         {
             btn.Text = text;
             btn.Location = new Point(left, 5);
-            btn.Size = new Size(30, 28);
-            btn.FillColor = Color.WhiteSmoke;
-            btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn.BorderRadius = 8;   
+            btn.Size = new Size(36, 32); // Slightly bigger & square
+            btn.FillColor = Color.FromArgb(248, 248, 248); // Light gray background
+            btn.ForeColor = Color.Black; // Black text
+            btn.BorderRadius = 8;
+            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
+            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
+            btn.DisabledState.ForeColor = Color.Gray;
         }
-
-        // CONTROL DECLARATIONS
-        private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
+        // CONTROL DECLARATIONS
+        private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Label label1;
         private Guna.UI2.WinForms.Guna2Button btngreaterthan;
