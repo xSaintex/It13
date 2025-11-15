@@ -53,6 +53,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            labelshow = new Label();
             guna2ShadowPanel3 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             datagridtableaddstock = new Guna.UI2.WinForms.Guna2DataGridView();
             Columnaddnewstock1 = new DataGridViewTextBoxColumn();
@@ -79,9 +80,9 @@
             guna2ShadowPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)datagridtableaddstock).BeginInit();
             SuspendLayout();
-            // 
+            //
             // mainpanel
-            // 
+            //
             mainpanel.BackColor = Color.Transparent;
             mainpanel.Controls.Add(guna2ShadowPanel1);
             mainpanel.Controls.Add(txtboxsearchcompany);
@@ -96,10 +97,11 @@
             mainpanel.ShadowColor = Color.Black;
             mainpanel.Size = new Size(1575, 898);
             mainpanel.TabIndex = 3;
-            // 
+            //
             // guna2ShadowPanel1
-            // 
+            //
             guna2ShadowPanel1.BackColor = Color.Transparent;
+            guna2ShadowPanel1.Controls.Add(labelshow);
             guna2ShadowPanel1.Controls.Add(guna2ShadowPanel3);
             guna2ShadowPanel1.Controls.Add(guna2Button3);
             guna2ShadowPanel1.Controls.Add(btnsavestcok);
@@ -114,9 +116,19 @@
             guna2ShadowPanel1.ShadowColor = Color.Black;
             guna2ShadowPanel1.Size = new Size(1458, 685);
             guna2ShadowPanel1.TabIndex = 5;
-            // 
+            //
+            // labelshow
+            //
+            labelshow.AutoSize = true;
+            labelshow.Font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelshow.Location = new Point(69, 628);
+            labelshow.Name = "labelshow";
+            labelshow.Size = new Size(165, 18);
+            labelshow.TabIndex = 24;
+            labelshow.Text = "Showing 1-10 of 100";
+            //
             // guna2ShadowPanel3
-            // 
+            //
             guna2ShadowPanel3.BackColor = Color.Transparent;
             guna2ShadowPanel3.Controls.Add(datagridtableaddstock);
             guna2ShadowPanel3.FillColor = Color.White;
@@ -126,9 +138,9 @@
             guna2ShadowPanel3.ShadowColor = Color.Black;
             guna2ShadowPanel3.Size = new Size(1315, 500);
             guna2ShadowPanel3.TabIndex = 22;
-            // 
+            //
             // datagridtableaddstock
-            // 
+            //
             dataGridViewCellStyle1.BackColor = Color.White;
             datagridtableaddstock.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -139,7 +151,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             datagridtableaddstock.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            datagridtableaddstock.ColumnHeadersHeight = 35;
+            datagridtableaddstock.ColumnHeadersHeight = 45;
             datagridtableaddstock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             datagridtableaddstock.Columns.AddRange(new DataGridViewColumn[] { Columnaddnewstock1, Columnaddnewstock2, Columnaddnewstock3, Columnaddnewstock4, Columnaddnewstock5 });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -178,39 +190,39 @@
             datagridtableaddstock.ThemeStyle.RowsStyle.Height = 29;
             datagridtableaddstock.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             datagridtableaddstock.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            // 
+            //
             // Columnaddnewstock1
-            // 
+            //
             Columnaddnewstock1.HeaderText = "Product Name";
             Columnaddnewstock1.MinimumWidth = 6;
             Columnaddnewstock1.Name = "Columnaddnewstock1";
-            // 
+            //
             // Columnaddnewstock2
-            // 
+            //
             Columnaddnewstock2.HeaderText = "Category";
             Columnaddnewstock2.MinimumWidth = 6;
             Columnaddnewstock2.Name = "Columnaddnewstock2";
-            // 
+            //
             // Columnaddnewstock3
-            // 
-            Columnaddnewstock3.HeaderText = "Quantity ";
+            //
+            Columnaddnewstock3.HeaderText = "Quantity";
             Columnaddnewstock3.MinimumWidth = 6;
             Columnaddnewstock3.Name = "Columnaddnewstock3";
-            // 
+            //
             // Columnaddnewstock4
-            // 
+            //
             Columnaddnewstock4.HeaderText = "Unit Cost";
             Columnaddnewstock4.MinimumWidth = 6;
             Columnaddnewstock4.Name = "Columnaddnewstock4";
-            // 
+            //
             // Columnaddnewstock5
-            // 
+            //
             Columnaddnewstock5.HeaderText = "Subtotal";
             Columnaddnewstock5.MinimumWidth = 6;
             Columnaddnewstock5.Name = "Columnaddnewstock5";
-            // 
+            //
             // guna2Button3
-            // 
+            //
             guna2Button3.BorderRadius = 5;
             guna2Button3.CustomizableEdges = customizableEdges1;
             guna2Button3.DisabledState.BorderColor = Color.DarkGray;
@@ -225,9 +237,9 @@
             guna2Button3.Size = new Size(103, 29);
             guna2Button3.TabIndex = 23;
             guna2Button3.Text = "Save Stock";
-            // 
+            //
             // btnsavestcok
-            // 
+            //
             btnsavestcok.BorderRadius = 5;
             btnsavestcok.CustomizableEdges = customizableEdges3;
             btnsavestcok.DisabledState.BorderColor = Color.DarkGray;
@@ -242,9 +254,9 @@
             btnsavestcok.Size = new Size(87, 29);
             btnsavestcok.TabIndex = 22;
             btnsavestcok.Text = "Cancel";
-            // 
+            //
             // labelitemtable
-            // 
+            //
             labelitemtable.AutoSize = true;
             labelitemtable.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelitemtable.Location = new Point(685, 24);
@@ -252,9 +264,9 @@
             labelitemtable.Size = new Size(120, 24);
             labelitemtable.TabIndex = 11;
             labelitemtable.Text = "Item Table";
-            // 
+            //
             // btnsearchprod
-            // 
+            //
             btnsearchprod.BorderRadius = 5;
             btnsearchprod.CustomizableEdges = customizableEdges5;
             btnsearchprod.DisabledState.BorderColor = Color.DarkGray;
@@ -270,9 +282,9 @@
             btnsearchprod.TabIndex = 13;
             btnsearchprod.Text = "Search";
             btnsearchprod.Click += guna2Button1_Click;
-            // 
+            //
             // btnaddincstock
-            // 
+            //
             btnaddincstock.BorderRadius = 5;
             btnaddincstock.CustomizableEdges = customizableEdges7;
             btnaddincstock.DisabledState.BorderColor = Color.DarkGray;
@@ -287,9 +299,9 @@
             btnaddincstock.Size = new Size(143, 40);
             btnaddincstock.TabIndex = 21;
             btnaddincstock.Text = " + Add Inv Stock";
-            // 
+            //
             // txtboxsearchproductname
-            // 
+            //
             txtboxsearchproductname.BackColor = Color.White;
             txtboxsearchproductname.BorderColor = Color.LightGray;
             txtboxsearchproductname.BorderRadius = 5;
@@ -310,9 +322,9 @@
             txtboxsearchproductname.ShadowDecoration.CustomizableEdges = customizableEdges10;
             txtboxsearchproductname.Size = new Size(334, 40);
             txtboxsearchproductname.TabIndex = 12;
-            // 
+            //
             // txtboxsearchcompany
-            // 
+            //
             txtboxsearchcompany.BackColor = Color.White;
             txtboxsearchcompany.BorderColor = Color.LightGray;
             txtboxsearchcompany.BorderRadius = 5;
@@ -333,9 +345,9 @@
             txtboxsearchcompany.ShadowDecoration.CustomizableEdges = customizableEdges12;
             txtboxsearchcompany.Size = new Size(334, 40);
             txtboxsearchcompany.TabIndex = 8;
-            // 
+            //
             // btnsearchcompany
-            // 
+            //
             btnsearchcompany.BorderRadius = 5;
             btnsearchcompany.CustomizableEdges = customizableEdges13;
             btnsearchcompany.DisabledState.BorderColor = Color.DarkGray;
@@ -350,9 +362,9 @@
             btnsearchcompany.Size = new Size(103, 40);
             btnsearchcompany.TabIndex = 9;
             btnsearchcompany.Text = "Search";
-            // 
+            //
             // labeladdnewstock
-            // 
+            //
             labeladdnewstock.AutoSize = true;
             labeladdnewstock.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labeladdnewstock.Location = new Point(24, 19);
@@ -360,9 +372,9 @@
             labeladdnewstock.Size = new Size(244, 36);
             labeladdnewstock.TabIndex = 0;
             labeladdnewstock.Text = "Add New Stock";
-            // 
+            //
             // labelcompanyname
-            // 
+            //
             labelcompanyname.AutoSize = true;
             labelcompanyname.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelcompanyname.Location = new Point(58, 110);
@@ -370,9 +382,9 @@
             labelcompanyname.Size = new Size(127, 18);
             labelcompanyname.TabIndex = 10;
             labelcompanyname.Text = "Company Name *";
-            // 
+            //
             // labelfeildsrequired
-            // 
+            //
             labelfeildsrequired.AutoSize = true;
             labelfeildsrequired.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelfeildsrequired.Location = new Point(24, 55);
@@ -381,9 +393,9 @@
             labelfeildsrequired.TabIndex = 6;
             labelfeildsrequired.Text = "Fields marked with an asterisk (*) are required.";
             labelfeildsrequired.Click += label2_Click;
-            // 
+            //
             // btninventory
-            // 
+            //
             btninventory.BorderRadius = 5;
             btninventory.CustomizableEdges = customizableEdges15;
             btninventory.DisabledState.BorderColor = Color.DarkGray;
@@ -399,9 +411,9 @@
             btninventory.TabIndex = 8;
             btninventory.Text = "Inventory";
             btninventory.Click += btninventory_Click;
-            // 
+            //
             // btnadd
-            // 
+            //
             btnadd.BorderRadius = 5;
             btnadd.CustomizableEdges = customizableEdges17;
             btnadd.DisabledState.BorderColor = Color.DarkGray;
@@ -417,9 +429,9 @@
             btnadd.TabIndex = 7;
             btnadd.Text = "Add Stock";
             btnadd.Click += btnadd_Click;
-            // 
+            //
             // btnhome
-            // 
+            //
             btnhome.BorderRadius = 5;
             btnhome.CustomizableEdges = customizableEdges19;
             btnhome.DisabledState.BorderColor = Color.DarkGray;
@@ -435,9 +447,9 @@
             btnhome.TabIndex = 6;
             btnhome.Text = "Home";
             btnhome.Click += btnhome_Click;
-            // 
+            //
             // AddStock
-            // 
+            //
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1906, 1055);
@@ -470,16 +482,17 @@
         private Label labelitemtable;
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel3;
         private Guna.UI2.WinForms.Guna2DataGridView datagridtableaddstock;
-        private DataGridViewTextBoxColumn Columnaddnewstock1;
-        private DataGridViewTextBoxColumn Columnaddnewstock2;
-        private DataGridViewTextBoxColumn Columnaddnewstock3;
-        private DataGridViewTextBoxColumn Columnaddnewstock4;
-        private DataGridViewTextBoxColumn Columnaddnewstock5;
         private Guna.UI2.WinForms.Guna2Button btninventory;
         private Guna.UI2.WinForms.Guna2Button btnadd;
         private Guna.UI2.WinForms.Guna2Button btnhome;
         private Guna.UI2.WinForms.Guna2Button guna2Button3;
         private Guna.UI2.WinForms.Guna2Button btnsavestcok;
         private Guna.UI2.WinForms.Guna2Button btnaddincstock;
+        private Label labelshow;
+        private DataGridViewTextBoxColumn Columnaddnewstock1;
+        private DataGridViewTextBoxColumn Columnaddnewstock2;
+        private DataGridViewTextBoxColumn Columnaddnewstock3;
+        private DataGridViewTextBoxColumn Columnaddnewstock4;
+        private DataGridViewTextBoxColumn Columnaddnewstock5;
     }
 }

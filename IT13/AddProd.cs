@@ -27,6 +27,8 @@ namespace IT13
             btnhome.Click += btnhome_Click;
             btnproductlist.Click += btnproductlist_Click;
             btnadd.Click += btnadd_Click;
+            btncancel.Click += btncancel_Click;
+            btnaddprod.Click += btnaddprod_Click;
 
             // Apply border radius to action buttons
             ApplyButtonStyles();
@@ -48,7 +50,7 @@ namespace IT13
             StyleBreadcrumbButton(btnproductlist, "Product List", false);
 
             // Style the add button (this would be the active/current page)
-            StyleBreadcrumbButton(btnadd, "Add stock", false);
+            StyleBreadcrumbButton(btnadd, "Add Product", false);
         }
 
         private void StyleBreadcrumbButton(Guna.UI2.WinForms.Guna2Button btn, string text, bool showHomeIcon = false)
@@ -104,6 +106,131 @@ namespace IT13
         private void btnproductlist_Click(object sender, EventArgs e)
         {
             // Navigate to ProductList form
+            NavigateToProductList();
+        }
+
+        private void btnadd_Click(object sender, EventArgs e)
+        {
+            // Already on Add Product page, so do nothing or refresh
+            // This is the current active page
+        }
+
+        private void btncancel_Click(object sender, EventArgs e)
+        {
+            // Cancel button - navigate back to ProductList
+            NavigateToProductList();
+        }
+
+        private void btnaddprod_Click(object sender, EventArgs e)
+        {
+            // Validate Product Name
+            string productName = guna2TextBox1.Text.Trim();
+            if (string.IsNullOrEmpty(productName) || productName == "Enter Product Name")
+            {
+                MessageBox.Show("Please enter a product name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate Unit Cost
+            string unitCostStr = guna2TextBox2.Text.Trim().Replace("₱", "").Replace(",", "").Trim();
+            if (string.IsNullOrEmpty(unitCostStr) || unitCostStr == "0.00")
+            {
+                MessageBox.Show("Please enter a valid unit cost.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate Selling Price
+            string sellingPriceStr = guna2TextBox3.Text.Trim().Replace("₱", "").Replace(",", "").Trim();
+            if (string.IsNullOrEmpty(sellingPriceStr) || sellingPriceStr == "0.00")
+            {
+                MessageBox.Show("Please enter a valid selling price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate Category
+            if (guna2ComboBox1.SelectedIndex < 0 || guna2ComboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a product category.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate Supplier
+            if (guna2ComboBox2.SelectedIndex < 0 || guna2ComboBox2.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a supplier company.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate Status
+            if (guna2ComboBox3.SelectedIndex < 0 || guna2ComboBox3.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a product status.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get Description
+            string description = guna2TextBox4.Text.Trim();
+            if (string.IsNullOrEmpty(description) || description == "Enter product description....")
+            {
+                description = "";
+            }
+
+            // Confirm save
+            DialogResult result = MessageBox.Show("Add this product to the product list?", "Confirm Add", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            // Create product item
+            var productItem = new ProductItem
+            {
+                ProductName = productName,
+                Category = guna2ComboBox1.SelectedItem.ToString(),
+                UnitCost = "₱" + unitCostStr,
+                SellingPrice = "₱" + sellingPriceStr,
+                PrimarySupplier = guna2ComboBox2.SelectedItem.ToString(),
+                Status = guna2ComboBox3.SelectedItem.ToString(),
+                Description = description
+            };
+
+            // Navigate to ProductList and add the product
+            Form1 parentForm = this.ParentForm as Form1;
+            if (parentForm != null)
+            {
+                parentForm.navBar1.PageTitle = "Product List";
+
+                ProductList productListForm = new ProductList();
+
+                // Add the product to the list
+                productListForm.AddProduct(productItem);
+
+                productListForm.TopLevel = false;
+                productListForm.FormBorderStyle = FormBorderStyle.None;
+                productListForm.Dock = DockStyle.Fill;
+
+                parentForm.pnlContent.Controls.Clear();
+                parentForm.pnlContent.Controls.Add(productListForm);
+                productListForm.Show();
+
+                MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // Helper class to hold product item data
+        public class ProductItem
+        {
+            public string ProductName { get; set; }
+            public string Category { get; set; }
+            public string UnitCost { get; set; }
+            public string SellingPrice { get; set; }
+            public string PrimarySupplier { get; set; }
+            public string Status { get; set; }
+            public string Description { get; set; }
+        }
+
+        private void NavigateToProductList()
+        {
             // Get the parent form (Form1)
             Form1 parentForm = this.ParentForm as Form1;
             if (parentForm != null)
@@ -122,12 +249,11 @@ namespace IT13
                 parentForm.pnlContent.Controls.Add(productListForm);
                 productListForm.Show();
             }
-        }
-
-        private void btnadd_Click(object sender, EventArgs e)
-        {
-            // Already on Add Product page, so do nothing or refresh
-            // This is the current active page
+            else
+            {
+                // Fallback if parent form is not found
+                this.Close();
+            }
         }
     }
 }
