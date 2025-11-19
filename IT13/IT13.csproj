@@ -10,6 +10,15 @@
 
   <ItemGroup>
     <Folder Include="Db\" />
+    <Folder Include="EMPLOYEES\" />
+    <Folder Include="RENTAL\New Rental\" />
+    <Folder Include="RENTAL\Rental List\" />
+    <Folder Include="REPORTS\Inventory Report\" />
+    <Folder Include="REPORTS\Sales Report\" />
+    <Folder Include="RETURNS\Returns List\" />
+    <Folder Include="RETURNS\Supplier Returns\" />
+    <Folder Include="USERS\User Admins\" />
+    <Folder Include="USERS\User List\" />
   </ItemGroup>
 
   <ItemGroup>

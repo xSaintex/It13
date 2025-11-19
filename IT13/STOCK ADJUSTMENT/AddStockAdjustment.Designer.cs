@@ -17,8 +17,8 @@ namespace IT13
         private void InitializeComponent()
         {
             mainpanel = new Guna2ShadowPanel();
-            lblHeader = new Label();     // NEW
-            lblRequired = new Label();   // NEW
+            lblHeader = new Label();     
+            lblRequired = new Label();  
 
             lblItem = new Label(); comboItem = new Guna2ComboBox();
             lblRequested = new Label(); comboRequestedBy = new Guna2ComboBox();

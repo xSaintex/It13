@@ -65,7 +65,14 @@ namespace IT13
 
                 if (string.IsNullOrEmpty(label)) continue;
 
-                bool hasDropdown = btn == btnProducts || btn == btnOrders || btn == btnCustomers || btn == btnDeliveries;
+                bool hasDropdown = btn == btnProducts || 
+                                   btn == btnOrders || 
+                                   btn == btnCustomers || 
+                                   btn == btnDeliveries || 
+                                   btn == btnReturns || 
+                                   btn == btnRental || 
+                                   btn == btnUsers || 
+                                   btn == btnReports; 
 
                 // YOUR EXACT EMOJIS — LITERALLY IN THE CODE
                 string icon = label switch
@@ -135,6 +142,31 @@ namespace IT13
             {
                 "🚛 Delivery List",
                 "🚐 Delivery Vehicles"
+            });
+
+            CreateSubmenuIfMissing(btnReturns, new[]
+            {
+                "👤 Customer Returns",
+                "📦 Supplier Returns",
+                "📝 Returns List"
+            });
+
+            CreateSubmenuIfMissing(btnRental, new[]
+            {
+                "📝 Rental List",
+                "➕ New Rental"
+            });
+
+            CreateSubmenuIfMissing(btnUsers, new[]
+            {
+                "👥 User List",
+                "🛡️ User Admins"
+            });
+
+            CreateSubmenuIfMissing(btnReports, new[]
+            {
+                "📈 Sales Report",
+                "📊 Inventory Report"
             });
 
             try { if (btnSuppliers != null) btnSuppliers.Visible = false; } catch { }

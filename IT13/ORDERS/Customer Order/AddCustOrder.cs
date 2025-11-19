@@ -16,7 +16,6 @@ namespace IT13
         private decimal discount = 0;
         private decimal shippingFee = 0;
 
-        // Additional controls needed
         private Label lblSubtotalLabel;
         private Label lblSubtotalValue;
         private Label lblDiscountLabel;
@@ -32,7 +31,6 @@ namespace IT13
         private Guna.UI2.WinForms.Guna2Button btnCancel;
         private Guna.UI2.WinForms.Guna2Button btnSaveOrder;
 
-        // Address tab controls
         private Guna.UI2.WinForms.Guna2ShadowPanel addressPanel;
         private Label lblBillingAddress;
         private Guna.UI2.WinForms.Guna2TextBox txtBillingAddress;
@@ -50,7 +48,7 @@ namespace IT13
 
         private void InitializeAdditionalControls()
         {
-            // Create the totals section at the bottom right (after the table)
+  
             int startX = 972;
             int startY = 1280;
 
@@ -235,39 +233,33 @@ namespace IT13
             txtShippingAddress.PlaceholderText = "Enter shipping address";
             txtShippingAddress.Font = new Font("Segoe UI", 10F);
 
-            // Add controls to address panel
             addressPanel.Controls.Add(lblBillingAddress);
             addressPanel.Controls.Add(txtBillingAddress);
             addressPanel.Controls.Add(lblShippingAddress);
             addressPanel.Controls.Add(txtShippingAddress);
 
-            // Add address panel to main panel
             mainpanel.Controls.Add(addressPanel);
             addressPanel.BringToFront();
         }
 
         private void InitializeFormSettings()
         {
-            // Enable scrolling for the form
+
             this.AutoScroll = true;
             this.AutoScrollMinSize = new Size(0, 2100);
             this.WindowState = FormWindowState.Maximized;
 
-            // Set date fields with current date
             txtboxorder.Text = DateTime.Now.ToString("MM/dd/yyyy");
             txtboxorder.ReadOnly = true;
 
-            // Configure delivery date as date picker style
             txtboxdelivery.PlaceholderText = "dd/mm/yyyy";
 
-            // Format DataGridView
             dgvItems.AutoGenerateColumns = false;
             dgvItems.AllowUserToAddRows = false;
             dgvItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvItems.MultiSelect = false;
             dgvItems.RowTemplate.Height = 40;
 
-            // Update button styles to match the image
             guna2Button1.FillColor = Color.FromArgb(94, 148, 255);
             guna2Button2.FillColor = Color.White;
             guna2Button2.ForeColor = Color.Black;
@@ -308,7 +300,6 @@ namespace IT13
             comboxcompanyname.SelectedIndexChanged += ComboxCompanyName_SelectedIndexChanged;
             txtSearch.KeyPress += TxtSearch_KeyPress;
 
-            // Tab switching
             guna2Button1.Click += BtnCustomerInfo_Click;
             guna2Button2.Click += BtnAddress_Click;
         }
@@ -319,7 +310,6 @@ namespace IT13
             guna2ShadowPanel2.Visible = true;
             addressPanel.Visible = false;
 
-            // Update button styles
             guna2Button1.FillColor = Color.FromArgb(94, 148, 255);
             guna2Button1.ForeColor = Color.White;
             guna2Button1.BorderThickness = 0;
@@ -336,7 +326,6 @@ namespace IT13
             guna2ShadowPanel2.Visible = false;
             addressPanel.Visible = true;
 
-            // Update button styles
             guna2Button2.FillColor = Color.FromArgb(94, 148, 255);
             guna2Button2.ForeColor = Color.White;
             guna2Button2.BorderThickness = 0;
@@ -358,22 +347,16 @@ namespace IT13
 
         private void BtnAddProduct_Click(object sender, EventArgs e)
         {
-            // Open the NewCustOrderModal form
             using (NewCustOrderModal modal = new NewCustOrderModal())
             {
-                // Set the modal to be displayed in the center of the parent form
                 modal.StartPosition = FormStartPosition.CenterParent;
 
-                // Show the modal dialog
                 DialogResult result = modal.ShowDialog(this);
 
-                // If the user confirmed adding products in the modal
                 if (result == DialogResult.OK)
                 {
-                    // Get the selected products from the modal and add them to dgvItems
                     AddProductsFromModal(modal);
 
-                    // Recalculate totals after adding products
                     CalculateTotals();
                 }
             }
@@ -452,7 +435,7 @@ namespace IT13
 
         private void LoadCompanyDetails(string companyName)
         {
-            // Simulate loading company data
+
             switch (companyName)
             {
                 case "Company A":
@@ -529,7 +512,6 @@ namespace IT13
             decimal discountAmount = subtotal * (discount / 100);
             decimal total = subtotal - discountAmount + shippingFee;
 
-            // Update labels
             lblSubtotalValue.Text = "₱" + subtotal.ToString("N2");
             lblTotalValue.Text = "₱" + total.ToString("N2");
         }
@@ -614,13 +596,11 @@ namespace IT13
 
             try
             {
-                // Save order to database
                 SaveOrderToDatabase();
 
                 MessageBox.Show("Customer order saved successfully!", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Navigate back to CustOrder and refresh the table
                 NavigateToCustOrder(refreshData: true);
             }
             catch (Exception ex)

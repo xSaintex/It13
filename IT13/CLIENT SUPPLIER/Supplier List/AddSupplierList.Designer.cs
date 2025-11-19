@@ -71,7 +71,6 @@ namespace IT13
             pnlRemarks.SuspendLayout();
             this.SuspendLayout();
 
-            // ==================== MAIN LAYOUT - NO EXTRA SCROLL ====================
             mainPanel.Location = new Point(300, 88);
             mainPanel.Size = new Size(1602, 860);
             mainPanel.FillColor = Color.White;

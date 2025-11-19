@@ -36,12 +36,12 @@ namespace IT13
             // TABS
             btnOther = new Guna2Button(); btnAddress = new Guna2Button();
 
-            // OTHER DETAILS — ROUNDED SHADOW PANEL
+            // OTHER DETAILS 
             pnlOther = new Guna2ShadowPanel();
             lblContactPerson = new Label(); txtContactPerson = new Guna2TextBox();
             lblContactNum = new Label(); txtContactNum = new Guna2TextBox();
 
-            // ADDRESS PANEL — ROUNDED SHADOW PANEL
+            // ADDRESS PANEL 
             pnlAddress = new Guna2ShadowPanel();
             lblBilling = new Label(); lblShip = new Label(); lnkCopy = new LinkLabel();
 
@@ -83,7 +83,7 @@ namespace IT13
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 
-            contentPanel.Size = new Size(1458, 2000); // Extra height
+            contentPanel.Size = new Size(1458, 2000); 
 
             // TOP LAYOUT
             lblHeader.Text = "Customer Information"; lblHeader.Font = new Font("Tahoma", 18F, FontStyle.Bold); lblHeader.Location = new Point(77, 20); lblHeader.AutoSize = true;
@@ -127,7 +127,7 @@ namespace IT13
             btnAddress.Text = "Address"; btnAddress.Location = new Point(237, y); btnAddress.Size = new Size(150, 36); btnAddress.BorderRadius = 5;
             btnAddress.FillColor = Color.WhiteSmoke; btnAddress.ForeColor = Color.Black;
 
-            // OTHER DETAILS — ROUNDED + SHADOW
+            // OTHER DETAILS 
             pnlOther.Location = new Point(77, y + 50);
             pnlOther.Size = new Size(1300, 200);
             pnlOther.FillColor = Color.FromArgb(248, 249, 252);
@@ -143,7 +143,7 @@ namespace IT13
 
             pnlOther.Controls.AddRange(new Control[] { lblContactPerson, txtContactPerson, lblContactNum, txtContactNum });
 
-            // ADDRESS PANEL — FULLY ROUNDED + WIDER
+            // ADDRESS PANEL 
             pnlAddress.Location = new Point(77, y + 50);
             pnlAddress.Size = new Size(1300, 520);
             pnlAddress.FillColor = Color.FromArgb(248, 249, 252);

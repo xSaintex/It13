@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------
-// AddDelivery.cs - FINAL (Same layout as AddStockAdjustment)
+// AddDelivery.cs 
 // ---------------------------------------------------------------------
 using System;
 using System.Drawing;

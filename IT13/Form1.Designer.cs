@@ -30,11 +30,12 @@
             // 
             navBar1.BackColor = Color.White;
             navBar1.Dock = DockStyle.Top;
-            navBar1.Location = new Point(0, 0);
+            navBar1.Location = new Point(260, 0);
             navBar1.Name = "navBar1";
             navBar1.PageTitle = "Dashboard";
-            navBar1.Size = new Size(1857, 80);
+            navBar1.Size = new Size(1579, 80);
             navBar1.TabIndex = 2;
+            navBar1.UserName = "Admin";
             // 
             // pnlContent
             // 
@@ -61,7 +62,7 @@
         }
         #endregion
         private Sidebar sidebar1;
-        public NavBar navBar1;      // Changed to public
-        public Panel pnlContent;    // Changed to public
+        public NavBar navBar1;      
+        public Panel pnlContent;    
     }
 }

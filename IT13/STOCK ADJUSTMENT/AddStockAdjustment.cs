@@ -9,8 +9,8 @@ namespace IT13
         public AddStockAdjustment()
         {
             InitializeComponent();
-            SetupCombos();               // fill all combos
-            datePicker.Value = DateTime.Today;   // default today
+            SetupCombos();              
+            datePicker.Value = DateTime.Today;   
         }
 
         #region ComboBox Setup
@@ -69,10 +69,10 @@ namespace IT13
         #region Validation
         private bool ValidateForm()
         {
-            // Required combo selections
+        
             if (comboItem.SelectedIndex <= 0 ||
                 comboRequestedBy.SelectedIndex <= 0 ||
-                comboReviewedBy.SelectedIndex <= 0 ||   // NEW
+                comboReviewedBy.SelectedIndex <= 0 ||   
                 comboAdjType.SelectedIndex == -1 ||
                 comboStatus.SelectedIndex == -1)
             {

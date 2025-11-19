@@ -16,7 +16,8 @@ namespace IT13
         private CustomerList customerListForm;
         private SupplierList supplierListForm;
         private DeliveryVehicleList deliveryVehicleListForm;
-        private DeliveryList deliveryListForm;  // ← NEW: DeliveryList form instance
+        private DeliveryList deliveryListForm;
+        private CustomerReturns customerReturnsForm;
 
         public Form1()
         {
@@ -123,7 +124,6 @@ namespace IT13
                         LoadDeliveryVehicleListForm();
                         break;
 
-                    // ← NEW: Delivery List
                     case "Delivery List":
                         navBar1.PageTitle = "Delivery List";
                         LoadDeliveryListForm();
@@ -132,9 +132,15 @@ namespace IT13
                     default:
                         navBar1.PageTitle = section;
                         break;
+
+                    case "Customer Returns":
+                        navBar1.PageTitle = "Customer Returns";
+                        LoadCustomerReturnsForm();
+                        break;
+
                 }
             };
-            // NO DEFAULT LOAD — only on click
+
         }
 
         #region Load Form Methods
@@ -269,7 +275,6 @@ namespace IT13
             deliveryVehicleListForm.Show();
         }
 
-        // ← NEW: Load DeliveryList
         private void LoadDeliveryListForm()
         {
             pnlContent.Controls.Clear();
@@ -281,6 +286,19 @@ namespace IT13
             };
             pnlContent.Controls.Add(deliveryListForm);
             deliveryListForm.Show();
+        }
+
+        private void LoadCustomerReturnsForm()
+        {
+            pnlContent.Controls.Clear();
+            customerReturnsForm = new CustomerReturns
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(customerReturnsForm);
+            customerReturnsForm.Show();
         }
 
         #endregion
@@ -304,11 +322,16 @@ namespace IT13
             LoadDeliveryVehicleListForm();
         }
 
-        // ← NEW: Public navigation to Delivery List
         public void NavigateToDeliveryList()
         {
             navBar1.PageTitle = "Delivery List";
             LoadDeliveryListForm();
+        }
+
+        public void NavigateToCustomerReturns()
+        {
+            navBar1.PageTitle = "Customer Returns";
+            LoadCustomerReturnsForm();   
         }
     }
 }

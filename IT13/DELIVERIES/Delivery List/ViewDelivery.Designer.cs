@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------
-// ViewDelivery.designer.cs - FINAL (TOP FIXED, TABLE CLEAN, BUTTONS CENTERED)
+// ViewDelivery.designer.cs 
 // ---------------------------------------------------------------------
 using Guna.UI2.WinForms;
 using System.Drawing;
@@ -202,7 +202,7 @@ lblStatus, pnlStatusBadge
             pnlDetails.Radius = 20;
             pnlDetails.Visible = false;
             lblInfoHeader.Text = "Delivery Information";
-            lblInfoHeader.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblInfoHeader.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblInfoHeader.Location = new Point(30, 25);
             lblInfoHeader.AutoSize = true;
             txtCustomer.Text = "Customer: Incio";

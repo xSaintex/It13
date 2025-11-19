@@ -1,4 +1,5 @@
-﻿using Guna.UI2.WinForms;
+﻿//supplierlist.designer.cs
+using Guna.UI2.WinForms;
 
 namespace IT13
 {

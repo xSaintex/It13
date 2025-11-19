@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------
-// AddDelivery.designer.cs - FINAL (Same layout as AddStockAdjustment)
+// AddDelivery.designer.cs 
 // ---------------------------------------------------------------------
 using Guna.UI2.WinForms;
 using System.Drawing;
