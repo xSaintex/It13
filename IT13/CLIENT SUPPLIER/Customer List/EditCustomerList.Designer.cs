@@ -73,7 +73,7 @@ namespace IT13
 
             // PERFECT SCROLLING
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 700);
+            scrollPanel.Size = new Size(1597, 700);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 
@@ -188,17 +188,17 @@ namespace IT13
 
             y += 180;
 
-            btnOther.Text = "Other Details";
-            btnOther.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            btnOther.Text = "📄 Other Details";
+            btnOther.Font = new Font("Tahoma", 8F, FontStyle.Regular);
             btnOther.Location = new Point(77, y);
-            btnOther.Size = new Size(150, 36);
+            btnOther.Size = new Size(170, 36);
             btnOther.BorderRadius = 5;
             btnOther.FillColor = Color.FromArgb(0, 123, 255);
             btnOther.ForeColor = Color.White;
 
-            btnAddress.Text = "Address";
-            btnAddress.Font = new Font("Poppins", 10F, FontStyle.Bold);
-            btnAddress.Location = new Point(237, y);
+            btnAddress.Text = "📍 Address";
+            btnAddress.Font = new Font("Tahoma", 8F, FontStyle.Regular);
+            btnAddress.Location = new Point(257, y);
             btnAddress.Size = new Size(150, 36);
             btnAddress.BorderRadius = 5;
             btnAddress.FillColor = Color.WhiteSmoke;
@@ -311,9 +311,9 @@ namespace IT13
             });
 
             // BOTTOM PANEL
-            bottomPanel.Location = new Point(0, 700);
+            bottomPanel.Location = new Point(0, 780);
             bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
 
             btnCancel.Text = "Cancel";
             btnCancel.Font = new Font("Poppins", 10.5F, FontStyle.Bold);

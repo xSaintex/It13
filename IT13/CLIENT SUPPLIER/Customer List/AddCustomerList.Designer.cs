@@ -78,7 +78,7 @@ namespace IT13
 
             // SCROLL PANEL — PERFECT HEIGHT (stops exactly at buttons)
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 700);
+            scrollPanel.Size = new Size(1597, 700);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 
@@ -315,9 +315,9 @@ namespace IT13
             });
 
             // BOTTOM PANEL — GLUED TO BOTTOM OF SCROLL
-            bottomPanel.Location = new Point(0, 700);
+            bottomPanel.Location = new Point(0, 780);
             bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
 
             btnCancel.Text = "Cancel";
             btnCancel.Font = new Font("Poppins", 10.5F, FontStyle.Bold);

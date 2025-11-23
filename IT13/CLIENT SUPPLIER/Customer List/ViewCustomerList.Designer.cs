@@ -75,7 +75,7 @@ namespace IT13
 
             // FIXED SCROLLING - exactly like AddSupplierOrder
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 700);
+            scrollPanel.Size = new Size(1597, 700);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
             contentPanel.Size = new Size(1458, 950);
@@ -124,11 +124,21 @@ namespace IT13
 
             y += 180;
 
-            btnOther.Text = "Other Details"; btnOther.Font = new Font("Poppins", 10F, FontStyle.Bold); btnOther.Location = new Point(77, y); btnOther.Size = new Size(150, 36); btnOther.BorderRadius = 5;
-            btnOther.FillColor = Color.FromArgb(0, 123, 255); btnOther.ForeColor = Color.White;
+            btnOther.Text = "📄 Other Details";
+            btnOther.Font = new Font("Tahoma", 8F, FontStyle.Regular);
+            btnOther.Location = new Point(77, y);
+            btnOther.Size = new Size(170, 36);
+            btnOther.BorderRadius = 5;
+            btnOther.FillColor = Color.FromArgb(0, 123, 255);
+            btnOther.ForeColor = Color.White;
 
-            btnAddress.Text = "Address"; btnAddress.Font = new Font("Poppins", 10F, FontStyle.Bold); btnAddress.Location = new Point(237, y); btnAddress.Size = new Size(150, 36); btnAddress.BorderRadius = 5;
-            btnAddress.FillColor = Color.WhiteSmoke; btnAddress.ForeColor = Color.Black;
+            btnAddress.Text = "📍 Address";
+            btnAddress.Font = new Font("Tahoma", 8F, FontStyle.Regular);
+            btnAddress.Location = new Point(257, y);
+            btnAddress.Size = new Size(150, 36);
+            btnAddress.BorderRadius = 5;
+            btnAddress.FillColor = Color.WhiteSmoke;
+            btnAddress.ForeColor = Color.Black;
 
             pnlOther.Location = new Point(77, y + 50); pnlOther.Size = new Size(1300, 200); pnlOther.FillColor = Color.FromArgb(248, 249, 252);
             pnlOther.ShadowColor = Color.FromArgb(100, 100, 100); pnlOther.Radius = 20; pnlOther.Visible = true;
@@ -202,9 +212,9 @@ namespace IT13
                 lblSCountry, cmbSCountry, lblSCity, txtSCity, lblSZip, txtSZip, lblSLine1, txtSLine1, lblSLine2, txtSLine2
             });
 
-            bottomPanel.Location = new Point(0, 700);
+            bottomPanel.Location = new Point(0, 780);
             bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
 
             btnBack.Text = "Back to List"; btnBack.Font = new Font("Poppins", 10.5F, FontStyle.Bold); btnBack.Location = new Point(1330, 20); btnBack.Size = new Size(180, 40); btnBack.BorderRadius = 8;
             btnBack.FillColor = Color.FromArgb(100, 88, 255); btnBack.ForeColor = Color.White;
