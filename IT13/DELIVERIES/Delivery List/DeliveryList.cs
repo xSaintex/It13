@@ -1,307 +1,313 @@
-﻿// ---------------------------------------------------------------------
-// DeliveryList.cs - FINAL (Add + Edit + View FULLY ENABLED)
-// ---------------------------------------------------------------------
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 using Guna.UI2.WinForms;
+
 namespace IT13
 {
     public partial class DeliveryList : Form
     {
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
+
         public DeliveryList()
         {
             InitializeComponent();
-            // Load icons (24x24)
-            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
+            _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
             SetupFilterComboBox();
             SetupExportComboBox();
-            // DataGridView Settings
-            dgvDeliveries.ReadOnly = true;
+            dgvDeliveries.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dgvDeliveries.MultiSelect = false;
+            dgvDeliveries.ReadOnly = true;
             dgvDeliveries.AllowUserToAddRows = false;
             dgvDeliveries.AllowUserToDeleteRows = false;
-            dgvDeliveries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDeliveries.MultiSelect = false;
-            foreach (DataGridViewColumn col in dgvDeliveries.Columns)
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dgvDeliveries.EnableHeadersVisualStyles = false;
-            dgvDeliveries.ColumnHeadersDefaultCellStyle.SelectionBackColor =
-            dgvDeliveries.ColumnHeadersDefaultCellStyle.BackColor;
-            dgvDeliveries.DefaultCellStyle.SelectionBackColor =
-            dgvDeliveries.DefaultCellStyle.BackColor;
-            dgvDeliveries.DefaultCellStyle.SelectionForeColor =
-            dgvDeliveries.DefaultCellStyle.ForeColor;
-            dgvDeliveries.DefaultCellStyle.Font = new Font("Segoe UI", 11F);
+            dgvDeliveries.RowHeadersVisible = false;
+            dgvDeliveries.DefaultCellStyle.SelectionBackColor = dgvDeliveries.DefaultCellStyle.BackColor;
+            dgvDeliveries.DefaultCellStyle.SelectionForeColor = dgvDeliveries.DefaultCellStyle.ForeColor;
+            foreach (DataGridViewColumn c in dgvDeliveries.Columns) c.SortMode = DataGridViewColumnSortMode.NotSortable;
+            dgvDeliveries.DefaultCellStyle.Font = new Font("Poppins", 11F);
             dgvDeliveries.RowTemplate.Height = 45;
-            dgvDeliveries.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dgvDeliveries.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            var colID = dgvDeliveries.Columns["colDeliveryID"];
-            colID.MinimumWidth = 160;
-            colID.Width = 160;
-            colID.FillWeight = 8;
-            dgvDeliveries.Columns["colOrderID"].FillWeight = 20;
-            dgvDeliveries.Columns["colCustomer"].FillWeight = 25;
-            dgvDeliveries.Columns["colDeliveryDate"].FillWeight = 18;
-            dgvDeliveries.Columns["colEmployee"].FillWeight = 18;
-            dgvDeliveries.Columns["colVehicle"].FillWeight = 16;
+            dgvDeliveries.Columns["colDeliveryID"].MinimumWidth = 160;
+            dgvDeliveries.Columns["colDeliveryID"].FillWeight = 10;
+            dgvDeliveries.Columns["colOrderID"].FillWeight = 18;
+            dgvDeliveries.Columns["colCustomer"].FillWeight = 28;
+            dgvDeliveries.Columns["colDeliveryDate"].FillWeight = 14;
+            dgvDeliveries.Columns["colEmployee"].FillWeight = 16;
+            dgvDeliveries.Columns["colVehicle"].FillWeight = 14;
             dgvDeliveries.Columns["colStatus"].FillWeight = 12;
             dgvDeliveries.Columns["colActions"].FillWeight = 14;
-            dgvDeliveries.Columns["colCustomer"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgvDeliveries.Columns["colEmployee"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvDeliveries.Columns["colDeliveryDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDeliveries.Columns["colEmployee"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDeliveries.Columns["colVehicle"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDeliveries.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvDeliveries.Columns["colActions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDeliveries.Columns["colCustomer"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             LoadSampleData();
             UpdateHeaderCheckState();
+            dgvDeliveries.ClearSelection();
+            dgvDeliveries.CurrentCell = null;
+            dgvDeliveries.MouseDown += (s, e) => dgvDeliveries.CurrentCell = null;
         }
-        #region ComboBox Setup
-        private void SetupFilterComboBox()
+
+        private void SetupFilterComboBox()
         {
-            Filter.Items.Clear();
-            Filter.Items.Add("Filter");
-            Filter.Items.Add("All");
-            Filter.Items.Add("Pending");
-            Filter.Items.Add("In Transit");
-            Filter.Items.Add("Delivered");
+            Filter.Items.AddRange(new object[] { "Filter", "All", "Pending", "In Transit", "Delivered" });
             Filter.SelectedIndex = 0;
-            Filter.ForeColor = Color.Black;
-            Filter.SelectedIndexChanged += (sse, ee) =>
-            Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
+            Filter.ForeColor = Color.Gray;
+            Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
+
         private void SetupExportComboBox()
         {
-            Export.Items.Clear();
-            Export.Items.Add("Export Data");
-            Export.Items.Add("Excel");
-            Export.Items.Add("PDF");
-            Export.Items.Add("CSV");
+            Export.Items.AddRange(new object[] { "Export", "Excel", "PDF", "CSV" });
             Export.SelectedIndex = 0;
-            Export.ForeColor = Color.Black;
-            Export.DropDownWidth = 150;
-            Export.SelectedIndexChanged += (sse, ee) =>
-            Export.ForeColor = Export.SelectedIndex == 0 ? Color.Black : Color.FromArgb(68, 88, 112);
+            Export.ForeColor = Color.Gray;
+            Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
-        #endregion
-        #region Sample Data
-        private void LoadSampleData()
+
+        private void LoadSampleData()
         {
-            AddRow("DEL-001", "ORD-1001", "ABC Corporation", "2025-11-18", "Juan Dela Cruz", "Toyota Hiace", "In Transit");
-            AddRow("DEL-002", "ORD-1002", "XYZ Trading", "2025-11-19", "Maria Santos", "Mitsubishi L300", "Pending");
-            AddRow("DEL-003", "ORD-1003", "Global Mart", "2025-11-20", "Pedro Reyes", "Isuzu Elf", "Delivered");
-            AddRow("DEL-004", "ORD-1004", "Tech Depot", "2025-11-21", "Ana Lim", "Toyota Hiace", "In Transit");
-            AddRow("DEL-005", "ORD-1005", "Prime Supplies", "2025-11-22", "Luis Tan", "Mitsubishi L300", "Pending");
+            AddRow("DEL 2025-001", "ORD-1001", "ABC Corporation", "2025-11-20", "Juan Dela Cruz", "Toyota Hiace", "Delivered");
+            AddRow("DEL 2025-002", "ORD-1002", "XYZ Trading", "2025-11-21", "Maria Santos", "Mitsubishi L300", "Pending");
+            AddRow("DEL 2025-003", "ORD-1003", "Global Mart", "2025-11-22", "Pedro Reyes", "Isuzu Elf", "In Transit");
         }
+
         private void AddRow(string id, string orderId, string customer, string date, string employee, string vehicle, string status)
         {
             int idx = dgvDeliveries.Rows.Add(false, orderId, customer, date, employee, vehicle, status, null);
-            var row = dgvDeliveries.Rows[idx];
-            row.Cells["colDeliveryID"].Tag = id;
-            row.Height = 45;
+            dgvDeliveries.Rows[idx].Cells[0].Tag = id;
+            dgvDeliveries.Rows[idx].Height = 45;
         }
-        #endregion
-        #region Header Check State
-        private void UpdateHeaderCheckState()
+
+        private void UpdateHeaderCheckState()
         {
-            int checkedCount = 0;
-            int visibleCount = 0;
+            int checkedCount = 0, visibleCount = 0;
             foreach (DataGridViewRow row in dgvDeliveries.Rows)
             {
-                if (row.Visible)
+                if (row.Visible && !row.IsNewRow)
                 {
                     visibleCount++;
-                    if ((bool)row.Cells["colDeliveryID"].Value) checkedCount++;
+                    if ((bool)(row.Cells[0].Value ?? false)) checkedCount++;
                 }
             }
             _headerCheckState = visibleCount == 0 ? false :
-            checkedCount == 0 ? false :
-            checkedCount == visibleCount ? true : (bool?)null;
-            dgvDeliveries.InvalidateCell(dgvDeliveries.Columns["colDeliveryID"].Index, -1);
+                               checkedCount == 0 ? false :
+                               checkedCount == visibleCount ? true : (bool?)null;
+            dgvDeliveries.InvalidateCell(0, -1);
         }
-        #endregion
-        #region Cell Painting
-        private void dgvDeliveries_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+
+        private GraphicsPath GetRoundedRect(Rectangle rect, float radius)
         {
-            if (e.RowIndex == -1 && e.ColumnIndex == dgvDeliveries.Columns["colDeliveryID"].Index)
+            GraphicsPath path = new GraphicsPath();
+            float d = radius * 2;
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
+        private void dgvDeliveries_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            // Header checkbox + "ID"
+            if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
-                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
-                ControlPaint.DrawCheckBox(e.Graphics, checkRect, ButtonState.Normal);
+                e.PaintBackground(e.CellBounds, true);
+                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
+                e.Graphics.FillRectangle(Brushes.White, r);
+                e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
                 if (_headerCheckState == true)
-                    ControlPaint.DrawCheckBox(e.Graphics, checkRect, ButtonState.Checked);
+                {
+                    using (Pen p = new Pen(Color.Black, 2.5f))
+                        e.Graphics.DrawLines(p, new Point[] {
+                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                        });
+                }
                 else if (_headerCheckState == null)
-                    e.Graphics.FillRectangle(Brushes.Gray, checkRect.X + 2, checkRect.Y + 2, 12, 12);
-                string headerText = "Delivery ID";
-                var headerFont = dgvDeliveries.ColumnHeadersDefaultCellStyle.Font;
-                var textSize = e.Graphics.MeasureString(headerText, headerFont);
-                var textRect = new Rectangle(
-                e.CellBounds.X + 30,
-                e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
-                e.CellBounds.Width - 35,
-                e.CellBounds.Height);
-                e.Graphics.DrawString(headerText, headerFont, Brushes.White, textRect);
-                e.Handled = true;
-                return;
+                    e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
+                TextRenderer.DrawText(e.Graphics, "ID",
+                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
+                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                e.Handled = true; return;
             }
-            if (e.RowIndex < 0) return;
-            if (e.ColumnIndex == dgvDeliveries.Columns["colDeliveryID"].Index)
+
+            // Row checkbox + ID
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                bool isChecked = (bool)(e.Value ?? false);
-                var checkRect = new Rectangle(e.CellBounds.X + 8, e.CellBounds.Y + 12, 16, 16);
-                ControlPaint.DrawCheckBox(e.Graphics, checkRect, isChecked ? ButtonState.Checked : ButtonState.Normal);
-                string idText = dgvDeliveries.Rows[e.RowIndex].Cells["colDeliveryID"].Tag?.ToString() ?? "";
-                if (!string.IsNullOrEmpty(idText))
+                bool chk = (bool)(e.Value ?? false);
+                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
+                e.Graphics.FillRectangle(Brushes.White, r);
+                e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
+                if (chk)
                 {
-                    var textSize = e.Graphics.MeasureString(idText, new Font("Segoe UI", 11F));
-                    var textRect = new Rectangle(
-                    e.CellBounds.X + 30,
-                    e.CellBounds.Y + (e.CellBounds.Height - (int)textSize.Height) / 2,
-                    e.CellBounds.Width - 35,
-                    e.CellBounds.Height);
-                    e.Graphics.DrawString(idText, new Font("Segoe UI", 11F), Brushes.Black, textRect);
+                    using (Pen p = new Pen(Color.Black, 2.5f))
+                        e.Graphics.DrawLines(p, new Point[] {
+                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                        });
+                }
+                string id = dgvDeliveries.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(id))
+                    TextRenderer.DrawText(e.Graphics, id, new Font("Poppins", 11F),
+                        new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
+                        Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                e.Handled = true; return;
+            }
+
+            // Actions
+            if (e.ColumnIndex == dgvDeliveries.Columns["colActions"].Index && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                int sz = 24, gap = 16, total = sz * 2 + gap;
+                int x = e.CellBounds.X + (e.CellBounds.Width - total) / 2;
+                int y = e.CellBounds.Y + (e.CellBounds.Height - sz) / 2;
+                e.Graphics.DrawImage(_editIcon, x, y, sz, sz);
+                e.Graphics.DrawImage(_viewIcon, x + sz + gap, y, sz, sz);
+                e.Handled = true; return;
+            }
+
+            // Status badge
+            if (e.ColumnIndex == dgvDeliveries.Columns["colStatus"].Index && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                string status = e.Value?.ToString() ?? "";
+                Color bg = status switch
+                {
+                    "Delivered" => Color.FromArgb(34, 197, 94),
+                    "Pending" => Color.FromArgb(255, 159, 0),
+                    "In Transit" => Color.FromArgb(255, 193, 7),
+                    _ => Color.Gray
+                };
+                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 8, e.CellBounds.Width - 20, e.CellBounds.Height - 16);
+                using (var path = GetRoundedRect(rect, 10f))
+                using (var br = new SolidBrush(bg))
+                    e.Graphics.FillPath(br, path);
+                using (var f = new Font("Poppins", 10F, FontStyle.Bold))
+                using (var br = new SolidBrush(Color.White))
+                {
+                    var sz = e.Graphics.MeasureString(status, f);
+                    e.Graphics.DrawString(status, f, br,
+                        e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
+                        e.CellBounds.Y + (e.CellBounds.Height - sz.Height) / 2);
                 }
                 e.Handled = true;
-                return;
             }
-            if (e.ColumnIndex == dgvDeliveries.Columns["colActions"].Index)
-            {
-                e.PaintBackground(e.CellBounds, true);
-                const int iconSize = 24;
-                const int gap = 16;
-                int totalWidth = (iconSize * 2) + gap;
-                int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
-                int y = e.CellBounds.Y + (e.CellBounds.Height - iconSize) / 2;
-                e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
-                e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
-                e.Handled = true;
-                return;
-            }
-            e.Handled = false;
         }
-        #endregion
-        #region Cell Click
-        private void dgvDeliveries_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        private void dgvDeliveries_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < -1) return;
-            // Header checkbox
-            if (e.RowIndex == -1 && e.ColumnIndex == dgvDeliveries.Columns["colDeliveryID"].Index)
+            dgvDeliveries.CurrentCell = null;
+
+            if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
-                var cellRect = dgvDeliveries.GetCellDisplayRectangle(e.ColumnIndex, -1, false);
-                var mousePos = dgvDeliveries.PointToClient(Control.MousePosition);
-                int clickX = mousePos.X - cellRect.X;
-                if (clickX >= 8 && clickX <= 8 + 16)
-                {
-                    bool newState = !_headerCheckState.GetValueOrDefault(true);
-                    foreach (DataGridViewRow row in dgvDeliveries.Rows)
-                        if (row.Visible) row.Cells["colDeliveryID"].Value = newState;
-                    UpdateHeaderCheckState();
-                    dgvDeliveries.InvalidateColumn(dgvDeliveries.Columns["colDeliveryID"].Index);
-                }
+                bool newState = !(_headerCheckState == true);
+                foreach (DataGridViewRow r in dgvDeliveries.Rows)
+                    if (r.Visible && !r.IsNewRow) r.Cells[0].Value = newState;
+                _headerCheckState = newState ? true : (bool?)false;
+                dgvDeliveries.InvalidateCell(0, -1);
                 return;
             }
-            if (e.RowIndex < 0) return;
-            // Row checkbox
-            if (e.ColumnIndex == dgvDeliveries.Columns["colDeliveryID"].Index)
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 var row = dgvDeliveries.Rows[e.RowIndex];
-                bool cur = (bool)(row.Cells["colDeliveryID"].Value ?? false);
-                row.Cells["colDeliveryID"].Value = !cur;
-                dgvDeliveries.InvalidateCell(dgvDeliveries.Columns["colDeliveryID"].Index, e.RowIndex);
+                row.Cells[0].Value = !(bool)(row.Cells[0].Value ?? false);
                 UpdateHeaderCheckState();
                 return;
             }
-            // Action icons
-            if (e.ColumnIndex == dgvDeliveries.Columns["colActions"].Index)
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvDeliveries.Columns["colActions"].Index)
             {
                 var cellRect = dgvDeliveries.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-                var mousePos = dgvDeliveries.PointToClient(Control.MousePosition);
-                int clickX = mousePos.X - cellRect.X;
-                const int iconSize = 24;
-                const int gap = 16;
-                int totalWidth = (iconSize * 2) + gap;
-                int iconX = (cellRect.Width - totalWidth) / 2;
-                string delId = dgvDeliveries.Rows[e.RowIndex].Cells["colDeliveryID"].Tag.ToString();
-                if (clickX >= iconX && clickX < iconX + iconSize)
-                {
-                    OpenEditDelivery(delId); // UNCOMMENTED
-                }
-                else if (clickX >= iconX + iconSize + gap && clickX < iconX + totalWidth)
-                {
-                    OpenViewDelivery(delId); // UNCOMMENTED
-                }
+                var pt = dgvDeliveries.PointToClient(Cursor.Position);
+                int clickX = pt.X - cellRect.X;
+                int sz = 24, gap = 16, total = sz * 2 + gap;
+                int startX = (cellRect.Width - total) / 2;
+                string id = dgvDeliveries.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+
+                if (clickX >= startX && clickX < startX + sz)
+                    OpenEditDelivery(id);
+                else if (clickX >= startX + sz + gap && clickX < startX + total)
+                    OpenViewDelivery(id);  // Now fully connected with real data!
             }
         }
-        #endregion
-        #region Navigation - FULLY ENABLED
-        private void btnAddDelivery_Click(object sender, EventArgs e)
+
+        // ADD DELIVERY BUTTON
+        private void btnAddDelivery_Click(object sender, EventArgs e)
         {
-            var parent = this.ParentForm as Form1;
-            if (parent == null) return;
-            parent.navBar1.PageTitle = "Add Delivery";
-            parent.pnlContent.Controls.Clear();
-            var form = new AddDelivery
-            {
-                TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.Fill
-            };
-            parent.pnlContent.Controls.Add(form);
-            form.Show();
+            var p = this.ParentForm as Form1;
+            if (p == null) return;
+            p.navBar1.PageTitle = "Add Delivery";
+            var f = new AddDelivery { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
+
         private void OpenEditDelivery(string id)
         {
-            var parent = this.ParentForm as Form1;
-            if (parent == null) return;
-            parent.navBar1.PageTitle = "Edit Delivery";
-            parent.pnlContent.Controls.Clear();
-            var form = new EditDelivery(id)
-            {
-                TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.Fill
-            };
-            parent.pnlContent.Controls.Add(form);
-            form.Show();
+            var p = this.ParentForm as Form1;
+            if (p == null) return;
+            p.navBar1.PageTitle = "Edit Delivery";
+            var f = new EditDelivery(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
         }
+
+        // FULLY CONNECTED VIEW DELIVERY — SHOWS REAL DATA FROM ROW
         private void OpenViewDelivery(string id)
         {
-            var parent = this.ParentForm as Form1;
-            if (parent == null) return;
-            parent.navBar1.PageTitle = $"View Delivery: {id}";
-            parent.pnlContent.Controls.Clear();
-            var form = new ViewDelivery(id)
-            {
-                TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.Fill
-            };
-            parent.pnlContent.Controls.Add(form);
-            form.Show();
-        }
-        #endregion
-        #region Search
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            string filter = txtSearch.Text.Trim().ToLower();
+            var p = this.ParentForm as Form1;
+            if (p == null) return;
+
             foreach (DataGridViewRow row in dgvDeliveries.Rows)
             {
-                if (row.IsNewRow) continue;
-                string id = row.Cells["colDeliveryID"].Tag?.ToString().ToLower() ?? "";
-                string orderId = row.Cells["colOrderID"].Value?.ToString().ToLower() ?? "";
-                string customer = row.Cells["colCustomer"].Value?.ToString().ToLower() ?? "";
-                string employee = row.Cells["colEmployee"].Value?.ToString().ToLower() ?? "";
-                bool match = string.IsNullOrEmpty(filter) ||
-                id.Contains(filter) ||
-                orderId.Contains(filter) ||
-                customer.Contains(filter) ||
-                employee.Contains(filter);
-                row.Visible = match;
+                if (row.Cells[0].Tag?.ToString() == id)
+                {
+                    p.navBar1.PageTitle = $"View Delivery: {id}";
+
+                    var view = new ViewDelivery
+                    {
+                        TopLevel = false,
+                        FormBorderStyle = FormBorderStyle.None,
+                        Dock = DockStyle.Fill,
+
+                        CustomerOrderNo = row.Cells["colOrderID"].Value?.ToString() ?? "",
+                        CustomerName = row.Cells["colCustomer"].Value?.ToString() ?? "",
+                        DeliveryDate = DateTime.Parse(row.Cells["colDeliveryDate"].Value.ToString())
+                                            .ToString("MMM dd, yyyy"),
+                        Employee = row.Cells["colEmployee"].Value?.ToString() ?? "Not Assigned",
+                        Vehicle = row.Cells["colVehicle"].Value?.ToString() ?? "-",
+                        PlateNumber = "NCR-JAA 1234", // Change later if you add plate column
+                        Status = row.Cells["colStatus"].Value?.ToString() ?? "Pending",
+                        LastAttempt = "Oct 22, 2025 2:30 PM",
+                        CreatedDate = DateTime.Now.ToString("MMM dd, yyyy hh:mm tt"),
+                        ShippingAddress = "Block 12 Lot 5, Phase 2, Barangay San Jose, Antipolo City, Rizal 1870"
+                    };
+
+                    p.pnlContent.Controls.Clear();
+                    p.pnlContent.Controls.Add(view);
+                    view.Show();
+                    return;
+                }
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string s = txtSearch.Text.Trim().ToLower();
+            foreach (DataGridViewRow r in dgvDeliveries.Rows)
+            {
+                if (r.IsNewRow) continue;
+                string id = r.Cells[0].Tag?.ToString().ToLower() ?? "";
+                string order = r.Cells["colOrderID"].Value?.ToString().ToLower() ?? "";
+                string cust = r.Cells["colCustomer"].Value?.ToString().ToLower() ?? "";
+                r.Visible = string.IsNullOrEmpty(s) || id.Contains(s) || order.Contains(s) || cust.Contains(s);
             }
             UpdateHeaderCheckState();
         }
-        #endregion
-    }
+    }
 }

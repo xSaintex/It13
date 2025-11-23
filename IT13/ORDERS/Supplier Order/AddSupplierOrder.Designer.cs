@@ -1,6 +1,5 @@
 ﻿// ---------------------------------------------------------------------
 // AddSupplierOrder.designer.cs
-// UPDATED: Tighter spacing (80px gap) | Full consistency
 // ---------------------------------------------------------------------
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -19,6 +18,7 @@ namespace IT13
         }
 
         #region Windows Form Designer generated code
+
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -28,7 +28,6 @@ namespace IT13
             this.bottomPanel = new Guna2Panel();
             this.label1 = new Label();
             this.label2 = new Label();
-
             // SUPPLIER INFO
             this.lblCompany = new Label();
             this.cmbCompany = new Guna2ComboBox();
@@ -38,7 +37,6 @@ namespace IT13
             this.cmbPayment = new Guna2ComboBox();
             this.lblEstDate = new Label();
             this.dateEstimated = new Guna2DateTimePicker();
-
             // ADDRESS
             this.lblAddr1 = new Label();
             this.txtAddr1 = new Guna2TextBox();
@@ -52,7 +50,6 @@ namespace IT13
             this.txtPostal = new Guna2TextBox();
             this.lblCountry = new Label();
             this.cmbCountry = new Guna2ComboBox();
-
             // ITEM TABLE
             this.pnlItems = new Guna2Panel();
             this.lblItemTable = new Label();
@@ -65,7 +62,6 @@ namespace IT13
             this.colSellPrice = new DataGridViewTextBoxColumn();
             this.colAvail = new DataGridViewTextBoxColumn();
             this.colSubtotal = new DataGridViewTextBoxColumn();
-
             // TOTALS
             this.lblSubtotal = new Label();
             this.lblSubtotalVal = new Label();
@@ -75,7 +71,6 @@ namespace IT13
             this.numShipping = new Guna2NumericUpDown();
             this.lblTotal = new Label();
             this.lblTotalVal = new Label();
-
             // BUTTONS
             this.btnCancel = new Guna2Button();
             this.btnSave = new Guna2Button();
@@ -118,15 +113,16 @@ namespace IT13
             this.label2.Text = "Fields marked with an asterisk (*) are required.";
             this.label2.ForeColor = Color.Red;
             this.label2.Font = new Font("Tahoma", 9F);
-            this.label2.Location = new Point(84, 56);
+            this.label2.Location = new Point(80, 56);
             this.label2.AutoSize = true;
 
-            // === SUPPLIER INFO (Tighter 80px gap) ===
+            // === SUPPLIER INFO ===
             int y = 100;
 
             this.lblCompany.Text = "Company Name *";
             this.lblCompany.Location = new Point(77, y);
-            this.lblCompany.Font = new Font("Tahoma", 10.2F);
+            this.lblCompany.Font = new Font("Poppins", 10.2F);
+            this.lblCompany.ForeColor = Color.Black;
             this.lblCompany.AutoSize = true;
             this.lblCompany.MaximumSize = new Size(500, 0);
 
@@ -134,12 +130,13 @@ namespace IT13
             this.cmbCompany.Size = new Size(460, 36);
             this.cmbCompany.BorderRadius = 5;
             this.cmbCompany.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbCompany.Font = new Font("Segoe UI", 10F);
-            this.cmbCompany.ForeColor = Color.FromArgb(68, 88, 112);
+            this.cmbCompany.Font = new Font("Poppins", 10F);
+            this.cmbCompany.ForeColor = Color.Black;
 
             this.lblOrderDate.Text = "Order Date *";
             this.lblOrderDate.Location = new Point(600, y);
-            this.lblOrderDate.Font = new Font("Tahoma", 10.2F);
+            this.lblOrderDate.Font = new Font("Poppins", 10.2F);
+            this.lblOrderDate.ForeColor = Color.Black;
             this.lblOrderDate.AutoSize = true;
             this.lblOrderDate.MaximumSize = new Size(300, 0);
 
@@ -148,11 +145,13 @@ namespace IT13
             this.dateOrder.FillColor = Color.White;
             this.dateOrder.Format = DateTimePickerFormat.Custom;
             this.dateOrder.CustomFormat = "MMMM dd, yyyy";
-            this.dateOrder.Font = new Font("Segoe UI", 9F);
+            this.dateOrder.Font = new Font("Poppins", 10F);
+            this.dateOrder.ForeColor = Color.Black;
 
             this.lblPayment.Text = "Payment Terms *";
             this.lblPayment.Location = new Point(77, y + 80);
-            this.lblPayment.Font = new Font("Tahoma", 10.2F);
+            this.lblPayment.Font = new Font("Poppins", 10.2F);
+            this.lblPayment.ForeColor = Color.Black;
             this.lblPayment.AutoSize = true;
             this.lblPayment.MaximumSize = new Size(500, 0);
 
@@ -160,12 +159,13 @@ namespace IT13
             this.cmbPayment.Size = new Size(460, 36);
             this.cmbPayment.BorderRadius = 5;
             this.cmbPayment.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbPayment.Font = new Font("Segoe UI", 10F);
-            this.cmbPayment.ForeColor = Color.FromArgb(68, 88, 112);
+            this.cmbPayment.Font = new Font("Poppins", 10F);
+            this.cmbPayment.ForeColor = Color.Black;
 
             this.lblEstDate.Text = "Estimated Date *";
             this.lblEstDate.Location = new Point(600, y + 80);
-            this.lblEstDate.Font = new Font("Tahoma", 10.2F);
+            this.lblEstDate.Font = new Font("Poppins", 10.2F);
+            this.lblEstDate.ForeColor = Color.Black;
             this.lblEstDate.AutoSize = true;
             this.lblEstDate.MaximumSize = new Size(300, 0);
 
@@ -174,14 +174,16 @@ namespace IT13
             this.dateEstimated.FillColor = Color.White;
             this.dateEstimated.Format = DateTimePickerFormat.Custom;
             this.dateEstimated.CustomFormat = "MMMM dd, yyyy";
-            this.dateEstimated.Font = new Font("Segoe UI", 9F);
+            this.dateEstimated.Font = new Font("Poppins", 10F);
+            this.dateEstimated.ForeColor = Color.Black;
 
-            // === ADDRESS FIELDS (Tighter flow) ===
+            // === ADDRESS FIELDS ===
             int ay = y + 180;
 
             this.lblAddr1.Text = "Address Line 1 *";
             this.lblAddr1.Location = new Point(77, ay);
-            this.lblAddr1.Font = new Font("Tahoma", 10.2F);
+            this.lblAddr1.Font = new Font("Poppins", 10.2F);
+            this.lblAddr1.ForeColor = Color.Black;
             this.lblAddr1.AutoSize = true;
             this.lblAddr1.MaximumSize = new Size(600, 0);
 
@@ -189,10 +191,13 @@ namespace IT13
             this.txtAddr1.Size = new Size(1300, 36);
             this.txtAddr1.BorderRadius = 5;
             this.txtAddr1.PlaceholderText = "Street, Building, Unit #";
+            this.txtAddr1.Font = new Font("Poppins", 10F);
+            this.txtAddr1.ForeColor = Color.Black;
 
             this.lblAddr2.Text = "Address Line 2";
             this.lblAddr2.Location = new Point(77, ay + 80);
-            this.lblAddr2.Font = new Font("Tahoma", 10.2F);
+            this.lblAddr2.Font = new Font("Poppins", 10.2F);
+            this.lblAddr2.ForeColor = Color.Black;
             this.lblAddr2.AutoSize = true;
             this.lblAddr2.MaximumSize = new Size(600, 0);
 
@@ -200,30 +205,39 @@ namespace IT13
             this.txtAddr2.Size = new Size(1300, 36);
             this.txtAddr2.BorderRadius = 5;
             this.txtAddr2.PlaceholderText = "Apartment, Suite, Floor (optional)";
+            this.txtAddr2.Font = new Font("Poppins", 10F);
+            this.txtAddr2.ForeColor = Color.Black;
 
             this.lblCity.Text = "City / District *";
             this.lblCity.Location = new Point(77, ay + 160);
-            this.lblCity.Font = new Font("Tahoma", 10.2F);
+            this.lblCity.Font = new Font("Poppins", 10.2F);
+            this.lblCity.ForeColor = Color.Black;
             this.lblCity.AutoSize = true;
             this.lblCity.MaximumSize = new Size(400, 0);
 
             this.txtCity.Location = new Point(77, ay + 185);
             this.txtCity.Size = new Size(400, 36);
             this.txtCity.BorderRadius = 5;
+            this.txtCity.Font = new Font("Poppins", 10F);
+            this.txtCity.ForeColor = Color.Black;
 
             this.lblState.Text = "State / Province *";
             this.lblState.Location = new Point(497, ay + 160);
-            this.lblState.Font = new Font("Tahoma", 10.2F);
+            this.lblState.Font = new Font("Poppins", 10.2F);
+            this.lblState.ForeColor = Color.Black;
             this.lblState.AutoSize = true;
             this.lblState.MaximumSize = new Size(400, 0);
 
             this.txtState.Location = new Point(497, ay + 185);
             this.txtState.Size = new Size(400, 36);
             this.txtState.BorderRadius = 5;
+            this.txtState.Font = new Font("Poppins", 10F);
+            this.txtState.ForeColor = Color.Black;
 
             this.lblPostal.Text = "Postal Code *";
             this.lblPostal.Location = new Point(917, ay + 160);
-            this.lblPostal.Font = new Font("Tahoma", 10.2F);
+            this.lblPostal.Font = new Font("Poppins", 10.2F);
+            this.lblPostal.ForeColor = Color.Black;
             this.lblPostal.AutoSize = true;
             this.lblPostal.MaximumSize = new Size(200, 0);
 
@@ -231,10 +245,13 @@ namespace IT13
             this.txtPostal.Size = new Size(200, 36);
             this.txtPostal.BorderRadius = 5;
             this.txtPostal.MaxLength = 10;
+            this.txtPostal.Font = new Font("Poppins", 10F);
+            this.txtPostal.ForeColor = Color.Black;
 
             this.lblCountry.Text = "Country *";
             this.lblCountry.Location = new Point(1137, ay + 160);
-            this.lblCountry.Font = new Font("Tahoma", 10.2F);
+            this.lblCountry.Font = new Font("Poppins", 10.2F);
+            this.lblCountry.ForeColor = Color.Black;
             this.lblCountry.AutoSize = true;
             this.lblCountry.MaximumSize = new Size(240, 0);
 
@@ -242,7 +259,8 @@ namespace IT13
             this.cmbCountry.Size = new Size(240, 36);
             this.cmbCountry.BorderRadius = 5;
             this.cmbCountry.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbCountry.Font = new Font("Segoe UI", 10F);
+            this.cmbCountry.Font = new Font("Poppins", 10F);
+            this.cmbCountry.ForeColor = Color.Black;
 
             // === ITEM PANEL ===
             this.pnlItems.Location = new Point(77, ay + 260);
@@ -258,6 +276,8 @@ namespace IT13
             this.txtSearchProduct.Size = new Size(300, 36);
             this.txtSearchProduct.PlaceholderText = "Search by product name...";
             this.txtSearchProduct.BorderRadius = 5;
+            this.txtSearchProduct.Font = new Font("Poppins", 10F);
+            this.txtSearchProduct.ForeColor = Color.Black;
 
             this.btnSearch.Text = "Search";
             this.btnSearch.Location = new Point(330, 50);
@@ -275,9 +295,9 @@ namespace IT13
             this.dgvItems.ColumnHeadersHeight = 40;
             this.dgvItems.GridColor = Color.FromArgb(231, 229, 255);
             this.dgvItems.RowHeadersVisible = false;
-            this.dgvItems.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
+            this.dgvItems.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(12, 57, 101);  // ← EXACT MATCH
             this.dgvItems.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            this.dgvItems.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.dgvItems.ThemeStyle.HeaderStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
 
             this.colProdName.HeaderText = "PRODUCT NAME"; this.colProdName.Width = 400;
             this.colQty.HeaderText = "QUANTITY"; this.colQty.Width = 120;
@@ -291,36 +311,49 @@ namespace IT13
 
             // === TOTALS ===
             int ty = ay + 660;
+
             this.lblSubtotal.Text = "SubTotal:";
-            this.lblSubtotal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.lblSubtotal.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            this.lblSubtotal.ForeColor = Color.Black;
             this.lblSubtotal.Location = new Point(1000, ty);
             this.lblSubtotal.AutoSize = true;
 
             this.lblSubtotalVal.Text = "₱0.00";
+            this.lblSubtotalVal.Font = new Font("Poppins", 10F);
+            this.lblSubtotalVal.ForeColor = Color.Black;
             this.lblSubtotalVal.Location = new Point(1200, ty);
             this.lblSubtotalVal.AutoSize = true;
 
             this.lblDiscount.Text = "Discount (%):";
+            this.lblDiscount.Font = new Font("Poppins", 10F);
+            this.lblDiscount.ForeColor = Color.Black;
             this.lblDiscount.Location = new Point(1000, ty + 40);
             this.lblDiscount.AutoSize = true;
 
             this.numDiscount.Location = new Point(1200, ty + 40);
             this.numDiscount.Size = new Size(100, 30);
+            this.numDiscount.Font = new Font("Poppins", 10F);
+            this.numDiscount.ForeColor = Color.Black;
 
             this.lblShipping.Text = "Shipping Fee:";
+            this.lblShipping.Font = new Font("Poppins", 10F);
+            this.lblShipping.ForeColor = Color.Black;
             this.lblShipping.Location = new Point(1000, ty + 80);
             this.lblShipping.AutoSize = true;
 
             this.numShipping.Location = new Point(1200, ty + 80);
             this.numShipping.Size = new Size(100, 30);
+            this.numShipping.Font = new Font("Poppins", 10F);
+            this.numShipping.ForeColor = Color.Black;
 
             this.lblTotal.Text = "Total:";
-            this.lblTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.lblTotal.Font = new Font("Poppins", 12F, FontStyle.Bold);
+            this.lblTotal.ForeColor = Color.Black;
             this.lblTotal.Location = new Point(1000, ty + 130);
             this.lblTotal.AutoSize = true;
 
             this.lblTotalVal.Text = "₱0.00";
-            this.lblTotalVal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.lblTotalVal.Font = new Font("Poppins", 12F, FontStyle.Bold);
             this.lblTotalVal.ForeColor = Color.FromArgb(0, 123, 255);
             this.lblTotalVal.Location = new Point(1200, ty + 130);
             this.lblTotalVal.AutoSize = true;
@@ -384,6 +417,7 @@ namespace IT13
             ((System.ComponentModel.ISupportInitialize)(this.numShipping)).EndInit();
             this.ResumeLayout(false);
         }
+
         #endregion
 
         private Guna2ShadowPanel mainPanel;
@@ -392,7 +426,6 @@ namespace IT13
         private Guna2Panel bottomPanel;
         private Label label1;
         private Label label2;
-
         private Label lblCompany;
         private Guna2ComboBox cmbCompany;
         private Label lblOrderDate;
@@ -401,7 +434,6 @@ namespace IT13
         private Guna2ComboBox cmbPayment;
         private Label lblEstDate;
         private Guna2DateTimePicker dateEstimated;
-
         private Label lblAddr1;
         private Guna2TextBox txtAddr1;
         private Label lblAddr2;
@@ -414,7 +446,6 @@ namespace IT13
         private Guna2TextBox txtPostal;
         private Label lblCountry;
         private Guna2ComboBox cmbCountry;
-
         private Guna2Panel pnlItems;
         private Label lblItemTable;
         private Guna2TextBox txtSearchProduct;
@@ -426,7 +457,6 @@ namespace IT13
         private DataGridViewTextBoxColumn colSellPrice;
         private DataGridViewTextBoxColumn colAvail;
         private DataGridViewTextBoxColumn colSubtotal;
-
         private Label lblSubtotal;
         private Label lblSubtotalVal;
         private Label lblDiscount;
@@ -435,7 +465,6 @@ namespace IT13
         private Guna2NumericUpDown numShipping;
         private Label lblTotal;
         private Label lblTotalVal;
-
         private Guna2Button btnCancel;
         private Guna2Button btnSave;
     }

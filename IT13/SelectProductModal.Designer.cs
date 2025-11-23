@@ -1,4 +1,7 @@
-﻿using Guna.UI2.WinForms;
+﻿// SelectProductsModal.designer.cs
+using Guna.UI2.WinForms;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace IT13
 {
@@ -15,7 +18,6 @@ namespace IT13
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-
             mainPanel = new Guna2ShadowPanel();
             txtSearch = new Guna2TextBox();
             dgvProducts = new Guna2DataGridView();
@@ -36,6 +38,7 @@ namespace IT13
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.None;
             Controls.Add(mainPanel);
+            Text = "Select Products";
 
             // MAIN PANEL
             mainPanel.Dock = DockStyle.Fill;
@@ -46,10 +49,13 @@ namespace IT13
             mainPanel.Controls.Add(btnCancel);
             mainPanel.Controls.Add(btnAddSelected);
 
-            // SEARCH BOX (Now at very top)
+            // SEARCH BOX
             txtSearch.Location = new Point(30, 20);
             txtSearch.Size = new Size(300, 36);
             txtSearch.PlaceholderText = "Search products...";
+            txtSearch.BorderRadius = 8;
+            txtSearch.Font = new Font("Poppins", 10F);
+            txtSearch.ForeColor = Color.Black;
 
             // DATA GRID
             dgvProducts.Location = new Point(30, 70);
@@ -57,8 +63,14 @@ namespace IT13
             dgvProducts.AllowUserToAddRows = false;
             dgvProducts.ColumnHeadersHeight = 40;
             dgvProducts.GridColor = Color.FromArgb(231, 229, 255);
+            dgvProducts.RowHeadersVisible = false;
 
-            colCheck.HeaderText = ""; colCheck.Width = 50;
+            // EXACT SAME HEADER STYLE AS AddSupplierOrder
+            dgvProducts.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(12, 57, 101);
+            dgvProducts.ThemeStyle.HeaderStyle.ForeColor = Color.White;
+            dgvProducts.ThemeStyle.HeaderStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
+
+            colCheck.HeaderText = ""; colCheck.Width = 100;
             colName.HeaderText = "PRODUCT NAME"; colName.Width = 250;
             colQty.HeaderText = "QTY"; colQty.Width = 80;
             colPrice.HeaderText = "PRICE"; colPrice.Width = 120;
@@ -69,21 +81,23 @@ namespace IT13
                 colCheck, colName, colQty, colPrice, colAvail
             });
 
-            // BUTTONS (Match SupplierOrderList style)
+            // BUTTONS
             btnCancel.Location = new Point(540, 540);
-            btnCancel.Size = new Size(100, 40);
+            btnCancel.Size = new Size(100, 35);
             btnCancel.Text = "Cancel";
             btnCancel.FillColor = Color.FromArgb(220, 53, 69);
             btnCancel.ForeColor = Color.White;
             btnCancel.BorderRadius = 8;
+            btnCancel.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btnCancel.Click += btnCancel_Click;
 
             btnAddSelected.Location = new Point(650, 540);
-            btnAddSelected.Size = new Size(120, 40);
-            btnAddSelected.Text = "Add Selected";
+            btnAddSelected.Size = new Size(100, 35);
+            btnAddSelected.Text = "Add";
             btnAddSelected.FillColor = Color.FromArgb(0, 123, 255);
             btnAddSelected.ForeColor = Color.White;
             btnAddSelected.BorderRadius = 8;
+            btnAddSelected.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btnAddSelected.Click += btnAddSelected_Click;
 
             mainPanel.ResumeLayout(false);

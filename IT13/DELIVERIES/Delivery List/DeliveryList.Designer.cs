@@ -1,158 +1,177 @@
-﻿// ---------------------------------------------------------------------
-// DeliveryList.designer.cs - FINAL (Export Data FIXED)
-// ---------------------------------------------------------------------
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using System.Drawing;
+
 namespace IT13
 {
     partial class DeliveryList
     {
         private System.ComponentModel.IContainer components = null;
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing && components != null) components.Dispose();
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
+
         private void InitializeComponent()
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(100, 88, 255),
+                BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Tahoma", 10.2F, FontStyle.Bold),
+                Font = new Font("Poppins", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
-            mainpanel = new Guna2ShadowPanel();
-            guna2Panel1 = new Guna2Panel();
-            label1 = new Label();
-            btngreaterthan = new Guna2Button();
-            btn9 = new Guna2Button(); btn8 = new Guna2Button(); btn7 = new Guna2Button();
-            btn6 = new Guna2Button(); btn5 = new Guna2Button(); btn4 = new Guna2Button();
-            btn3 = new Guna2Button(); btn2 = new Guna2Button(); btn1 = new Guna2Button();
-            btnlessthan = new Guna2Button();
-            guna2ShadowPanel1 = new Guna2ShadowPanel();
-            dgvDeliveries = new Guna2DataGridView();
-            colDeliveryID = new DataGridViewCheckBoxColumn();
-            colOrderID = new DataGridViewTextBoxColumn();
-            colCustomer = new DataGridViewTextBoxColumn();
-            colDeliveryDate = new DataGridViewTextBoxColumn();
-            colEmployee = new DataGridViewTextBoxColumn();
-            colVehicle = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
-            colActions = new DataGridViewTextBoxColumn();
-            Export = new Guna2ComboBox();
-            btnAddDelivery = new Guna2Button();
-            Filter = new Guna2ComboBox();
-            btnSearch = new Guna2Button();
-            txtSearch = new Guna2TextBox();
-            mainpanel.SuspendLayout();
-            guna2Panel1.SuspendLayout();
-            guna2ShadowPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDeliveries).BeginInit();
-            SuspendLayout();
-            mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(300, 88);
-            mainpanel.Radius = 8;
-            mainpanel.Size = new Size(1602, 878);
-            mainpanel.Controls.Add(guna2Panel1);
-            mainpanel.Controls.Add(guna2ShadowPanel1);
-            mainpanel.Controls.Add(Export);
-            mainpanel.Controls.Add(btnAddDelivery);
-            mainpanel.Controls.Add(Filter);
-            mainpanel.Controls.Add(btnSearch);
-            mainpanel.Controls.Add(txtSearch);
-            guna2Panel1.Location = new Point(77, 826);
-            guna2Panel1.Size = new Size(1458, 36);
-            guna2Panel1.Controls.Add(label1);
-            guna2Panel1.Controls.Add(btngreaterthan);
-            guna2Panel1.Controls.Add(btn9); guna2Panel1.Controls.Add(btn8); guna2Panel1.Controls.Add(btn7);
-            guna2Panel1.Controls.Add(btn6); guna2Panel1.Controls.Add(btn5); guna2Panel1.Controls.Add(btn4);
-            guna2Panel1.Controls.Add(btn3); guna2Panel1.Controls.Add(btn2); guna2Panel1.Controls.Add(btn1);
-            guna2Panel1.Controls.Add(btnlessthan);
-            label1.AutoSize = true;
-            label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
-            label1.Location = new Point(16, 8);
-            label1.Text = "Showing 1-9 of 100";
+
+            this.mainpanel = new Guna2ShadowPanel();
+            this.guna2Panel1 = new Guna2Panel();
+            this.label1 = new Label();
+            this.btngreaterthan = new Guna2Button();
+            this.btn9 = new Guna2Button();
+            this.btn8 = new Guna2Button();
+            this.btn7 = new Guna2Button();
+            this.btn6 = new Guna2Button();
+            this.btn5 = new Guna2Button();
+            this.btn4 = new Guna2Button();
+            this.btn3 = new Guna2Button();
+            this.btn2 = new Guna2Button();
+            this.btn1 = new Guna2Button();
+            this.btnlessthan = new Guna2Button();
+            this.guna2ShadowPanel1 = new Guna2ShadowPanel();
+            this.dgvDeliveries = new Guna2DataGridView();
+
+            this.colDeliveryID = new DataGridViewCheckBoxColumn();
+            this.colOrderID = new DataGridViewTextBoxColumn();
+            this.colCustomer = new DataGridViewTextBoxColumn();
+            this.colDeliveryDate = new DataGridViewTextBoxColumn();
+            this.colEmployee = new DataGridViewTextBoxColumn();
+            this.colVehicle = new DataGridViewTextBoxColumn();
+            this.colStatus = new DataGridViewTextBoxColumn();
+            this.colActions = new DataGridViewTextBoxColumn();
+
+            this.Export = new Guna2ComboBox();
+            this.btnAddDelivery = new Guna2Button();
+            this.Filter = new Guna2ComboBox();
+            this.btnSearch = new Guna2Button();
+            this.txtSearch = new Guna2TextBox();
+
+            this.mainpanel.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
+            this.guna2ShadowPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliveries)).BeginInit();
+            this.SuspendLayout();
+
+            // mainpanel
+            this.mainpanel.Controls.Add(this.guna2Panel1);
+            this.mainpanel.Controls.Add(this.guna2ShadowPanel1);
+            this.mainpanel.Controls.Add(this.Export);
+            this.mainpanel.Controls.Add(this.btnAddDelivery);
+            this.mainpanel.Controls.Add(this.Filter);
+            this.mainpanel.Controls.Add(this.btnSearch);
+            this.mainpanel.Controls.Add(this.txtSearch);
+            this.mainpanel.FillColor = Color.White;
+            this.mainpanel.Location = new Point(300, 88);
+            this.mainpanel.Radius = 8;
+            this.mainpanel.Size = new Size(1602, 878);
+
+            // Pagination
+            this.guna2Panel1.Location = new Point(77, 826);
+            this.guna2Panel1.Size = new Size(1458, 36);
+            this.guna2Panel1.Controls.Add(this.label1);
+            this.guna2Panel1.Controls.Add(this.btngreaterthan);
+            this.guna2Panel1.Controls.Add(this.btn9); this.guna2Panel1.Controls.Add(this.btn8);
+            this.guna2Panel1.Controls.Add(this.btn7); this.guna2Panel1.Controls.Add(this.btn6);
+            this.guna2Panel1.Controls.Add(this.btn5); this.guna2Panel1.Controls.Add(this.btn4);
+            this.guna2Panel1.Controls.Add(this.btn3); this.guna2Panel1.Controls.Add(this.btn2);
+            this.guna2Panel1.Controls.Add(this.btn1); this.guna2Panel1.Controls.Add(this.btnlessthan);
+
+            this.label1.AutoSize = true;
+            this.label1.Font = new Font("Poppins", 9F, FontStyle.Bold);
+            this.label1.ForeColor = Color.Gray;
+            this.label1.Location = new Point(16, 8);
+            this.label1.Text = "Showing 1-10 of 100";
+
             SetupPaginationButton(btngreaterthan, ">", 1408);
             SetupPaginationButton(btn9, "9", 1378); SetupPaginationButton(btn8, "8", 1348);
             SetupPaginationButton(btn7, "7", 1318); SetupPaginationButton(btn6, "6", 1288);
             SetupPaginationButton(btn5, "5", 1258); SetupPaginationButton(btn4, "4", 1228);
             SetupPaginationButton(btn3, "3", 1198); SetupPaginationButton(btn2, "2", 1168);
             SetupPaginationButton(btn1, "1", 1138); SetupPaginationButton(btnlessthan, "<", 1108);
-            guna2ShadowPanel1.FillColor = Color.White;
-            guna2ShadowPanel1.Location = new Point(77, 104);
-            guna2ShadowPanel1.Radius = 5;
-            guna2ShadowPanel1.Size = new Size(1458, 716);
-            guna2ShadowPanel1.Controls.Add(dgvDeliveries);
-            dgvDeliveries.AllowUserToAddRows = false;
-            dgvDeliveries.AllowUserToResizeColumns = false;
-            dgvDeliveries.AllowUserToResizeRows = false;
-            dgvDeliveries.ColumnHeadersDefaultCellStyle = headerStyle;
-            dgvDeliveries.ColumnHeadersHeight = 40;
-            dgvDeliveries.GridColor = Color.FromArgb(231, 229, 255);
-            dgvDeliveries.Location = new Point(22, 27);
-            dgvDeliveries.Size = new Size(1412, 662);
-            dgvDeliveries.RowHeadersVisible = false;
-            dgvDeliveries.CellPainting += dgvDeliveries_CellPainting;
-            dgvDeliveries.CellClick += dgvDeliveries_CellClick;
-            colDeliveryID.HeaderText = "Delivery ID"; colDeliveryID.Name = "colDeliveryID"; colDeliveryID.Width = 160;
-            colOrderID.HeaderText = "Customer Order ID"; colOrderID.Name = "colOrderID"; colOrderID.Width = 180;
-            colCustomer.HeaderText = "Customer"; colCustomer.Name = "colCustomer"; colCustomer.Width = 220;
-            colDeliveryDate.HeaderText = "Delivery Date"; colDeliveryDate.Name = "colDeliveryDate"; colDeliveryDate.Width = 150;
-            colEmployee.HeaderText = "Employee"; colEmployee.Name = "colEmployee"; colEmployee.Width = 160;
-            colVehicle.HeaderText = "Vehicle"; colVehicle.Name = "colVehicle"; colVehicle.Width = 140;
-            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 100;
-            colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 120;
-            colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvDeliveries.Columns.AddRange(new DataGridViewColumn[]
-            {
-colDeliveryID, colOrderID, colCustomer, colDeliveryDate,
-colEmployee, colVehicle, colStatus, colActions
-            });
-            // EXPORT DATA - FIXED: FULL TEXT VISIBLE
-            Export.Location = new Point(1380, 45);
-            Export.Size = new Size(150, 36);
-            Export.DropDownStyle = ComboBoxStyle.DropDownList;
-            Export.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
-            Export.ItemHeight = 30;
-            Export.AutoSize = true;
-            Export.MinimumSize = new Size(150, 36);
-            // ADD DELIVERY - Adjusted position
-            btnAddDelivery.Location = new Point(1215, 45);
-            btnAddDelivery.Size = new Size(155, 36);
-            btnAddDelivery.Text = "+ Add Delivery";
-            btnAddDelivery.FillColor = Color.FromArgb(0, 123, 255);
-            btnAddDelivery.ForeColor = Color.White;
-            btnAddDelivery.BorderRadius = 8;
-            btnAddDelivery.Click += btnAddDelivery_Click;
-            // FILTER
-            Filter.Location = new Point(1076, 45);
-            Filter.Size = new Size(128, 36);
-            Filter.DropDownStyle = ComboBoxStyle.DropDownList;
-            Filter.Font = new Font("Segoe UI", 10F);
-            Filter.ItemHeight = 30;
-            btnSearch.Location = new Point(537, 41);
-            btnSearch.Size = new Size(103, 40);
-            btnSearch.Text = "Search";
-            btnSearch.FillColor = Color.FromArgb(0, 123, 255);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.BorderRadius = 8;
-            btnSearch.Click += btnSearch_Click;
-            txtSearch.Location = new Point(94, 41);
-            txtSearch.PlaceholderText = "Search delivery ID, order, customer...";
-            txtSearch.Size = new Size(437, 40);
-            ClientSize = new Size(1914, 1055);
-            Controls.Add(mainpanel);
-            Name = "DeliveryList";
-            Load += DeliveryList_Load;
-            mainpanel.ResumeLayout(false);
-            guna2Panel1.ResumeLayout(false);
-            guna2Panel1.PerformLayout();
-            guna2ShadowPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvDeliveries).EndInit();
-            ResumeLayout(false);
+
+            // Grid panel
+            this.guna2ShadowPanel1.FillColor = Color.White;
+            this.guna2ShadowPanel1.Location = new Point(77, 104);
+            this.guna2ShadowPanel1.Size = new Size(1458, 716);
+            this.guna2ShadowPanel1.Radius = 5;
+            this.guna2ShadowPanel1.Controls.Add(this.dgvDeliveries);
+
+            // dgvDeliveries
+            this.dgvDeliveries.AllowUserToAddRows = false;
+            this.dgvDeliveries.AllowUserToResizeColumns = false;
+            this.dgvDeliveries.AllowUserToResizeRows = false;
+            this.dgvDeliveries.ColumnHeadersDefaultCellStyle = headerStyle;
+            this.dgvDeliveries.ColumnHeadersHeight = 40;
+            this.dgvDeliveries.GridColor = Color.FromArgb(231, 229, 255);
+            this.dgvDeliveries.Location = new Point(22, 27);
+            this.dgvDeliveries.Size = new Size(1412, 662);
+            this.dgvDeliveries.RowHeadersVisible = false;
+            this.dgvDeliveries.CellPainting += new DataGridViewCellPaintingEventHandler(this.dgvDeliveries_CellPainting);
+            this.dgvDeliveries.CellClick += new DataGridViewCellEventHandler(this.dgvDeliveries_CellClick);
+
+            // Columns
+            this.colDeliveryID.HeaderText = "ID"; this.colDeliveryID.Name = "colDeliveryID";
+            this.colOrderID.HeaderText = "Order ID"; this.colOrderID.Name = "colOrderID";
+            this.colCustomer.HeaderText = "Customer"; this.colCustomer.Name = "colCustomer";
+            this.colDeliveryDate.HeaderText = "Delivery Date"; this.colDeliveryDate.Name = "colDeliveryDate";
+            this.colEmployee.HeaderText = "Employee"; this.colEmployee.Name = "colEmployee";
+            this.colVehicle.HeaderText = "Vehicle"; this.colVehicle.Name = "colVehicle";
+            this.colStatus.HeaderText = "Status"; this.colStatus.Name = "colStatus";
+            this.colActions.HeaderText = "Actions"; this.colActions.Name = "colActions";
+            this.colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            this.dgvDeliveries.Columns.AddRange(new DataGridViewColumn[] {
+                colDeliveryID, colOrderID, colCustomer, colDeliveryDate, colEmployee, colVehicle, colStatus, colActions });
+
+            // Top controls
+            this.Export.Location = new Point(1400, 45); this.Export.Size = new Size(128, 50);
+            this.Export.Font = new Font("Poppins", 10F); this.Export.BorderRadius = 8; this.Export.FillColor = Color.White;
+
+            this.btnAddDelivery.Location = new Point(1202, 45); this.btnAddDelivery.Size = new Size(190, 38);
+            this.btnAddDelivery.Text = "✚ Add Delivery";
+            this.btnAddDelivery.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+            this.btnAddDelivery.FillColor = Color.FromArgb(0, 123, 255);
+            this.btnAddDelivery.ForeColor = Color.White;
+            this.btnAddDelivery.BorderRadius = 8;
+            this.btnAddDelivery.Click += new EventHandler(this.btnAddDelivery_Click); // ← ADDED THIS LINE
+
+            this.Filter.Location = new Point(1065, 45); this.Filter.Size = new Size(128, 50);
+            this.Filter.Font = new Font("Poppins", 10F); this.Filter.BorderRadius = 8; this.Filter.FillColor = Color.White;
+
+            this.btnSearch.Location = new Point(537, 41); this.btnSearch.Size = new Size(103, 48);
+            this.btnSearch.Text = "Search"; this.btnSearch.FillColor = Color.FromArgb(0, 123, 255);
+            this.btnSearch.ForeColor = Color.White; this.btnSearch.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            this.btnSearch.BorderRadius = 5;
+
+            this.txtSearch.Location = new Point(94, 41); this.txtSearch.Size = new Size(437, 48);
+            this.txtSearch.PlaceholderText = "Search delivery ID, order, customer...";
+            this.txtSearch.Font = new Font("Poppins", 10.5F); this.txtSearch.BorderRadius = 12;
+            this.txtSearch.PlaceholderForeColor = Color.FromArgb(80, 80, 80);
+            this.txtSearch.TextChanged += new EventHandler(this.txtSearch_TextChanged);
+
+            this.ClientSize = new Size(1914, 1055);
+            this.Controls.Add(this.mainpanel);
+            this.Name = "DeliveryList";
+            this.Text = "Delivery List";
+
+            this.mainpanel.ResumeLayout(false);
+            this.guna2Panel1.ResumeLayout(false);
+            this.guna2Panel1.PerformLayout();
+            this.guna2ShadowPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliveries)).EndInit();
+            this.ResumeLayout(false);
         }
+
         private void SetupPaginationButton(Guna2Button btn, string text, int left)
         {
             btn.Text = text;
@@ -161,12 +180,10 @@ colEmployee, colVehicle, colStatus, colActions
             btn.FillColor = Color.FromArgb(248, 248, 248);
             btn.ForeColor = Color.Black;
             btn.BorderRadius = 8;
-            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
-            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
-            btn.DisabledState.ForeColor = Color.Gray;
         }
-        private void DeliveryList_Load(object sender, EventArgs e) { }
+
         private Guna2ShadowPanel mainpanel;
         private Guna2Panel guna2Panel1;
         private Label label1;
@@ -175,10 +192,8 @@ colEmployee, colVehicle, colStatus, colActions
         private Guna2DataGridView dgvDeliveries;
         private DataGridViewCheckBoxColumn colDeliveryID;
         private DataGridViewTextBoxColumn colOrderID, colCustomer, colDeliveryDate, colEmployee, colVehicle, colStatus, colActions;
-        private Guna2ComboBox Export;
-        private Guna2Button btnAddDelivery;
-        private Guna2ComboBox Filter;
-        private Guna2Button btnSearch;
+        private Guna2ComboBox Export, Filter;
+        private Guna2Button btnAddDelivery, btnSearch;
         private Guna2TextBox txtSearch;
     }
 }

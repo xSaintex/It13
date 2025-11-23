@@ -1,6 +1,5 @@
 ﻿// ---------------------------------------------------------------------
 // AddSupplierOrder.cs
-// LOGIC ONLY — DESIGN IN .designer.cs
 // ---------------------------------------------------------------------
 using System;
 using System.Collections.Generic;

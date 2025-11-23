@@ -8,7 +8,6 @@ namespace IT13
         public AddCategory()
         {
             InitializeComponent();
-
             txtName.Text = "";
             txtStatus.Text = "Active";
             datePicker.Value = DateTime.Today;
@@ -24,7 +23,6 @@ namespace IT13
             }
 
             string selectedDate = datePicker.Value.ToString("MM/dd/yyyy");
-
             MessageBox.Show($"Category added successfully!\n" +
                           $"Name: {txtName.Text}\n" +
                           $"Date: {selectedDate}",

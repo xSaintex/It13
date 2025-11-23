@@ -1,8 +1,4 @@
-﻿using Guna.UI2.WinForms;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace IT13
+﻿namespace IT13
 {
     partial class EditStockAdjustment
     {
@@ -16,25 +12,27 @@ namespace IT13
 
         private void InitializeComponent()
         {
-            mainpanel = new Guna2ShadowPanel();
-            lblHeader = new Label();
-            lblRequired = new Label();
-            lblId = new Label(); txtId = new Guna2TextBox();
-            lblItem = new Label(); comboItem = new Guna2ComboBox();
-            lblRequested = new Label(); comboRequestedBy = new Guna2ComboBox();
-            lblReviewed = new Label(); comboReviewedBy = new Guna2ComboBox();
-            lblAdjType = new Label(); comboAdjType = new Guna2ComboBox();
-            lblPhysical = new Label(); txtPhysicalCount = new Guna2TextBox();
-            lblSystem = new Label(); txtSystemCount = new Guna2TextBox();
-            lblAdjCount = new Label(); txtAdjCount = new Guna2TextBox();
-            lblStatus = new Label(); comboStatus = new Guna2ComboBox();
-            lblReason = new Label(); txtReason = new Guna2TextBox();
-            lblDate = new Label(); datePicker = new Guna2DateTimePicker();
-            btnCancel = new Guna2Button();
-            btnSubmit = new Guna2Button();
+            mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            lblHeader = new System.Windows.Forms.Label();
+            lblRequired = new System.Windows.Forms.Label();
+
+            lblId = new System.Windows.Forms.Label(); txtId = new Guna.UI2.WinForms.Guna2TextBox();
+            lblItem = new System.Windows.Forms.Label(); comboItem = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblRequested = new System.Windows.Forms.Label(); comboRequestedBy = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblReviewed = new System.Windows.Forms.Label(); comboReviewedBy = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblAdjType = new System.Windows.Forms.Label(); comboAdjType = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblPhysical = new System.Windows.Forms.Label(); txtPhysicalCount = new Guna.UI2.WinForms.Guna2TextBox();
+            lblSystem = new System.Windows.Forms.Label(); txtSystemCount = new Guna.UI2.WinForms.Guna2TextBox();
+            lblAdjCount = new System.Windows.Forms.Label(); txtAdjCount = new Guna.UI2.WinForms.Guna2TextBox();
+            lblStatus = new System.Windows.Forms.Label(); comboStatus = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblReason = new System.Windows.Forms.Label(); txtReason = new Guna.UI2.WinForms.Guna2TextBox();
+            lblDate = new System.Windows.Forms.Label(); datePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
+
+            btnCancel = new Guna.UI2.WinForms.Guna2Button();
+            btnSubmit = new Guna.UI2.WinForms.Guna2Button();
 
             mainpanel.SuspendLayout();
-            SuspendLayout();
+            this.SuspendLayout();
 
             // === MAIN PANEL ===
             mainpanel.FillColor = Color.White;
@@ -56,21 +54,24 @@ namespace IT13
             mainpanel.Controls.Add(lblDate); mainpanel.Controls.Add(datePicker);
             mainpanel.Controls.Add(btnCancel); mainpanel.Controls.Add(btnSubmit);
 
-            // === HEADER & REQUIRED TEXT ===
+            // === HEADER (kept Tahoma 18 Bold) ===
             lblHeader.AutoSize = true;
             lblHeader.Font = new Font("Tahoma", 18F, FontStyle.Bold);
             lblHeader.Location = new Point(77, 20);
             lblHeader.Text = "Edit Stock Adjustment";
             lblHeader.ForeColor = Color.FromArgb(50, 50, 50);
 
+            // === REQUIRED FIELDS TEXT ===
             lblRequired.AutoSize = true;
-            lblRequired.Font = new Font("Segoe UI", 9F);
+            lblRequired.Font = new Font("Poppins", 9F);
             lblRequired.ForeColor = Color.Red;
             lblRequired.Location = new Point(77, 56);
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
 
-            // === ADJUSTMENT ID ===
+            // === ADJUSTMENT ID (Read-only) ===
             lblId.AutoSize = true;
+            lblId.Font = new Font("Poppins", 10F);
+            lblId.ForeColor = Color.FromArgb(70, 70, 70);
             lblId.Location = new Point(77, 110);
             lblId.Text = "Adjustment ID";
 
@@ -81,9 +82,13 @@ namespace IT13
             txtId.BorderColor = Color.FromArgb(200, 200, 200);
             txtId.BorderThickness = 1;
             txtId.FillColor = Color.White;
+            txtId.Font = new Font("Poppins", 11F);
+            txtId.ForeColor = Color.Black;
 
             // === INVENTORY ITEM ===
             lblItem.AutoSize = true;
+            lblItem.Font = new Font("Poppins", 10F);
+            lblItem.ForeColor = Color.FromArgb(70, 70, 70);
             lblItem.Location = new Point(300, 110);
             lblItem.Text = "Inventory Item *";
 
@@ -94,10 +99,13 @@ namespace IT13
             comboItem.BorderColor = Color.FromArgb(200, 200, 200);
             comboItem.BorderThickness = 1;
             comboItem.FillColor = Color.White;
-            comboItem.Font = new Font("Segoe UI", 11F);
+            comboItem.Font = new Font("Poppins", 11F);
+            comboItem.ForeColor = Color.Black;
 
             // === DATE ===
             lblDate.AutoSize = true;
+            lblDate.Font = new Font("Poppins", 10F);
+            lblDate.ForeColor = Color.FromArgb(70, 70, 70);
             lblDate.Location = new Point(750, 110);
             lblDate.Text = "Date *";
 
@@ -110,9 +118,13 @@ namespace IT13
             datePicker.BorderColor = Color.FromArgb(200, 200, 200);
             datePicker.BorderThickness = 1;
             datePicker.BorderRadius = 8;
+            datePicker.Font = new Font("Poppins", 11F);
+            datePicker.ForeColor = Color.Black;
 
             // === REASON ===
             lblReason.AutoSize = true;
+            lblReason.Font = new Font("Poppins", 10F);
+            lblReason.ForeColor = Color.FromArgb(70, 70, 70);
             lblReason.Location = new Point(750, 210);
             lblReason.Text = "Reason *";
 
@@ -123,10 +135,13 @@ namespace IT13
             txtReason.BorderColor = Color.FromArgb(200, 200, 200);
             txtReason.BorderThickness = 1;
             txtReason.FillColor = Color.White;
-            txtReason.Font = new Font("Segoe UI", 11F);
+            txtReason.Font = new Font("Poppins", 11F);
+            txtReason.ForeColor = Color.Black;
 
             // === REQUESTED BY ===
             lblRequested.AutoSize = true;
+            lblRequested.Font = new Font("Poppins", 10F);
+            lblRequested.ForeColor = Color.FromArgb(70, 70, 70);
             lblRequested.Location = new Point(77, 210);
             lblRequested.Text = "Requested By *";
 
@@ -137,10 +152,13 @@ namespace IT13
             comboRequestedBy.BorderColor = Color.FromArgb(200, 200, 200);
             comboRequestedBy.BorderThickness = 1;
             comboRequestedBy.FillColor = Color.White;
-            comboRequestedBy.Font = new Font("Segoe UI", 11F);
+            comboRequestedBy.Font = new Font("Poppins", 11F);
+            comboRequestedBy.ForeColor = Color.Black;
 
             // === REVIEWED BY ===
             lblReviewed.AutoSize = true;
+            lblReviewed.Font = new Font("Poppins", 10F);
+            lblReviewed.ForeColor = Color.FromArgb(70, 70, 70);
             lblReviewed.Location = new Point(77, 310);
             lblReviewed.Text = "Reviewed By *";
 
@@ -151,10 +169,13 @@ namespace IT13
             comboReviewedBy.BorderColor = Color.FromArgb(200, 200, 200);
             comboReviewedBy.BorderThickness = 1;
             comboReviewedBy.FillColor = Color.White;
-            comboReviewedBy.Font = new Font("Segoe UI", 11F);
+            comboReviewedBy.Font = new Font("Poppins", 11F);
+            comboReviewedBy.ForeColor = Color.Black;
 
             // === ADJUSTMENT TYPE ===
             lblAdjType.AutoSize = true;
+            lblAdjType.Font = new Font("Poppins", 10F);
+            lblAdjType.ForeColor = Color.FromArgb(70, 70, 70);
             lblAdjType.Location = new Point(77, 410);
             lblAdjType.Text = "Adjustment Type *";
 
@@ -165,10 +186,13 @@ namespace IT13
             comboAdjType.BorderColor = Color.FromArgb(200, 200, 200);
             comboAdjType.BorderThickness = 1;
             comboAdjType.FillColor = Color.White;
-            comboAdjType.Font = new Font("Segoe UI", 11F);
+            comboAdjType.Font = new Font("Poppins", 11F);
+            comboAdjType.ForeColor = Color.Black;
 
             // === PHYSICAL COUNT ===
             lblPhysical.AutoSize = true;
+            lblPhysical.Font = new Font("Poppins", 10F);
+            lblPhysical.ForeColor = Color.FromArgb(70, 70, 70);
             lblPhysical.Location = new Point(77, 510);
             lblPhysical.Text = "Physical Count *";
 
@@ -180,10 +204,13 @@ namespace IT13
             txtPhysicalCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtPhysicalCount.BorderThickness = 1;
             txtPhysicalCount.FillColor = Color.White;
-            txtPhysicalCount.Font = new Font("Segoe UI", 11F);
+            txtPhysicalCount.Font = new Font("Poppins", 11F);
+            txtPhysicalCount.ForeColor = Color.Black;
 
             // === SYSTEM COUNT ===
             lblSystem.AutoSize = true;
+            lblSystem.Font = new Font("Poppins", 10F);
+            lblSystem.ForeColor = Color.FromArgb(70, 70, 70);
             lblSystem.Location = new Point(750, 410);
             lblSystem.Text = "System Count *";
 
@@ -195,10 +222,13 @@ namespace IT13
             txtSystemCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtSystemCount.BorderThickness = 1;
             txtSystemCount.FillColor = Color.White;
-            txtSystemCount.Font = new Font("Segoe UI", 11F);
+            txtSystemCount.Font = new Font("Poppins", 11F);
+            txtSystemCount.ForeColor = Color.Black;
 
             // === ADJUSTMENT COUNT ===
             lblAdjCount.AutoSize = true;
+            lblAdjCount.Font = new Font("Poppins", 10F);
+            lblAdjCount.ForeColor = Color.FromArgb(70, 70, 70);
             lblAdjCount.Location = new Point(77, 610);
             lblAdjCount.Text = "Adjustment Count *";
 
@@ -210,10 +240,13 @@ namespace IT13
             txtAdjCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtAdjCount.BorderThickness = 1;
             txtAdjCount.FillColor = Color.White;
-            txtAdjCount.Font = new Font("Segoe UI", 11F);
+            txtAdjCount.Font = new Font("Poppins", 11F);
+            txtAdjCount.ForeColor = Color.Black;
 
             // === STATUS ===
             lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Poppins", 10F);
+            lblStatus.ForeColor = Color.FromArgb(70, 70, 70);
             lblStatus.Location = new Point(750, 510);
             lblStatus.Text = "Status *";
 
@@ -224,51 +257,57 @@ namespace IT13
             comboStatus.BorderColor = Color.FromArgb(200, 200, 200);
             comboStatus.BorderThickness = 1;
             comboStatus.FillColor = Color.White;
-            comboStatus.Font = new Font("Segoe UI", 11F);
+            comboStatus.Font = new Font("Poppins", 11F);
+            comboStatus.ForeColor = Color.Black;
 
-            // === BUTTONS ===
+            // === BUTTONS (Poppins Bold) ===
             btnCancel.Location = new Point(1150, 700);
             btnCancel.Size = new Size(140, 50);
             btnCancel.Text = "Cancel";
             btnCancel.FillColor = Color.FromArgb(220, 53, 69);
             btnCancel.ForeColor = Color.White;
             btnCancel.BorderRadius = 8;
+            btnCancel.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
             btnCancel.Click += btnCancel_Click;
 
             btnSubmit.Location = new Point(1300, 700);
-            btnSubmit.Size = new Size(200, 50);
-            btnSubmit.Text = "Submit Stock Adjustment";
+            btnSubmit.Size = new Size(140, 50);
+            btnSubmit.Text = "Update";
             btnSubmit.FillColor = Color.FromArgb(0, 123, 255);
             btnSubmit.ForeColor = Color.White;
             btnSubmit.BorderRadius = 8;
+            btnSubmit.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
             btnSubmit.Click += btnSubmit_Click;
 
             // === FORM ===
-            ClientSize = new Size(1914, 1055);
-            Controls.Add(mainpanel);
-            Name = "EditStockAdjustment";
-            Text = "Edit Stock Adjustment";
+            this.ClientSize = new Size(1914, 1055);
+            this.Controls.Add(mainpanel);
+            this.Name = "EditStockAdjustment";
+            this.Text = "Edit Stock Adjustment";
 
             mainpanel.ResumeLayout(false);
             mainpanel.PerformLayout();
-            ResumeLayout(false);
+            this.ResumeLayout(false);
         }
 
-        private Guna2ShadowPanel mainpanel;
-        private Label lblHeader;
-        private Label lblRequired;
-        private Label lblId; private Guna2TextBox txtId;
-        private Label lblItem; private Guna2ComboBox comboItem;
-        private Label lblRequested; private Guna2ComboBox comboRequestedBy;
-        private Label lblReviewed; private Guna2ComboBox comboReviewedBy;
-        private Label lblAdjType; private Guna2ComboBox comboAdjType;
-        private Label lblPhysical; private Guna2TextBox txtPhysicalCount;
-        private Label lblSystem; private Guna2TextBox txtSystemCount;
-        private Label lblAdjCount; private Guna2TextBox txtAdjCount;
-        private Label lblStatus; private Guna2ComboBox comboStatus;
-        private Label lblReason; private Guna2TextBox txtReason;
-        private Label lblDate; private Guna2DateTimePicker datePicker;
-        private Guna2Button btnCancel;
-        private Guna2Button btnSubmit;
+        private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
+        private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.Label lblRequired;
+
+        private System.Windows.Forms.Label lblId;
+        private Guna.UI2.WinForms.Guna2TextBox txtId;
+        private System.Windows.Forms.Label lblItem; private Guna.UI2.WinForms.Guna2ComboBox comboItem;
+        private System.Windows.Forms.Label lblRequested; private Guna.UI2.WinForms.Guna2ComboBox comboRequestedBy;
+        private System.Windows.Forms.Label lblReviewed; private Guna.UI2.WinForms.Guna2ComboBox comboReviewedBy;
+        private System.Windows.Forms.Label lblAdjType; private Guna.UI2.WinForms.Guna2ComboBox comboAdjType;
+        private System.Windows.Forms.Label lblPhysical; private Guna.UI2.WinForms.Guna2TextBox txtPhysicalCount;
+        private System.Windows.Forms.Label lblSystem; private Guna.UI2.WinForms.Guna2TextBox txtSystemCount;
+        private System.Windows.Forms.Label lblAdjCount; private Guna.UI2.WinForms.Guna2TextBox txtAdjCount;
+        private System.Windows.Forms.Label lblStatus; private Guna.UI2.WinForms.Guna2ComboBox comboStatus;
+        private System.Windows.Forms.Label lblReason; private Guna.UI2.WinForms.Guna2TextBox txtReason;
+        private System.Windows.Forms.Label lblDate; private Guna.UI2.WinForms.Guna2DateTimePicker datePicker;
+
+        private Guna.UI2.WinForms.Guna2Button btnCancel;
+        private Guna.UI2.WinForms.Guna2Button btnSubmit;
     }
 }

@@ -1,5 +1,6 @@
-﻿//supplierlist.designer.cs
-using Guna.UI2.WinForms;
+﻿using Guna.UI2.WinForms;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace IT13
 {
@@ -17,9 +18,9 @@ namespace IT13
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(100, 88, 255),
+                BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Tahoma", 10.2F, FontStyle.Bold),
+                Font = new Font("Poppins", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 
@@ -46,98 +47,130 @@ namespace IT13
             btnSearch = new Guna2Button();
             txtSearch = new Guna2TextBox();
 
-            // SAME EXACT LAYOUT AS CustomerList
+            mainpanel.SuspendLayout();
+            guna2Panel1.SuspendLayout();
+            guna2ShadowPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(dgvSuppliers)).BeginInit();
+            this.SuspendLayout();
+
+            // === LAYOUT IDENTICAL TO CustomerList ===
             mainpanel.FillColor = Color.White;
             mainpanel.Location = new Point(300, 88);
             mainpanel.Radius = 8;
             mainpanel.Size = new Size(1602, 878);
-            mainpanel.Controls.Add(guna2Panel1); mainpanel.Controls.Add(guna2ShadowPanel1);
-            mainpanel.Controls.Add(Export); mainpanel.Controls.Add(btnAddSupplier);
-            mainpanel.Controls.Add(Filter); mainpanel.Controls.Add(btnSearch); mainpanel.Controls.Add(txtSearch);
+            mainpanel.Controls.Add(guna2Panel1);
+            mainpanel.Controls.Add(guna2ShadowPanel1);
+            mainpanel.Controls.Add(Export);
+            mainpanel.Controls.Add(btnAddSupplier);
+            mainpanel.Controls.Add(Filter);
+            mainpanel.Controls.Add(btnSearch);
+            mainpanel.Controls.Add(txtSearch);
 
-            guna2Panel1.Location = new Point(77, 826); guna2Panel1.Size = new Size(1458, 36);
-            guna2Panel1.Controls.Add(label1); guna2Panel1.Controls.Add(btngreaterthan);
+            guna2Panel1.Location = new Point(77, 826);
+            guna2Panel1.Size = new Size(1458, 36);
+            guna2Panel1.Controls.Add(label1);
+            guna2Panel1.Controls.Add(btngreaterthan);
             guna2Panel1.Controls.Add(btn9); guna2Panel1.Controls.Add(btn8); guna2Panel1.Controls.Add(btn7);
             guna2Panel1.Controls.Add(btn6); guna2Panel1.Controls.Add(btn5); guna2Panel1.Controls.Add(btn4);
             guna2Panel1.Controls.Add(btn3); guna2Panel1.Controls.Add(btn2); guna2Panel1.Controls.Add(btn1);
             guna2Panel1.Controls.Add(btnlessthan);
 
             label1.AutoSize = true;
+            label1.Font = new Font("Poppins", 9F, FontStyle.Bold);
+            label1.ForeColor = Color.Gray;
+            label1.Location = new Point(16, 8);
             label1.Text = "Showing 1-10 of 100";
-            label1.Location = new Point(20, 9);
-            label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
 
-            SetupPaginationButton(btngreaterthan, ">", 1408); SetupPaginationButton(btn9, "9", 1378);
-            SetupPaginationButton(btn8, "8", 1348); SetupPaginationButton(btn7, "7", 1318);
-            SetupPaginationButton(btn6, "6", 1288); SetupPaginationButton(btn5, "5", 1258);
-            SetupPaginationButton(btn4, "4", 1228); SetupPaginationButton(btn3, "3", 1198);
-            SetupPaginationButton(btn2, "2", 1168); SetupPaginationButton(btn1, "1", 1138);
-            SetupPaginationButton(btnlessthan, "<", 1108);
+            SetupPaginationButton(btngreaterthan, ">", 1408);
+            SetupPaginationButton(btn9, "9", 1378); SetupPaginationButton(btn8, "8", 1348);
+            SetupPaginationButton(btn7, "7", 131 ); SetupPaginationButton(btn6, "6", 1288);
+            SetupPaginationButton(btn5, "5", 1258); SetupPaginationButton(btn4, "4", 1228);
+            SetupPaginationButton(btn3, "3", 1198); SetupPaginationButton(btn2, "2", 1168);
+            SetupPaginationButton(btn1, "1", 1138); SetupPaginationButton(btnlessthan, "<", 1108);
 
-            guna2ShadowPanel1.FillColor = Color.White; guna2ShadowPanel1.Location = new Point(77, 104);
-            guna2ShadowPanel1.Radius = 5; guna2ShadowPanel1.Size = new Size(1458, 716);
+            guna2ShadowPanel1.FillColor = Color.White;
+            guna2ShadowPanel1.Location = new Point(77, 104);
+            guna2ShadowPanel1.Radius = 5;
+            guna2ShadowPanel1.Size = new Size(1458, 716);
             guna2ShadowPanel1.Controls.Add(dgvSuppliers);
 
-            dgvSuppliers.AllowUserToAddRows = false; dgvSuppliers.AllowUserToResizeColumns = false;
-            dgvSuppliers.AllowUserToResizeRows = false; dgvSuppliers.ColumnHeadersDefaultCellStyle = headerStyle;
-            dgvSuppliers.ColumnHeadersHeight = 40; dgvSuppliers.GridColor = Color.FromArgb(231, 229, 255);
-            dgvSuppliers.Location = new Point(22, 27); dgvSuppliers.Size = new Size(1412, 662);
+            dgvSuppliers.AllowUserToAddRows = false;
+            dgvSuppliers.AllowUserToResizeColumns = false;
+            dgvSuppliers.AllowUserToResizeRows = false;
+            dgvSuppliers.ColumnHeadersDefaultCellStyle = headerStyle;
+            dgvSuppliers.ColumnHeadersHeight = 40;
+            dgvSuppliers.GridColor = Color.FromArgb(231, 229, 255);
+            dgvSuppliers.Location = new Point(22, 27);
+            dgvSuppliers.Size = new Size(1412, 662);
             dgvSuppliers.RowHeadersVisible = false;
             dgvSuppliers.CellPainting += dgvSuppliers_CellPainting;
             dgvSuppliers.CellClick += dgvSuppliers_CellClick;
+            dgvSuppliers.MouseDown += (s, e) => dgvSuppliers.ClearSelection();
 
-            colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
-            colCompany.HeaderText = "Company"; colCompany.Name = "colCompany"; colCompany.Width = 280;
-            colContact.HeaderText = "Contact"; colContact.Name = "colContact"; colContact.Width = 200;
-            colPhone.HeaderText = "Phone"; colPhone.Name = "colPhone"; colPhone.Width = 150;
-            colEmail.HeaderText = "Email"; colEmail.Name = "colEmail"; colEmail.Width = 220;
-            colPayment.HeaderText = "Payment"; colPayment.Name = "colPayment"; colPayment.Width = 120;
-            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 100;
-            colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 120;
+            colID.HeaderText = "ID"; colID.Name = "colID";
+            colCompany.HeaderText = "Company"; colCompany.Name = "colCompany";
+            colContact.HeaderText = "Contact"; colContact.Name = "colContact";
+            colPhone.HeaderText = "Phone"; colPhone.Name = "colPhone";
+            colEmail.HeaderText = "Email"; colEmail.Name = "colEmail";
+            colPayment.HeaderText = "Payment"; colPayment.Name = "colPayment";
+            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus";
+            colActions.HeaderText = "Actions"; colActions.Name = "colActions";
             colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dgvSuppliers.Columns.AddRange(new DataGridViewColumn[]
-            {
-                colID, colCompany, colContact, colPhone, colEmail, colPayment, colStatus, colActions
-            });
+            dgvSuppliers.Columns.AddRange(new DataGridViewColumn[] {
+                colID, colCompany, colContact, colPhone, colEmail, colPayment, colStatus, colActions });
 
-            Export.Location = new Point(1400, 45); Export.Size = new Size(128, 36); Export.DropDownStyle = ComboBoxStyle.DropDownList;
-            btnAddSupplier.Location = new Point(1235, 45); btnAddSupplier.Size = new Size(155, 36);
-            btnAddSupplier.Text = "+ Add Supplier"; btnAddSupplier.FillColor = Color.FromArgb(0, 123, 255);
-            btnAddSupplier.ForeColor = Color.White; btnAddSupplier.BorderRadius = 8;
+            Export.Location = new Point(1400, 45); Export.Size = new Size(128, 48);
+            Export.Font = new Font("Poppins", 10F); Export.BorderRadius = 8; Export.FillColor = Color.White;
+
+            btnAddSupplier.Location = new Point(1202, 45); btnAddSupplier.Size = new Size(190, 40);
+            btnAddSupplier.Text = "✚ Add Supplier";
+            btnAddSupplier.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+            btnAddSupplier.FillColor = Color.FromArgb(0, 123, 255);
+            btnAddSupplier.ForeColor = Color.White;
+            btnAddSupplier.BorderRadius = 8;
             btnAddSupplier.Click += btnAddSupplier_Click;
 
-            Filter.Location = new Point(1100, 45); Filter.Size = new Size(128, 36); Filter.DropDownStyle = ComboBoxStyle.DropDownList;
-            btnSearch.Location = new Point(537, 41); btnSearch.Size = new Size(103, 40); btnSearch.Text = "Search";
-            btnSearch.FillColor = Color.FromArgb(0, 123, 255); btnSearch.ForeColor = Color.White; btnSearch.BorderRadius = 8;
-            btnSearch.Click += btnSearch_Click;
+            Filter.Location = new Point(1065, 45); Filter.Size = new Size(128, 48);
+            Filter.Font = new Font("Poppins", 10F); Filter.BorderRadius = 8; Filter.FillColor = Color.White;
 
-            txtSearch.Location = new Point(94, 41); txtSearch.Size = new Size(437, 40);
+            btnSearch.Location = new Point(537, 41); btnSearch.Size = new Size(103, 48);
+            btnSearch.Text = "Search";
+            btnSearch.FillColor = Color.FromArgb(0, 123, 255);
+            btnSearch.ForeColor = Color.White;
+            btnSearch.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            btnSearch.BorderRadius = 5;
+            btnSearch.Click += btnSearch_Click;  // NOW EXISTS!
+
+            txtSearch.Location = new Point(94, 41); txtSearch.Size = new Size(437, 48);
             txtSearch.PlaceholderText = "Search company, email, or phone...";
+            txtSearch.PlaceholderForeColor = Color.FromArgb(80, 80, 80);
+            txtSearch.Font = new Font("Poppins", 10.5F);
+            txtSearch.ForeColor = Color.Black;
+            txtSearch.BorderRadius = 12;
 
-            ClientSize = new Size(1914, 1055);
-            Controls.Add(mainpanel);
-            Name = "SupplierList";
-            Load += SupplierList_Load;
+            this.ClientSize = new Size(1914, 1055);
+            this.Controls.Add(mainpanel);
+            this.Name = "SupplierList";
+            this.Text = "Supplier List";
 
-            mainpanel.ResumeLayout(false); guna2Panel1.ResumeLayout(false); guna2Panel1.PerformLayout();
+            mainpanel.ResumeLayout(false);
+            guna2Panel1.ResumeLayout(false); guna2Panel1.PerformLayout();
             guna2ShadowPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvSuppliers).EndInit();
-            ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(dgvSuppliers)).EndInit();
+            this.ResumeLayout(false);
         }
 
-        private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
+        private void SetupPaginationButton(Guna2Button btn, string text, int left)
         {
             btn.Text = text;
             btn.Location = new Point(left, 5);
-            btn.Size = new Size(36, 32);                    // Slightly bigger & square
-            btn.FillColor = Color.FromArgb(248, 248, 248);  // Light gray background
-            btn.ForeColor = Color.Black;                    // Black text
+            btn.Size = new Size(36, 32);
+            btn.FillColor = Color.FromArgb(248, 248, 248);
+            btn.ForeColor = Color.Black;
             btn.BorderRadius = 8;
-            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
-            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
-            btn.DisabledState.ForeColor = Color.Gray;
         }
 
         private Guna2ShadowPanel mainpanel, guna2ShadowPanel1;
@@ -150,7 +183,5 @@ namespace IT13
         private Guna2ComboBox Export, Filter;
         private Guna2Button btnAddSupplier, btnSearch;
         private Guna2TextBox txtSearch;
-
-        private void SupplierList_Load(object sender, EventArgs e) { }
     }
 }

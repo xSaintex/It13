@@ -32,81 +32,104 @@ namespace IT13
 
             // MAIN PANEL
             mainpanel.BackColor = Color.Transparent;
+            mainpanel.FillColor = Color.White;
+            mainpanel.Location = new Point(300, 88);
+            mainpanel.Name = "mainpanel";
+            mainpanel.Radius = 12;
+            mainpanel.ShadowColor = Color.FromArgb(100, 0, 0, 0);
+            mainpanel.Size = new Size(1602, 878);
+            mainpanel.TabIndex = 0;
             mainpanel.Controls.Add(lblTitle);
             mainpanel.Controls.Add(lblName); mainpanel.Controls.Add(txtName);
             mainpanel.Controls.Add(lblStatus); mainpanel.Controls.Add(txtStatus);
             mainpanel.Controls.Add(lblStatusNote);
             mainpanel.Controls.Add(lblDate); mainpanel.Controls.Add(datePicker);
             mainpanel.Controls.Add(btnCancel); mainpanel.Controls.Add(btnAdd);
-            mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(300, 88);
-            mainpanel.Name = "mainpanel";
-            mainpanel.Radius = 8;
-            mainpanel.ShadowColor = Color.Black;
-            mainpanel.Size = new Size(1602, 878);
-            mainpanel.TabIndex = 0;
 
-            // TITLE
+            // TITLE — Kept exactly like your original (big Tahoma bold)
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Tahoma", 16F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(77, 40);
             lblTitle.Text = "Add New Category";
 
             // CATEGORY NAME
             lblName.AutoSize = true;
+            lblName.Font = new Font("Poppins", 11F);
             lblName.Location = new Point(77, 120);
             lblName.Text = "Category Name *";
+
             txtName.Location = new Point(77, 150);
-            txtName.Size = new Size(600, 45);
+            txtName.Size = new Size(600, 52);
+            txtName.BorderRadius = 12;
+            txtName.BorderThickness = 1;
+            txtName.BorderColor = Color.FromArgb(180, 180, 180);
+            txtName.FillColor = Color.White;
+            txtName.ForeColor = Color.Black;
+            txtName.Font = new Font("Poppins", 11F);
+            txtName.PlaceholderText = "Enter category name";
+            txtName.PlaceholderForeColor = Color.Gray;
 
             // STATUS
             lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Poppins", 11F);
             lblStatus.Location = new Point(750, 120);
             lblStatus.Text = "Category Status *";
+
             txtStatus.Location = new Point(750, 150);
-            txtStatus.Size = new Size(600, 45);
+            txtStatus.Size = new Size(600, 52);
+            txtStatus.BorderRadius = 12;
+            txtStatus.BorderThickness = 1;
+            txtStatus.BorderColor = Color.FromArgb(180, 180, 180);
+            txtStatus.FillColor = Color.FromArgb(240, 240, 240);
+            txtStatus.ForeColor = Color.Black;
+            txtStatus.Font = new Font("Poppins", 11F);
             txtStatus.Text = "Active";
             txtStatus.ReadOnly = true;
 
             lblStatusNote.AutoSize = true;
-            lblStatusNote.ForeColor = Color.Black;
-            lblStatusNote.Location = new Point(750, 200);
+            lblStatusNote.Font = new Font("Poppins", 9F, FontStyle.Italic);
+            lblStatusNote.ForeColor = Color.FromArgb(100, 100, 100);
+            lblStatusNote.Location = new Point(750, 210);
             lblStatusNote.Text = "Status is automatically set to \"Active\" and cannot be edited.";
 
-            // DATE – CALENDAR PICKER (WHITE BG)
+            // DATE
             lblDate.AutoSize = true;
+            lblDate.Font = new Font("Poppins", 11F);
             lblDate.Location = new Point(750, 260);
             lblDate.Text = "Date *";
 
             datePicker.Location = new Point(750, 290);
-            datePicker.Size = new Size(600, 45);
+            datePicker.Size = new Size(600, 52);
             datePicker.Format = DateTimePickerFormat.Custom;
             datePicker.CustomFormat = "MM/dd/yyyy";
-            datePicker.ShowUpDown = false;
-            datePicker.Font = new Font("Tahoma", 10F);
+            datePicker.Font = new Font("Poppins", 11F);
             datePicker.FillColor = Color.White;
-            datePicker.BorderColor = Color.FromArgb(200, 200, 200);
+            datePicker.ForeColor = Color.Black;
+            datePicker.BorderColor = Color.FromArgb(180, 180, 180);
             datePicker.BorderThickness = 1;
-            datePicker.BorderRadius = 8;
+            datePicker.BorderRadius = 12;
 
-            // CANCEL BUTTON
-            btnCancel.Location = new Point(1150, 400);
-            btnCancel.Size = new Size(140, 50);
+            // CANCEL BUTTON — Smaller + Red
+            btnCancel.Location = new Point(1180, 420);
+            btnCancel.Size = new Size(130, 48);
             btnCancel.Text = "Cancel";
-            btnCancel.FillColor = Color.FromArgb(240, 240, 240);
-            btnCancel.ForeColor = Color.Black;
-            btnCancel.BorderColor = Color.Black; 
-            btnCancel.BorderThickness = 1;
-            btnCancel.BorderRadius = 8;
+            btnCancel.FillColor = Color.FromArgb(220, 53, 69);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.BorderRadius = 12;
+            btnCancel.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+            btnCancel.HoverState.FillColor = Color.FromArgb(200, 35, 51);
             btnCancel.Click += btnCancel_Click;
 
-            // ADD BUTTON
-            btnAdd.Location = new Point(1300, 400);
-            btnAdd.Size = new Size(180, 50);
+            // ADD BUTTON — Smaller + Blue
+            btnAdd.Location = new Point(1320, 420);
+            btnAdd.Size = new Size(160, 48);
             btnAdd.Text = "Add Category";
             btnAdd.FillColor = Color.FromArgb(0, 123, 255);
             btnAdd.ForeColor = Color.White;
-            btnAdd.BorderRadius = 8;
+            btnAdd.BorderRadius = 12;
+            btnAdd.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+            btnAdd.HoverState.FillColor = Color.FromArgb(0, 105, 230);
             btnAdd.Click += btnAdd_Click;
 
             // FORM
@@ -114,6 +137,7 @@ namespace IT13
             Controls.Add(mainpanel);
             Name = "AddCategory";
             Text = "Add Category";
+            StartPosition = FormStartPosition.CenterScreen;
 
             mainpanel.ResumeLayout(false);
             mainpanel.PerformLayout();

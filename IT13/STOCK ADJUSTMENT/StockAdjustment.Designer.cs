@@ -3,93 +3,96 @@
     partial class StockAdjustment
     {
         private System.ComponentModel.IContainer components = null;
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-                components.Dispose();
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
+
         private void InitializeComponent()
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(100, 88, 255),
+                BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Tahoma", 10.2F, FontStyle.Bold),
+                Font = new Font("Poppins", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
-            mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            label1 = new Label();
-            btngreaterthan = new Guna.UI2.WinForms.Guna2Button();
-            btn9 = new Guna.UI2.WinForms.Guna2Button();
-            btn8 = new Guna.UI2.WinForms.Guna2Button();
-            btn7 = new Guna.UI2.WinForms.Guna2Button();
-            btn6 = new Guna.UI2.WinForms.Guna2Button();
-            btn5 = new Guna.UI2.WinForms.Guna2Button();
-            btn4 = new Guna.UI2.WinForms.Guna2Button();
-            btn3 = new Guna.UI2.WinForms.Guna2Button();
-            btn2 = new Guna.UI2.WinForms.Guna2Button();
-            btn1 = new Guna.UI2.WinForms.Guna2Button();
-            btnlessthan = new Guna.UI2.WinForms.Guna2Button();
-            guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            datagridviewadjustment = new Guna.UI2.WinForms.Guna2DataGridView();
-            colID = new DataGridViewCheckBoxColumn();
-            colDate = new DataGridViewTextBoxColumn();
-            colProductName = new DataGridViewTextBoxColumn();
-            colAdjustmentType = new DataGridViewTextBoxColumn();
-            colPhysicalCount = new DataGridViewTextBoxColumn();
-            colRequestedBy = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
-            colActions = new DataGridViewTextBoxColumn();
-            Export = new Guna.UI2.WinForms.Guna2ComboBox();
-            btnaddadjustment = new Guna.UI2.WinForms.Guna2Button();
-            Filter = new Guna.UI2.WinForms.Guna2ComboBox();
-            btnsearch = new Guna.UI2.WinForms.Guna2Button();
-            txtboxsearch = new Guna.UI2.WinForms.Guna2TextBox();
-            mainpanel.SuspendLayout();
-            guna2Panel1.SuspendLayout();
-            guna2ShadowPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).BeginInit();
-            SuspendLayout();
-            // MAIN PANEL
-            mainpanel.BackColor = Color.Transparent;
-            mainpanel.Controls.Add(guna2Panel1);
-            mainpanel.Controls.Add(guna2ShadowPanel1);
-            mainpanel.Controls.Add(Export);
-            mainpanel.Controls.Add(btnaddadjustment);
-            mainpanel.Controls.Add(Filter);
-            mainpanel.Controls.Add(btnsearch);
-            mainpanel.Controls.Add(txtboxsearch);
-            mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(300, 88);
-            mainpanel.Name = "mainpanel";
-            mainpanel.Radius = 8;
-            mainpanel.ShadowColor = Color.Black;
-            mainpanel.Size = new Size(1602, 878);
-            mainpanel.TabIndex = 1;
-            // PAGINATION PANEL
-            guna2Panel1.Controls.Add(label1);
-            guna2Panel1.Controls.Add(btngreaterthan);
-            guna2Panel1.Controls.Add(btn9);
-            guna2Panel1.Controls.Add(btn8);
-            guna2Panel1.Controls.Add(btn7);
-            guna2Panel1.Controls.Add(btn6);
-            guna2Panel1.Controls.Add(btn5);
-            guna2Panel1.Controls.Add(btn4);
-            guna2Panel1.Controls.Add(btn3);
-            guna2Panel1.Controls.Add(btn2);
-            guna2Panel1.Controls.Add(btn1);
-            guna2Panel1.Controls.Add(btnlessthan);
-            guna2Panel1.Location = new Point(77, 826);
-            guna2Panel1.Name = "guna2Panel1";
-            guna2Panel1.Size = new Size(1458, 36);
-            guna2Panel1.TabIndex = 7;
-            label1.AutoSize = true;
-            label1.Font = new Font("Tahoma", 9F, FontStyle.Bold);
-            label1.Location = new Point(16, 8);
-            label1.Text = "Showing 1-10 of 100";
-            // PAGINATION BUTTONS
+
+            this.mainpanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btngreaterthan = new Guna.UI2.WinForms.Guna2Button();
+            this.btn9 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn8 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn7 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn6 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn5 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn4 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn3 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn2 = new Guna.UI2.WinForms.Guna2Button();
+            this.btn1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnlessthan = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            this.dgvAdjustment = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.colID = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAdjustmentType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPhysicalCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRequestedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Export = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.btnAddAdjustment = new Guna.UI2.WinForms.Guna2Button();
+            this.Filter = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
+            this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
+
+            this.mainpanel.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
+            this.guna2ShadowPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdjustment)).BeginInit();
+            this.SuspendLayout();
+
+            // mainpanel
+            this.mainpanel.Controls.Add(this.guna2Panel1);
+            this.mainpanel.Controls.Add(this.guna2ShadowPanel1);
+            this.mainpanel.Controls.Add(this.Export);
+            this.mainpanel.Controls.Add(this.btnAddAdjustment);
+            this.mainpanel.Controls.Add(this.Filter);
+            this.mainpanel.Controls.Add(this.btnSearch);
+            this.mainpanel.Controls.Add(this.txtSearch);
+            this.mainpanel.FillColor = Color.White;
+            this.mainpanel.Location = new Point(300, 88);
+            this.mainpanel.Name = "mainpanel";
+            this.mainpanel.Radius = 8;
+            this.mainpanel.Size = new Size(1602, 878);
+            this.mainpanel.TabIndex = 1;
+
+            // Pagination panel
+            this.guna2Panel1.Location = new Point(77, 826);
+            this.guna2Panel1.Size = new Size(1458, 36);
+            this.guna2Panel1.Controls.Add(this.label1);
+            this.guna2Panel1.Controls.Add(this.btngreaterthan);
+            this.guna2Panel1.Controls.Add(this.btn9);
+            this.guna2Panel1.Controls.Add(this.btn8);
+            this.guna2Panel1.Controls.Add(this.btn7);
+            this.guna2Panel1.Controls.Add(this.btn6);
+            this.guna2Panel1.Controls.Add(this.btn5);
+            this.guna2Panel1.Controls.Add(this.btn4);
+            this.guna2Panel1.Controls.Add(this.btn3);
+            this.guna2Panel1.Controls.Add(this.btn2);
+            this.guna2Panel1.Controls.Add(this.btn1);
+            this.guna2Panel1.Controls.Add(this.btnlessthan);
+
+            this.label1.AutoSize = true;
+            this.label1.Font = new Font("Poppins", 9F, FontStyle.Bold);
+            this.label1.ForeColor = Color.Gray;
+            this.label1.Location = new Point(16, 8);
+            this.label1.Text = "Showing 1-10 of 100";
+
             SetupPaginationButton(btngreaterthan, ">", 1408);
             SetupPaginationButton(btn9, "9", 1378);
             SetupPaginationButton(btn8, "8", 1348);
@@ -101,94 +104,84 @@
             SetupPaginationButton(btn2, "2", 1168);
             SetupPaginationButton(btn1, "1", 1138);
             SetupPaginationButton(btnlessthan, "<", 1108);
-            // DATAGRIDVIEW PANEL
-            guna2ShadowPanel1.BackColor = Color.Transparent;
-            guna2ShadowPanel1.Controls.Add(datagridviewadjustment);
-            guna2ShadowPanel1.FillColor = Color.White;
-            guna2ShadowPanel1.Location = new Point(77, 104);
-            guna2ShadowPanel1.Name = "guna2ShadowPanel1";
-            guna2ShadowPanel1.Radius = 5;
-            guna2ShadowPanel1.Size = new Size(1458, 716);
-            guna2ShadowPanel1.TabIndex = 5;
-            // DATAGRIDVIEW
-            datagridviewadjustment.AllowUserToAddRows = false;
-            datagridviewadjustment.AllowUserToResizeColumns = false;
-            datagridviewadjustment.AllowUserToResizeRows = false;
-            datagridviewadjustment.ColumnHeadersDefaultCellStyle = headerStyle;
-            datagridviewadjustment.ColumnHeadersHeight = 40;
-            datagridviewadjustment.GridColor = Color.FromArgb(231, 229, 255);
-            datagridviewadjustment.Location = new Point(22, 27);
-            datagridviewadjustment.Name = "datagridviewadjustment";
-            datagridviewadjustment.RowHeadersVisible = false;
-            datagridviewadjustment.Size = new Size(1412, 662);
-            datagridviewadjustment.TabIndex = 0;
-            datagridviewadjustment.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
-            datagridviewadjustment.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            datagridviewadjustment.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            datagridviewadjustment.CellPainting += datagridviewadjustment_CellPainting;
-            datagridviewadjustment.CellClick += datagridviewadjustment_CellClick;
-            // COLUMNS
-            colID.HeaderText = "ID"; colID.Name = "colID"; colID.Width = 140;
-            colDate.HeaderText = "Date"; colDate.Name = "colDate"; colDate.Width = 130;
-            colProductName.HeaderText = "Product Name"; colProductName.Name = "colProductName"; colProductName.Width = 220;
-            colAdjustmentType.HeaderText = "Adjust Type"; colAdjustmentType.Name = "colAdjustmentType"; colAdjustmentType.Width = 150;
-            colPhysicalCount.HeaderText = "Phys Count"; colPhysicalCount.Name = "colPhysicalCount"; colPhysicalCount.Width = 130;
-            colRequestedBy.HeaderText = "Requested By"; colRequestedBy.Name = "colRequestedBy"; colRequestedBy.Width = 180;
-            colStatus.HeaderText = "Status"; colStatus.Name = "colStatus"; colStatus.Width = 120;
-            colActions.HeaderText = "Actions"; colActions.Name = "colActions"; colActions.Width = 100;
-            colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            datagridviewadjustment.Columns.AddRange(new DataGridViewColumn[]
-            {
-                colID, colDate, colProductName, colAdjustmentType,
-                colPhysicalCount, colRequestedBy, colStatus, colActions
-            });
-            // EXPORT COMBOBOX
-            Export.Location = new Point(1400, 45);
-            Export.Size = new Size(128, 36);
-            Export.DropDownStyle = ComboBoxStyle.DropDownList;
-            Export.Font = new Font("Segoe UI", 10F);
-            Export.ItemHeight = 30;
-            Export.TabIndex = 4;
-            // ADD ADJUSTMENT BUTTON
-            btnaddadjustment.Location = new Point(1235, 45);
-            btnaddadjustment.Size = new Size(155, 36);
-            btnaddadjustment.Text = "+Add Adjustment";
-            btnaddadjustment.Click += btnaddadjustment_Click;
-            btnaddadjustment.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
-            btnaddadjustment.Padding = new Padding(4, 0, 4, 0);
-            btnaddadjustment.FillColor = Color.FromArgb(0, 123, 255);
-            btnaddadjustment.ForeColor = Color.White;
-            btnaddadjustment.BorderRadius = 8;
-            // FILTER COMBOBOX
-            Filter.Location = new Point(1100, 45);
-            Filter.Size = new Size(128, 36);
-            Filter.DropDownStyle = ComboBoxStyle.DropDownList;
-            Filter.Font = new Font("Segoe UI", 10F);
-            Filter.ItemHeight = 30;
-            Filter.TabIndex = 2;
-            // SEARCH BUTTON
-            btnsearch.Location = new Point(537, 41);
-            btnsearch.Size = new Size(103, 40);
-            btnsearch.Text = "Search";
-            btnsearch.FillColor = Color.FromArgb(0, 123, 255);
-            btnsearch.ForeColor = Color.White;
-            btnsearch.BorderRadius = 8;
-            txtboxsearch.Location = new Point(94, 41);
-            txtboxsearch.PlaceholderText = "Search Adjustment";
-            txtboxsearch.Size = new Size(437, 40);
-            txtboxsearch.TextChanged += txtboxsearch_TextChanged;
-            // FORM
-            ClientSize = new Size(1914, 1055);
-            Controls.Add(mainpanel);
-            Name = "StockAdjustment";
-            Text = "Stock Adjustment";
-            mainpanel.ResumeLayout(false);
-            guna2Panel1.ResumeLayout(false);
-            guna2Panel1.PerformLayout();
-            guna2ShadowPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)datagridviewadjustment).EndInit();
-            ResumeLayout(false);
+
+            // Grid panel
+            this.guna2ShadowPanel1.FillColor = Color.White;
+            this.guna2ShadowPanel1.Location = new Point(77, 104);
+            this.guna2ShadowPanel1.Size = new Size(1458, 716);
+            this.guna2ShadowPanel1.Radius = 5;
+            this.guna2ShadowPanel1.Controls.Add(this.dgvAdjustment);
+
+            // dgvAdjustment
+            this.dgvAdjustment.AllowUserToAddRows = false;
+            this.dgvAdjustment.AllowUserToResizeColumns = false;
+            this.dgvAdjustment.AllowUserToResizeRows = false;
+            this.dgvAdjustment.ColumnHeadersDefaultCellStyle = headerStyle;
+            this.dgvAdjustment.ColumnHeadersHeight = 40;
+            this.dgvAdjustment.GridColor = Color.FromArgb(231, 229, 255);
+            this.dgvAdjustment.Location = new Point(22, 27);
+            this.dgvAdjustment.Name = "dgvAdjustment";
+            this.dgvAdjustment.RowHeadersVisible = false;
+            this.dgvAdjustment.Size = new Size(1412, 662);
+            this.dgvAdjustment.TabIndex = 0;
+
+            this.dgvAdjustment.CellPainting += new DataGridViewCellPaintingEventHandler(this.dgvAdjustment_CellPainting);
+            this.dgvAdjustment.CellClick += new DataGridViewCellEventHandler(this.dgvAdjustment_CellClick);
+
+            // Columns
+            this.colID.HeaderText = "ID"; this.colID.Name = "colID";
+            this.colDate.HeaderText = "Date"; this.colDate.Name = "colDate";
+            this.colProductName.HeaderText = "Product Name"; this.colProductName.Name = "colProductName";
+            this.colAdjustmentType.HeaderText = "Adjust Type"; this.colAdjustmentType.Name = "colAdjustmentType";
+            this.colPhysicalCount.HeaderText = "PhyCount"; this.colPhysicalCount.Name = "colPhysicalCount";
+            this.colRequestedBy.HeaderText = "Requested By"; this.colRequestedBy.Name = "colRequestedBy";
+            this.colStatus.HeaderText = "Status"; this.colStatus.Name = "colStatus";
+            this.colActions.HeaderText = "Actions"; this.colActions.Name = "colActions";
+            this.colActions.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            this.dgvAdjustment.Columns.AddRange(new DataGridViewColumn[] {
+                colID, colDate, colProductName, colAdjustmentType, colPhysicalCount, colRequestedBy, colStatus, colActions });
+
+            // Top controls (exact copy of SupplierOrderList)
+            this.Export.Location = new Point(1400, 45); this.Export.Size = new Size(128, 50);
+            this.Export.Font = new Font("Poppins", 10F); this.Export.BorderRadius = 8; this.Export.FillColor = Color.White;
+
+            this.btnAddAdjustment.Location = new Point(1202, 45); this.btnAddAdjustment.Size = new Size(190, 38);
+            this.btnAddAdjustment.Text = "✚ Add Adjustment";
+            this.btnAddAdjustment.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+            this.btnAddAdjustment.FillColor = Color.FromArgb(0, 123, 255);
+            this.btnAddAdjustment.ForeColor = Color.White;
+            this.btnAddAdjustment.BorderRadius = 8;
+            this.btnAddAdjustment.Click += new EventHandler(this.btnAddAdjustment_Click);
+
+            this.Filter.Location = new Point(1065, 45); this.Filter.Size = new Size(128, 50);
+            this.Filter.Font = new Font("Poppins", 10F); this.Filter.BorderRadius = 8; this.Filter.FillColor = Color.White;
+
+            this.btnSearch.Location = new Point(537, 41); this.btnSearch.Size = new Size(103, 48);
+            this.btnSearch.Text = "Search"; this.btnSearch.FillColor = Color.FromArgb(0, 123, 255);
+            this.btnSearch.ForeColor = Color.White; this.btnSearch.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            this.btnSearch.BorderRadius = 5;
+
+            this.txtSearch.Location = new Point(94, 41); this.txtSearch.Size = new Size(437, 48);
+            this.txtSearch.PlaceholderText = "Search adjustment ID or product...";
+            this.txtSearch.Font = new Font("Poppins", 10.5F); this.txtSearch.BorderRadius = 12;
+            this.txtSearch.PlaceholderForeColor = Color.FromArgb(80, 80, 80);
+            this.txtSearch.TextChanged += new EventHandler(this.txtSearch_TextChanged);
+
+            // Form
+            this.ClientSize = new Size(1914, 1055);
+            this.Controls.Add(this.mainpanel);
+            this.Name = "StockAdjustment";
+            this.Text = "Stock Adjustment";
+
+            this.mainpanel.ResumeLayout(false);
+            this.guna2Panel1.ResumeLayout(false);
+            this.guna2Panel1.PerformLayout();
+            this.guna2ShadowPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdjustment)).EndInit();
+            this.ResumeLayout(false);
         }
+
         private void SetupPaginationButton(Guna.UI2.WinForms.Guna2Button btn, string text, int left)
         {
             btn.Text = text;
@@ -197,14 +190,14 @@
             btn.FillColor = Color.FromArgb(248, 248, 248);
             btn.ForeColor = Color.Black;
             btn.BorderRadius = 8;
-            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btn.HoverState.FillColor = Color.FromArgb(235, 235, 235);
-            btn.DisabledState.FillColor = Color.FromArgb(220, 220, 220);
-            btn.DisabledState.ForeColor = Color.Gray;
         }
+
+        // Controls
         private Guna.UI2.WinForms.Guna2ShadowPanel mainpanel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Label label1;
+        private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2Button btngreaterthan;
         private Guna.UI2.WinForms.Guna2Button btn9;
         private Guna.UI2.WinForms.Guna2Button btn8;
@@ -217,19 +210,19 @@
         private Guna.UI2.WinForms.Guna2Button btn1;
         private Guna.UI2.WinForms.Guna2Button btnlessthan;
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
-        private Guna.UI2.WinForms.Guna2DataGridView datagridviewadjustment;
-        private DataGridViewCheckBoxColumn colID;
-        private DataGridViewTextBoxColumn colDate;
-        private DataGridViewTextBoxColumn colProductName;
-        private DataGridViewTextBoxColumn colAdjustmentType;
-        private DataGridViewTextBoxColumn colPhysicalCount;
-        private DataGridViewTextBoxColumn colRequestedBy;
-        private DataGridViewTextBoxColumn colStatus;
-        private DataGridViewTextBoxColumn colActions;
+        private Guna.UI2.WinForms.Guna2DataGridView dgvAdjustment;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAdjustmentType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPhysicalCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRequestedBy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colActions;
         private Guna.UI2.WinForms.Guna2ComboBox Export;
-        private Guna.UI2.WinForms.Guna2Button btnaddadjustment;
+        private Guna.UI2.WinForms.Guna2Button btnAddAdjustment;
         private Guna.UI2.WinForms.Guna2ComboBox Filter;
-        private Guna.UI2.WinForms.Guna2Button btnsearch;
-        private Guna.UI2.WinForms.Guna2TextBox txtboxsearch;
+        private Guna.UI2.WinForms.Guna2Button btnSearch;
+        private Guna.UI2.WinForms.Guna2TextBox txtSearch;
     }
 }

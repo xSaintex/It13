@@ -1,7 +1,4 @@
-﻿// ---------------------------------------------------------------------
-// AddAttemptModal.cs
-// ---------------------------------------------------------------------
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -10,6 +7,9 @@ namespace IT13
 {
     public partial class AddAttemptModal : Form
     {
+        // ← THIS PROPERTY WAS MISSING — NOW ADDED
+        public string DeliveryId { get; set; }
+
         public DateTime AttemptDate { get; private set; }
         public string Status { get; private set; }
         public string Remarks { get; private set; }
@@ -17,7 +17,7 @@ namespace IT13
         public AddAttemptModal()
         {
             InitializeComponent();
-            dtpDate.Value = DateTime.Today;
+            dtpDate.Value = DateTime.Now;
             cmbStatus.SelectedIndex = 0;
         }
 
