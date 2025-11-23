@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
@@ -10,17 +11,27 @@ namespace IT13
     {
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
+        private string connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
 
         public SupplierList()
         {
             InitializeComponent();
 
+            // Load icons
             _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
 
+            // Setup
+            SetupDataGridView();
             SetupFilterComboBox();
             SetupExportComboBox();
+            LoadDataFromDatabase();
+            UpdateHeaderCheckState();
+            dgvSuppliers.ClearSelection();
+        }
 
+        private void SetupDataGridView()
+        {
             dgvSuppliers.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dgvSuppliers.MultiSelect = false;
             dgvSuppliers.ReadOnly = true;
@@ -29,12 +40,15 @@ namespace IT13
             dgvSuppliers.RowHeadersVisible = false;
             dgvSuppliers.DefaultCellStyle.SelectionBackColor = dgvSuppliers.DefaultCellStyle.BackColor;
             dgvSuppliers.DefaultCellStyle.SelectionForeColor = dgvSuppliers.DefaultCellStyle.ForeColor;
-            foreach (DataGridViewColumn c in dgvSuppliers.Columns) c.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            foreach (DataGridViewColumn c in dgvSuppliers.Columns)
+                c.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             dgvSuppliers.DefaultCellStyle.Font = new Font("Poppins", 11F);
             dgvSuppliers.RowTemplate.Height = 45;
             dgvSuppliers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+            // Column weights
             dgvSuppliers.Columns["colID"].MinimumWidth = 160;
             dgvSuppliers.Columns["colID"].FillWeight = 10;
             dgvSuppliers.Columns["colCompany"].FillWeight = 28;
@@ -45,6 +59,7 @@ namespace IT13
             dgvSuppliers.Columns["colStatus"].FillWeight = 12;
             dgvSuppliers.Columns["colActions"].FillWeight = 14;
 
+            // Alignment
             dgvSuppliers.Columns["colContact"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colPhone"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colEmail"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -52,10 +67,6 @@ namespace IT13
             dgvSuppliers.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvSuppliers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
-            LoadSampleData();
-            UpdateHeaderCheckState();
-            dgvSuppliers.ClearSelection();
         }
 
         private void SetupFilterComboBox()
@@ -63,7 +74,12 @@ namespace IT13
             Filter.Items.AddRange(new object[] { "Filter", "All", "Active", "Inactive" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
-            Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+
+            Filter.SelectedIndexChanged += (s, e) =>
+            {
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                ApplyFiltersAndSearch();
+            };
         }
 
         private void SetupExportComboBox()
@@ -71,40 +87,116 @@ namespace IT13
             Export.Items.AddRange(new object[] { "Export", "Excel", "PDF", "CSV" });
             Export.SelectedIndex = 0;
             Export.ForeColor = Color.Gray;
-            Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+            Export.SelectedIndexChanged += (s, e) =>
+                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
-        private void LoadSampleData()
+        private void LoadDataFromDatabase()
         {
-            AddRow("SUP-001", "PrimeTech Distributors", "Mark Lim", "+63 917 555 1234", "mark@primetech.com", "Net 30", "Active");
-            AddRow("SUP-002", "Global Supplies Inc.", "Sarah Go", "+63 922 888 9999", "sarah@global.com", "Net 45", "Active");
-            AddRow("SUP-003", "Metro Trading Co.", "John Tan", "+63 905 333 4444", "john@metro.com", "Cash", "Inactive");
-            AddRow("SUP-004", "Asia Pacific Traders", "Lisa Wong", "+63 918 777 8888", "lisa@apt.com.ph", "Net 60", "Active");
-            AddRow("SUP-005", "Sunrise Enterprises", "David Cruz", "+63 927 111 2222", "david@sunrise.ph", "Net 30", "Active");
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT id, CompanyName, CONCAT(FirstName, ' ', LastName) AS FullName,
+                               PhoneNo, Email, PaymentTerms, Status
+                        FROM suppliers
+                        ORDER BY id ASC";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dgvSuppliers.Rows.Clear();
+                        while (reader.Read())
+                        {
+                            int rawId = Convert.ToInt32(reader["id"]);
+                            string formattedId = "SUP-" + rawId.ToString().PadLeft(3, '0');
+                            string company = reader["CompanyName"]?.ToString() ?? "";
+                            string contact = reader["FullName"]?.ToString() ?? "";
+                            string phone = reader["PhoneNo"]?.ToString() ?? "";
+                            string email = reader["Email"]?.ToString() ?? "";
+                            string payment = reader["PaymentTerms"]?.ToString() ?? "";
+                            string status = reader["Status"]?.ToString() ?? "Inactive";
+
+                            AddRow(formattedId, company, contact, phone, email, payment, status);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AddRow(string id, string company, string contact, string phone, string email, string payment, string status)
         {
             int idx = dgvSuppliers.Rows.Add(false, company, contact, phone, email, payment, status, null);
-            dgvSuppliers.Rows[idx].Cells[0].Tag = id;
-            dgvSuppliers.Rows[idx].Height = 45;
+            var row = dgvSuppliers.Rows[idx];
+            row.Tag = id; // Store formatted ID like "SUP-001"
+            row.Height = 45;
+        }
+
+        private void ApplyFiltersAndSearch()
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            string filterStatus = Filter.SelectedItem?.ToString() ?? "Filter";
+
+            bool showAll = filterStatus == "Filter" || filterStatus == "All";
+            bool showActive = filterStatus == "Active";
+            bool showInactive = filterStatus == "Inactive";
+
+            foreach (DataGridViewRow row in dgvSuppliers.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                // Get values for searching
+                string id = (row.Tag?.ToString() ?? "").ToLower(); // This is SUP-001
+                string company = (row.Cells["colCompany"].Value?.ToString() ?? "").ToLower();
+                string contact = (row.Cells["colContact"].Value?.ToString() ?? "").ToLower();
+                string phone = (row.Cells["colPhone"].Value?.ToString() ?? "").ToLower();
+                string email = (row.Cells["colEmail"].Value?.ToString() ?? "").ToLower();
+                string status = (row.Cells["colStatus"].Value?.ToString() ?? "").ToLower();
+
+                bool matchesSearch = string.IsNullOrEmpty(searchText) ||
+                                     id.Contains(searchText) ||
+                                     company.Contains(searchText) ||
+                                     contact.Contains(searchText) ||
+                                     phone.Contains(searchText) ||
+                                     email.Contains(searchText);
+
+                bool matchesFilter = showAll ||
+                                     (showActive && status == "active") ||
+                                     (showInactive && status == "inactive");
+
+                row.Visible = matchesSearch && matchesFilter;
+            }
+
+            UpdateHeaderCheckState();
         }
 
         private void UpdateHeaderCheckState()
         {
-            int checkedCount = 0, visibleCount = 0;
+            int checkedCount = 0;
+            int visibleCount = 0;
+
             foreach (DataGridViewRow row in dgvSuppliers.Rows)
             {
                 if (row.Visible && !row.IsNewRow)
                 {
                     visibleCount++;
-                    if ((bool)(row.Cells[0].Value ?? false)) checkedCount++;
+                    if (Convert.ToBoolean(row.Cells[0].Value ?? false))
+                        checkedCount++;
                 }
             }
-            _headerCheckState = visibleCount == 0 ? false :
-                               checkedCount == 0 ? false :
-                               checkedCount == visibleCount ? true : (bool?)null;
-            dgvSuppliers.InvalidateCell(0, -1);
+
+            _headerCheckState = visibleCount == 0 ? (bool?)false :
+                                checkedCount == 0 ? false :
+                                checkedCount == visibleCount ? (bool?)true : null;
+
+            dgvSuppliers.InvalidateCell(0, -1); // Refresh header checkbox
         }
 
         private GraphicsPath GetRoundedRect(Rectangle rect, float radius)
@@ -121,80 +213,103 @@ namespace IT13
 
         private void dgvSuppliers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
+            // Header Checkbox + "ID" label
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
                 var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, r);
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
+
                 if (_headerCheckState == true)
                 {
                     using (Pen p = new Pen(Color.Black, 2.5f))
                         e.Graphics.DrawLines(p, new Point[] {
-                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                            new Point(r.X + 3, r.Y + 8),
+                            new Point(r.X + 7, r.Y + 12),
+                            new Point(r.X + 13, r.Y + 5)
                         });
                 }
                 else if (_headerCheckState == null)
-                    e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Gray), r.X + 3, r.Y + 3, 10, 10);
+                }
 
                 TextRenderer.DrawText(e.Graphics, "ID",
                     new Font("Poppins", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
-                e.Handled = true; return;
+
+                e.Handled = true;
+                return;
             }
 
+            // Row Checkbox + ID Display
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                bool chk = (bool)(e.Value ?? false);
+                bool isChecked = Convert.ToBoolean(e.Value ?? false);
                 var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, r);
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
-                if (chk)
+
+                if (isChecked)
                 {
                     using (Pen p = new Pen(Color.Black, 2.5f))
                         e.Graphics.DrawLines(p, new Point[] {
-                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                            new Point(r.X + 3, r.Y + 8),
+                            new Point(r.X + 7, r.Y + 12),
+                            new Point(r.X + 13, r.Y + 5)
                         });
                 }
 
-                string id = dgvSuppliers.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+                string id = dgvSuppliers.Rows[e.RowIndex].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
-                    TextRenderer.DrawText(e.Graphics, id, new Font("Poppins", 11F),
+                {
+                    TextRenderer.DrawText(e.Graphics, id,
+                        new Font("Poppins", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
-                e.Handled = true; return;
+                }
+                e.Handled = true;
+                return;
             }
 
+            // Action Buttons (Edit & View)
             if (e.ColumnIndex == dgvSuppliers.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int x = e.CellBounds.X + (e.CellBounds.Width - total) / 2;
                 int y = e.CellBounds.Y + (e.CellBounds.Height - sz) / 2;
+
                 e.Graphics.DrawImage(_editIcon, x, y, sz, sz);
                 e.Graphics.DrawImage(_viewIcon, x + sz + gap, y, sz, sz);
-                e.Handled = true; return;
+                e.Handled = true;
+                return;
             }
 
+            // Status Badge
             if (e.ColumnIndex == dgvSuppliers.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                string status = e.Value?.ToString() ?? "";
-                Color bg = status == "Active" ? Color.FromArgb(34, 197, 94) : Color.FromArgb(239, 68, 68);
+                string status = e.Value?.ToString() ?? "Inactive";
+                Color bg = status.Equals("Active", StringComparison.OrdinalIgnoreCase)
+                    ? Color.FromArgb(34, 197, 94)
+                    : Color.FromArgb(239, 68, 68);
+
                 var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 8, e.CellBounds.Width - 20, e.CellBounds.Height - 16);
                 using (var path = GetRoundedRect(rect, 10f))
-                using (var br = new SolidBrush(bg))
-                    e.Graphics.FillPath(br, path);
+                using (var brush = new SolidBrush(bg))
+                    e.Graphics.FillPath(brush, path);
 
-                using (var f = new Font("Poppins", 10F, FontStyle.Bold))
-                using (var br = new SolidBrush(Color.White))
+                using (var font = new Font("Poppins", 10F, FontStyle.Bold))
+                using (var textBrush = new SolidBrush(Color.White))
                 {
-                    var sz = e.Graphics.MeasureString(status, f);
-                    e.Graphics.DrawString(status, f, br,
-                        e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
-                        e.CellBounds.Y + (e.CellBounds.Height - sz.Height) / 2);
+                    var size = e.Graphics.MeasureString(status, font);
+                    float x = e.CellBounds.X + (e.CellBounds.Width - size.Width) / 2;
+                    float y = e.CellBounds.Y + (e.CellBounds.Height - size.Height) / 2;
+                    e.Graphics.DrawString(status, font, textBrush, x, y);
                 }
                 e.Handled = true;
             }
@@ -204,32 +319,40 @@ namespace IT13
         {
             dgvSuppliers.CurrentCell = null;
 
+            // Header checkbox
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 bool newState = !(_headerCheckState == true);
-                foreach (DataGridViewRow r in dgvSuppliers.Rows)
-                    if (r.Visible && !r.IsNewRow) r.Cells[0].Value = newState;
+                foreach (DataGridViewRow row in dgvSuppliers.Rows)
+                {
+                    if (row.Visible && !row.IsNewRow)
+                        row.Cells[0].Value = newState;
+                }
                 _headerCheckState = newState ? true : (bool?)false;
-                dgvSuppliers.InvalidateCell(0, -1);
-                return;
-            }
-
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
-            {
-                var row = dgvSuppliers.Rows[e.RowIndex];
-                row.Cells[0].Value = !(bool)(row.Cells[0].Value ?? false);
                 UpdateHeaderCheckState();
                 return;
             }
 
-            if (e.RowIndex >= 0 && e.ColumnIndex == dgvSuppliers.Columns["colActions"].Index)
+            // Row checkbox
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            {
+                var row = dgvSuppliers.Rows[e.RowIndex];
+                bool current = Convert.ToBoolean(row.Cells[0].Value ?? false);
+                row.Cells[0].Value = !current;
+                UpdateHeaderCheckState();
+                return;
+            }
+
+            // Action buttons
+            if (e.ColumnIndex == dgvSuppliers.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 var cellRect = dgvSuppliers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var pt = dgvSuppliers.PointToClient(Cursor.Position);
                 int clickX = pt.X - cellRect.X;
+
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int startX = (cellRect.Width - total) / 2;
-                string id = dgvSuppliers.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+                string id = dgvSuppliers.Rows[e.RowIndex].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + sz)
                     OpenEditSupplier(id);
@@ -238,54 +361,58 @@ namespace IT13
             }
         }
 
-        // SEARCH BUTTON — NOW WORKS!
-        private void btnSearch_Click(object sender, EventArgs e)
+        // Real-time Search
+        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            string filter = txtSearch.Text.Trim().ToLower();
-            foreach (DataGridViewRow row in dgvSuppliers.Rows)
-            {
-                if (row.IsNewRow) continue;
-                string id = row.Cells[0].Tag?.ToString().ToLower() ?? "";
-                string company = row.Cells["colCompany"].Value?.ToString().ToLower() ?? "";
-                string phone = row.Cells["colPhone"].Value?.ToString().ToLower() ?? "";
-                string email = row.Cells["colEmail"].Value?.ToString().ToLower() ?? "";
-
-                bool match = string.IsNullOrEmpty(filter) ||
-                             id.Contains(filter) ||
-                             company.Contains(filter) ||
-                             phone.Contains(filter) ||
-                             email.Contains(filter);
-
-                row.Visible = match;
-            }
-            UpdateHeaderCheckState();
+            ApplyFiltersAndSearch();
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            ApplyFiltersAndSearch();
+        }
+
+        // Navigation
         private void OpenEditSupplier(string id)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = "Edit Supplier";
             var f = new EditSupplierList(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
         private void OpenViewSupplier(string id)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = $"View Supplier: {id}";
             var f = new ViewSupplierList(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
         private void btnAddSupplier_Click(object sender, EventArgs e)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = "Add Supplier";
             var f = new AddSupplierList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
+        }
+
+        public void RefreshData()
+        {
+            LoadDataFromDatabase();
+            ApplyFiltersAndSearch();
         }
     }
 }

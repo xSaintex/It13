@@ -1,4 +1,4 @@
-﻿// SupplierOrderList.cs - PERFECT MATCH WITH ProductCategory
+﻿// SupplierOrderList.cs - PERFECT MATCH WITH ProductCategory + WORKING FILTER
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -73,7 +73,12 @@ namespace IT13
             Filter.Items.AddRange(new object[] { "Filter", "All", "Pending", "Delivered", "Cancelled" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
-            Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+
+            Filter.SelectedIndexChanged += (s, e) =>
+            {
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                ApplyFiltersAndSearch(); // Apply filter whenever selection changes
+            };
         }
 
         private void SetupExportComboBox()
@@ -102,30 +107,67 @@ namespace IT13
 
         private void UpdateHeaderCheckState()
         {
-            int checkedCount = 0, visibleCount = 0;
+            int checkedCount = 0;
+            int visibleCount = 0;
+
             foreach (DataGridViewRow row in dgvOrders.Rows)
             {
-                if (row.Visible && !row.IsNewRow)
+                if (!row.IsNewRow && row.Visible)
                 {
                     visibleCount++;
-                    if ((bool)(row.Cells[0].Value ?? false)) checkedCount++;
+                    if ((bool)(row.Cells[0].Value ?? false))
+                        checkedCount++;
                 }
             }
 
-            _headerCheckState = visibleCount == 0 ? false :
-                               checkedCount == 0 ? false :
-                               checkedCount == visibleCount ? true : (bool?)null;
+            _headerCheckState = visibleCount == 0 ? (bool?)false :
+                                checkedCount == 0 ? false :
+                                checkedCount == visibleCount ? true : (bool?)null;
 
-            dgvOrders.InvalidateCell(0, -1);
+            dgvOrders.InvalidateCell(dgvOrders.Columns["colID"].Index, -1); // Refresh header checkbox
         }
 
+        // NEW: Combined filter + search logic
+        private void ApplyFiltersAndSearch()
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            string filterStatus = Filter.SelectedItem?.ToString() ?? "Filter";
+
+            bool showAll = filterStatus == "All" || filterStatus == "Filter";
+
+            foreach (DataGridViewRow row in dgvOrders.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string id = (row.Cells[0].Tag?.ToString() ?? "").ToLower();
+                string supplier = (row.Cells["colSupplier"].Value?.ToString() ?? "").ToLower();
+                string status = row.Cells["colStatus"].Value?.ToString() ?? "";
+
+                bool matchesSearch = string.IsNullOrEmpty(searchText) ||
+                                     id.Contains(searchText) ||
+                                     supplier.Contains(searchText);
+
+                bool matchesFilter = showAll ||
+                                     (filterStatus != "Filter" && status.Equals(filterStatus, StringComparison.OrdinalIgnoreCase));
+
+                row.Visible = matchesSearch && matchesFilter;
+            }
+
+            UpdateHeaderCheckState();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            ApplyFiltersAndSearch(); // Re-apply both filters when search changes
+        }
+
+        // Cell Painting (unchanged, only fixed column reference in header invalidate)
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // HEADER: Checkbox + "ID" (Only ONE "ID")
-            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            // HEADER: Checkbox + "ID"
+            if (e.RowIndex == -1 && e.ColumnIndex == dgvOrders.Columns["colID"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 var checkRect = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, checkRect);
                 e.Graphics.DrawRectangle(Pens.Black, checkRect.X, checkRect.Y, 15, 15);
@@ -151,19 +193,16 @@ namespace IT13
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White,
                     TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
-
                 e.Handled = true;
                 return;
             }
 
             // ROW: Checkbox + ID Text
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvOrders.Columns["colID"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 bool isChecked = (bool)(e.Value ?? false);
                 var checkRect = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
-
                 e.Graphics.FillRectangle(Brushes.White, checkRect);
                 e.Graphics.DrawRectangle(Pens.Black, checkRect.X, checkRect.Y, 15, 15);
 
@@ -188,16 +227,14 @@ namespace IT13
                         Color.Black,
                         TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
-
                 e.Handled = true;
                 return;
             }
 
-            // ACTIONS: Edit | View | Delete
+            // ACTIONS COLUMN
             if (e.ColumnIndex == dgvOrders.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 int iconSize = 24, gap = 16;
                 int totalWidth = iconSize * 3 + gap * 2;
                 int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
@@ -206,12 +243,11 @@ namespace IT13
                 e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
                 e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
                 e.Graphics.DrawImage(_deleteIcon, x + (iconSize + gap) * 2, y, iconSize, iconSize);
-
                 e.Handled = true;
                 return;
             }
 
-            // STATUS BADGE (Pending = Orange, Delivered = Green, Cancelled = Red)
+            // STATUS BADGE
             if (e.ColumnIndex == dgvOrders.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -237,7 +273,6 @@ namespace IT13
                         e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
                         e.CellBounds.Y + (e.CellBounds.Height - sz.Height) / 2);
                 }
-
                 e.Handled = true;
             }
         }
@@ -256,10 +291,9 @@ namespace IT13
 
         private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dgvOrders.CurrentCell = null; // Block selection
+            dgvOrders.CurrentCell = null;
 
-            // Header checkbox
-            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            if (e.RowIndex == -1 && e.ColumnIndex == dgvOrders.Columns["colID"].Index)
             {
                 bool newState = !(_headerCheckState == true);
                 foreach (DataGridViewRow row in dgvOrders.Rows)
@@ -268,12 +302,11 @@ namespace IT13
                         row.Cells[0].Value = newState;
                 }
                 _headerCheckState = newState ? true : (bool?)false;
-                dgvOrders.InvalidateCell(0, -1);
+                dgvOrders.InvalidateCell(dgvOrders.Columns["colID"].Index, -1);
                 return;
             }
 
-            // Row checkbox
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvOrders.Columns["colID"].Index)
             {
                 var row = dgvOrders.Rows[e.RowIndex];
                 bool current = (bool)(row.Cells[0].Value ?? false);
@@ -282,16 +315,13 @@ namespace IT13
                 return;
             }
 
-            // Edit | View | Delete icons
             if (e.RowIndex >= 0 && e.ColumnIndex == dgvOrders.Columns["colActions"].Index)
             {
                 var cellRect = dgvOrders.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var pt = dgvOrders.PointToClient(Cursor.Position);
                 int clickX = pt.X - cellRect.X;
-
                 int iconSize = 24, gap = 16, total = iconSize * 3 + gap * 2;
                 int startX = (cellRect.Width - total) / 2;
-
                 string id = dgvOrders.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + iconSize)
@@ -308,6 +338,7 @@ namespace IT13
             dgvOrders.CurrentCell = null;
         }
 
+        // Action Methods (unchanged)
         private void OpenEditOrder(string orderId)
         {
             var parent = this.ParentForm as Form1;
@@ -342,7 +373,7 @@ namespace IT13
                         break;
                     }
                 }
-                UpdateHeaderCheckState();
+                ApplyFiltersAndSearch(); // Re-apply filter after delete
             }
         }
 
@@ -355,19 +386,6 @@ namespace IT13
             parent.pnlContent.Controls.Clear();
             parent.pnlContent.Controls.Add(f);
             f.Show();
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            string search = txtSearch.Text.Trim().ToLower();
-            foreach (DataGridViewRow row in dgvOrders.Rows)
-            {
-                if (row.IsNewRow) continue;
-                string id = row.Cells[0].Tag?.ToString().ToLower() ?? "";
-                string supplier = row.Cells["colSupplier"].Value?.ToString().ToLower() ?? "";
-                row.Visible = string.IsNullOrEmpty(search) || id.Contains(search) || supplier.Contains(search);
-            }
-            UpdateHeaderCheckState();
         }
     }
 }

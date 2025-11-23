@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -7,6 +8,7 @@ namespace IT13
     public partial class EditCategory : Form
     {
         private readonly string _categoryId;
+        private string connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
 
         public EditCategory(string categoryId)
         {
@@ -17,21 +19,63 @@ namespace IT13
 
         private void LoadData()
         {
-            txtId.Text = _categoryId;
-            txtName.Text = "CCTV";
-
-            // Set date from string
-            if (DateTime.TryParseExact("10/11/2025", "MM/dd/yyyy", null,
-                DateTimeStyles.None, out DateTime dt))
+            try
             {
-                datePicker.Value = dt;
-            }
-            else
-            {
-                datePicker.Value = DateTime.Today;
-            }
+                // Extract numeric ID from "CAT-001" format
+                string numericId = _categoryId.Replace("CAT-", "");
 
-            comboStatus.SelectedIndex = 0; // "Active"
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT CategoryName, Date, Status FROM categories WHERE id = @id";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", numericId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                txtId.Text = _categoryId;
+                                txtName.Text = reader["CategoryName"].ToString();
+
+                                // Set date
+                                if (reader["Date"] != DBNull.Value)
+                                {
+                                    datePicker.Value = Convert.ToDateTime(reader["Date"]);
+                                }
+                                else
+                                {
+                                    datePicker.Value = DateTime.Today;
+                                }
+
+                                // Set status
+                                string status = reader["Status"].ToString();
+                                comboStatus.SelectedItem = status;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Category not found.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                ReturnToList();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ReturnToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ReturnToList();
+            }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -43,15 +87,53 @@ namespace IT13
                 return;
             }
 
-            string selectedDate = datePicker.Value.ToString("MM/dd/yyyy");
+            try
+            {
+                // Extract numeric ID from "CAT-001" format
+                string numericId = _categoryId.Replace("CAT-", "");
 
-            MessageBox.Show($"Category updated!\n" +
-                          $"Name: {txtName.Text}\n" +
-                          $"Date: {selectedDate}\n" +
-                          $"Status: {comboStatus.Text}",
-                          "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"UPDATE categories 
+                                   SET CategoryName = @name, 
+                                       Date = @date, 
+                                       Status = @status 
+                                   WHERE id = @id";
 
-            ReturnToList();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@name", txtName.Text.Trim());
+                        cmd.Parameters.AddWithValue("@date", datePicker.Value.Date);
+                        cmd.Parameters.AddWithValue("@status", comboStatus.Text);
+                        cmd.Parameters.AddWithValue("@id", numericId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Category updated successfully!", "Success",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ReturnToList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No changes were made.", "Info",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -65,14 +147,19 @@ namespace IT13
             if (parent == null) return;
 
             parent.navBar1.PageTitle = "Product Categories";
+
             parent.pnlContent.Controls.Clear();
-            parent.pnlContent.Controls.Add(new ProductCategory
+
+            // Create new instance - LoadDataFromDatabase is called in constructor
+            var categoryForm = new ProductCategory
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
                 Dock = DockStyle.Fill
-            });
-            parent.pnlContent.Controls[0].Show();
+            };
+
+            parent.pnlContent.Controls.Add(categoryForm);
+            categoryForm.Show();
         }
     }
 }

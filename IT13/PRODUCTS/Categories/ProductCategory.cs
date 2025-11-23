@@ -1,5 +1,5 @@
-﻿// ProductCategory.cs 
-using System;
+﻿using System;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
@@ -10,18 +10,17 @@ namespace IT13
     {
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
+        private string connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
 
         public ProductCategory()
         {
             InitializeComponent();
-
             _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
-
             SetupFilterComboBox();
             SetupExportComboBox();
 
-            // COMPLETELY DISABLE SELECTION - THIS IS THE KEY
+            // COMPLETELY DISABLE SELECTION
             datagridviewcategory.SelectionMode = DataGridViewSelectionMode.CellSelect;
             datagridviewcategory.MultiSelect = false;
             datagridviewcategory.ReadOnly = true;
@@ -29,7 +28,7 @@ namespace IT13
             datagridviewcategory.AllowUserToDeleteRows = false;
             datagridviewcategory.RowHeadersVisible = false;
 
-            // Remove any selection highlight
+            // Remove selection highlight
             datagridviewcategory.DefaultCellStyle.SelectionBackColor = datagridviewcategory.DefaultCellStyle.BackColor;
             datagridviewcategory.DefaultCellStyle.SelectionForeColor = datagridviewcategory.DefaultCellStyle.ForeColor;
 
@@ -38,23 +37,39 @@ namespace IT13
 
             datagridviewcategory.DefaultCellStyle.Font = new Font("Poppins", 11F);
             datagridviewcategory.RowTemplate.Height = 45;
+
+            // Use Fill mode with proper weights for better distribution
             datagridviewcategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            datagridviewcategory.Columns["colID"].MinimumWidth = 160;
-            datagridviewcategory.Columns["colID"].FillWeight = 10;
-            datagridviewcategory.Columns["colName"].FillWeight = 48;
-            datagridviewcategory.Columns["colDate"].FillWeight = 15;
-            datagridviewcategory.Columns["colStatus"].FillWeight = 12;
-            datagridviewcategory.Columns["colActions"].FillWeight = 15;
+            // Adjusted column weights for proper spacing
+            datagridviewcategory.Columns["colID"].FillWeight = 18;
+            datagridviewcategory.Columns["colName"].FillWeight = 30;
+            datagridviewcategory.Columns["colDate"].FillWeight = 18;
+            datagridviewcategory.Columns["colStatus"].FillWeight = 17;
+            datagridviewcategory.Columns["colActions"].FillWeight = 17;
 
+            // Set padding and alignment for all columns
+            datagridviewcategory.Columns["colID"].DefaultCellStyle.Padding = new Padding(0, 0, 0, 0);
+
+            // Category Name - Center aligned
+            datagridviewcategory.Columns["colName"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+            datagridviewcategory.Columns["colName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             datagridviewcategory.Columns["colName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            datagridviewcategory.Columns["colDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            datagridviewcategory.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            LoadSampleData();
+            // Date - Center aligned
+            datagridviewcategory.Columns["colDate"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+            datagridviewcategory.Columns["colDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            datagridviewcategory.Columns["colStatus"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+            datagridviewcategory.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            datagridviewcategory.Columns["colActions"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+            datagridviewcategory.Columns["colActions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            LoadDataFromDatabase();
             UpdateHeaderCheckState();
 
-            // FINAL FIX: Prevent any selection at all times
+            // Prevent any selection
             datagridviewcategory.ClearSelection();
             datagridviewcategory.CurrentCell = null;
         }
@@ -64,6 +79,9 @@ namespace IT13
             Filter.Items.AddRange(new object[] { "Filter", "All", "Active", "Inactive" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
+
+            // Attach the event properly
+            Filter.SelectedIndexChanged += Filter_SelectedIndexChanged;
             Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
@@ -75,13 +93,76 @@ namespace IT13
             Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
-        private void LoadSampleData()
+        // NEW: Functional Filter Handler
+        private void Filter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AddRow("CAT-001", "High-Resolution CCTV Security Camera System", "2025-04-05", "Active");
-            AddRow("CAT-002", "Wireless Bluetooth Speaker with Subwoofer", "2025-04-02", "Active");
-            AddRow("CAT-003", "Dual Stereo Speaker Set for Home Theater", "2025-03-20", "Inactive");
-            AddRow("CAT-004", "Portable Mini Speaker with LED Lights", "2025-03-15", "Active");
-            AddRow("CAT-005", "Professional Studio Monitor Speakers", "2025-02-28", "Active");
+            if (Filter.SelectedIndex <= 0) return; // Ignore "Filter" placeholder
+
+            ApplyFiltersAndSearch();
+        }
+
+        // Combined method to apply both Search + Filter
+        private void ApplyFiltersAndSearch()
+        {
+            string searchText = txtboxsearch.Text.Trim().ToLower();
+            string filterStatus = Filter.SelectedItem?.ToString();
+
+            foreach (DataGridViewRow row in datagridviewcategory.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string id = row.Cells[0].Tag?.ToString() ?? "";
+                string name = row.Cells["colName"].Value?.ToString() ?? "";
+                string status = row.Cells["colStatus"].Value?.ToString() ?? "";
+
+                bool matchesSearch = string.IsNullOrEmpty(searchText) ||
+                                    id.ToLower().Contains(searchText) ||
+                                    name.ToLower().Contains(searchText);
+
+                bool matchesFilter = string.IsNullOrEmpty(filterStatus) ||
+                                    filterStatus == "Filter" ||
+                                    filterStatus == "All" ||
+                                    (filterStatus == "Active" && status.Equals("Active", StringComparison.OrdinalIgnoreCase)) ||
+                                    (filterStatus == "Inactive" && status.Equals("Inactive", StringComparison.OrdinalIgnoreCase));
+
+                // Show only if both conditions are satisfied
+                row.Visible = matchesSearch && matchesFilter;
+            }
+
+            UpdateHeaderCheckState();
+        }
+
+        private void LoadDataFromDatabase()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT id, CategoryName, Date, Status FROM categories ORDER BY id ASC";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        datagridviewcategory.Rows.Clear();
+                        while (reader.Read())
+                        {
+                            string id = "CAT-" + reader["id"].ToString().PadLeft(3, '0');
+                            string name = reader["CategoryName"].ToString();
+                            string date = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
+                            string status = reader["Status"].ToString();
+                            AddRow(id, name, date, status);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AddRow(string id, string name, string date, string status)
@@ -116,7 +197,6 @@ namespace IT13
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 var checkRect = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, checkRect);
                 e.Graphics.DrawRectangle(Pens.Black, checkRect.X, checkRect.Y, 15, 15);
@@ -142,7 +222,58 @@ namespace IT13
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White,
                     TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                e.Handled = true;
+                return;
+            }
 
+            // HEADER for Category Name - Centered
+            if (e.RowIndex == -1 && e.ColumnIndex == datagridviewcategory.Columns["colName"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                TextRenderer.DrawText(e.Graphics, "Category Name",
+                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height),
+                    Color.White,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+                e.Handled = true;
+                return;
+            }
+
+            // HEADER for Date - Centered
+            if (e.RowIndex == -1 && e.ColumnIndex == datagridviewcategory.Columns["colDate"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                TextRenderer.DrawText(e.Graphics, "Date",
+                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height),
+                    Color.White,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+                e.Handled = true;
+                return;
+            }
+
+            // HEADER for Status
+            if (e.RowIndex == -1 && e.ColumnIndex == datagridviewcategory.Columns["colStatus"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                TextRenderer.DrawText(e.Graphics, "Status",
+                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Rectangle(e.CellBounds.X + 20, e.CellBounds.Y, e.CellBounds.Width - 20, e.CellBounds.Height),
+                    Color.White,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                e.Handled = true;
+                return;
+            }
+
+            // HEADER for Actions
+            if (e.RowIndex == -1 && e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                TextRenderer.DrawText(e.Graphics, "Actions",
+                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Rectangle(e.CellBounds.X + 20, e.CellBounds.Y, e.CellBounds.Width - 20, e.CellBounds.Height),
+                    Color.White,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 e.Handled = true;
                 return;
             }
@@ -151,10 +282,8 @@ namespace IT13
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 bool isChecked = (bool)(e.Value ?? false);
                 var checkRect = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
-
                 e.Graphics.FillRectangle(Brushes.White, checkRect);
                 e.Graphics.DrawRectangle(Pens.Black, checkRect.X, checkRect.Y, 15, 15);
 
@@ -179,29 +308,52 @@ namespace IT13
                         Color.Black,
                         TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
-
                 e.Handled = true;
                 return;
             }
 
-            // ACTIONS COLUMN
+            // CATEGORY NAME COLUMN - Centered
+            if (e.RowIndex >= 0 && e.ColumnIndex == datagridviewcategory.Columns["colName"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                string nameText = e.Value?.ToString() ?? "";
+                TextRenderer.DrawText(e.Graphics, nameText,
+                    new Font("Poppins", 11F),
+                    new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height),
+                    Color.Black,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+                e.Handled = true;
+                return;
+            }
+
+            // DATE COLUMN - Centered
+            if (e.RowIndex >= 0 && e.ColumnIndex == datagridviewcategory.Columns["colDate"].Index)
+            {
+                e.PaintBackground(e.CellBounds, true);
+                string dateText = e.Value?.ToString() ?? "";
+                TextRenderer.DrawText(e.Graphics, dateText,
+                    new Font("Poppins", 11F),
+                    new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height),
+                    Color.Black,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+                e.Handled = true;
+                return;
+            }
+
+            // ACTIONS COLUMN - Left aligned with padding
             if (e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-
                 int iconSize = 24, gap = 16;
-                int totalWidth = iconSize * 2 + gap;
-                int x = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
+                int x = e.CellBounds.X + 20; // Left aligned with 20px padding
                 int y = e.CellBounds.Y + (e.CellBounds.Height - iconSize) / 2;
-
                 e.Graphics.DrawImage(_editIcon, x, y, iconSize, iconSize);
                 e.Graphics.DrawImage(_viewIcon, x + iconSize + gap, y, iconSize, iconSize);
-
                 e.Handled = true;
                 return;
             }
 
-            // STATUS BADGE
+            // STATUS BADGE - Left aligned with padding
             if (e.ColumnIndex == datagridviewcategory.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -210,20 +362,25 @@ namespace IT13
                     ? Color.FromArgb(34, 197, 94)
                     : Color.FromArgb(239, 68, 68);
 
-                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 8, e.CellBounds.Width - 20, e.CellBounds.Height - 16);
-                using (var path = GetRoundedRect(rect, 10f))
-                using (var brush = new SolidBrush(bg))
-                    e.Graphics.FillPath(brush, path);
-
+                // Measure text to create properly sized badge
                 using (var font = new Font("Poppins", 10F, FontStyle.Bold))
-                using (var brush = new SolidBrush(Color.White))
                 {
                     var sz = e.Graphics.MeasureString(status, font);
-                    e.Graphics.DrawString(status, font, brush,
-                        e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
-                        e.CellBounds.Y + (e.CellBounds.Height - sz.Height) / 2);
-                }
+                    int badgeWidth = (int)sz.Width + 30;
+                    int badgeHeight = e.CellBounds.Height - 16;
 
+                    var rect = new Rectangle(e.CellBounds.X + 20, e.CellBounds.Y + 8, badgeWidth, badgeHeight);
+                    using (var path = GetRoundedRect(rect, 10f))
+                    using (var brush = new SolidBrush(bg))
+                        e.Graphics.FillPath(brush, path);
+
+                    using (var textBrush = new SolidBrush(Color.White))
+                    {
+                        e.Graphics.DrawString(status, font, textBrush,
+                            rect.X + (rect.Width - sz.Width) / 2,
+                            rect.Y + (rect.Height - sz.Height) / 2);
+                    }
+                }
                 e.Handled = true;
             }
         }
@@ -242,12 +399,8 @@ namespace IT13
 
         private void datagridviewcategory_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // BLOCK ALL SELECTION
             datagridviewcategory.CurrentCell = null;
 
-            // ONLY ALLOW THESE THREE ACTIONS:
-
-            // 1. Header checkbox
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 bool newState = !(_headerCheckState == true);
@@ -261,7 +414,7 @@ namespace IT13
                 return;
             }
 
-            // 2. Row checkbox
+            // Row checkbox
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 var row = datagridviewcategory.Rows[e.RowIndex];
@@ -271,26 +424,23 @@ namespace IT13
                 return;
             }
 
-            // 3. Edit/View icons
+            // Edit/View icons - Updated for left alignment with 20px padding
             if (e.RowIndex >= 0 && e.ColumnIndex == datagridviewcategory.Columns["colActions"].Index)
             {
                 var cellRect = datagridviewcategory.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var pt = datagridviewcategory.PointToClient(Cursor.Position);
                 int clickX = pt.X - cellRect.X;
-
-                int iconSize = 24, gap = 16, total = iconSize * 2 + gap;
-                int startX = (cellRect.Width - total) / 2;
-
+                int iconSize = 24, gap = 16;
+                int startX = 20; // Left aligned position with padding
                 string id = datagridviewcategory.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + iconSize)
                     OpenEditCategory(id);
-                else if (clickX >= startX + iconSize + gap && clickX < startX + total)
+                else if (clickX >= startX + iconSize + gap && clickX < startX + iconSize + gap + iconSize)
                     OpenViewProdCategory(id);
             }
         }
 
-        // Prevent selection on mouse down
         private void datagridviewcategory_MouseDown(object sender, MouseEventArgs e)
         {
             datagridviewcategory.CurrentCell = null;
@@ -329,17 +479,17 @@ namespace IT13
             f.Show();
         }
 
+        // UPDATED: Search now reapplies filter too
         private void txtboxsearch_TextChanged(object sender, EventArgs e)
         {
-            string search = txtboxsearch.Text.Trim().ToLower();
-            foreach (DataGridViewRow row in datagridviewcategory.Rows)
-            {
-                if (row.IsNewRow) continue;
-                string id = row.Cells[0].Tag?.ToString().ToLower() ?? "";
-                string name = row.Cells["colName"].Value?.ToString().ToLower() ?? "";
-                row.Visible = string.IsNullOrEmpty(search) || id.Contains(search) || name.Contains(search);
-            }
-            UpdateHeaderCheckState();
+            ApplyFiltersAndSearch();
+        }
+
+        // Public method to refresh data
+        public void RefreshData()
+        {
+            LoadDataFromDatabase();
+            ApplyFiltersAndSearch(); // Reapply current filter + search after refresh
         }
     }
 }
