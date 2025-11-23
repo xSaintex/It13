@@ -44,9 +44,11 @@ namespace IT13
             dgvReturns.Columns["colCustomerID"].MinimumWidth = 180;     // ← Same as Return ID
             dgvReturns.Columns["colCustomerID"].Width = 180;
             dgvReturns.Columns["colCustomerID"].FillWeight = 18;
+            dgvReturns.Columns["colCustomerID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvReturns.Columns["colCustomerName"].FillWeight = 28;      // ← Longer name column
             dgvReturns.Columns["colCustomerName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvReturns.Columns["colCustomerName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvReturns.Columns["colQty"].FillWeight = 9;
             dgvReturns.Columns["colQty"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;

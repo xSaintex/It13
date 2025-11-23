@@ -85,7 +85,7 @@ namespace IT13
 
             lnkBack.Text = "← Back to Customer Returns";
             lnkBack.LinkColor = Color.FromArgb(0, 123, 255);
-            lnkBack.Font = new Font("Segoe UI", 10F);
+            lnkBack.Font = new Font("Poppins", 10F);
             lnkBack.Location = new Point(1280, 68);
             lnkBack.AutoSize = true;
 
@@ -166,8 +166,8 @@ namespace IT13
             colPrice.HeaderText = "Unit Price"; colPrice.Width = 280;
             colTotal.HeaderText = "Total"; colTotal.Width = 280;
 
-            btnSaveCustomerOrder.Text = "Update Customer Return";
-            btnSaveCustomerOrder.Size = new Size(220, 44);
+            btnSaveCustomerOrder.Text = "Update";
+            btnSaveCustomerOrder.Size = new Size(180, 44);
             btnSaveCustomerOrder.Location = new Point(40, 540);
             btnSaveCustomerOrder.FillColor = Color.FromArgb(0, 123, 255);
             btnSaveCustomerOrder.ForeColor = Color.White;
@@ -216,8 +216,8 @@ namespace IT13
             txtShippingAddress.Multiline = true;
             txtShippingAddress.BorderRadius = 10;
 
-            btnSaveAddress.Text = "Update Customer Return";
-            btnSaveAddress.Size = new Size(220, 44);
+            btnSaveAddress.Text = "Update";
+            btnSaveAddress.Size = new Size(180, 44);
             btnSaveAddress.Location = new Point(40, 540);
             btnSaveAddress.FillColor = Color.FromArgb(0, 123, 255);
             btnSaveAddress.ForeColor = Color.White;
@@ -269,8 +269,8 @@ namespace IT13
             txtReturnReason.BorderRadius = 10;
             txtReturnReason.ScrollBars = ScrollBars.Vertical;
 
-            btnSaveReturns.Text = "Update Customer Return";
-            btnSaveReturns.Size = new Size(220, 44);
+            btnSaveReturns.Text = "Update";
+            btnSaveReturns.Size = new Size(180, 44);
             btnSaveReturns.Location = new Point(40, 540);
             btnSaveReturns.FillColor = Color.FromArgb(0, 123, 255);
             btnSaveReturns.ForeColor = Color.White;
