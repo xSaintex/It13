@@ -102,7 +102,7 @@
             mainpanel.Controls.Add(guna2ShadowPanel1);
             mainpanel.Controls.Add(label2);
             mainpanel.FillColor = Color.White;
-            mainpanel.Location = new Point(291, 117);
+            mainpanel.Location = new Point(300, 88);
             mainpanel.Name = "mainpanel";
             mainpanel.Radius = 8;
             mainpanel.ShadowColor = Color.Black;
@@ -124,7 +124,7 @@
             btnaddprod.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnaddprod.Size = new Size(114, 33);
             btnaddprod.TabIndex = 3;
-            btnaddprod.Text = "Add product";
+            btnaddprod.Text = "Add";
             // 
             // btncancel
             // 
@@ -290,12 +290,12 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Tahoma", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(30, 24);
             label1.Name = "label1";
             label1.Size = new Size(199, 22);
             label1.TabIndex = 1;
-            label1.Text = "Addition Information";
+            label1.Text = "Additional Information";
             // 
             // guna2ShadowPanel2
             // 
@@ -408,7 +408,7 @@
             // labelproductbases
             // 
             labelproductbases.AutoSize = true;
-            labelproductbases.Font = new Font("Tahoma", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelproductbases.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelproductbases.Location = new Point(27, 24);
             labelproductbases.Name = "labelproductbases";
             labelproductbases.Size = new Size(132, 22);

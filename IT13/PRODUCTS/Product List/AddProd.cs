@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace IT13
 {
@@ -16,195 +11,160 @@ namespace IT13
         {
             InitializeComponent();
 
-            // Enable scrolling for the form
             this.AutoScroll = true;
             this.AutoScrollMinSize = new Size(0, 0);
 
-            // Style breadcrumb buttons
-            StyleBreadcrumbButtons();
-
-            // Wire up click events
-            btnhome.Click += btnhome_Click;
-            btnproductlist.Click += btnproductlist_Click;
-            btnadd.Click += btnadd_Click;
+            // Wire events
             btncancel.Click += btncancel_Click;
             btnaddprod.Click += btnaddprod_Click;
 
-            // Apply border radius to action buttons
-            ApplyButtonStyles();
+            // Apply all styling
+            ApplyModernStyling();
         }
 
-        private void ApplyButtonStyles()
+        private void ApplyModernStyling()
         {
-            // Set border radius to 5 for action buttons
-            btncancel.BorderRadius = 5;
-            btnaddprod.BorderRadius = 5;
-        }
+            // === REMOVE BREADCRUMB BUTTONS FROM VIEW ===
+            btnhome.Visible = false;
+            btnproductlist.Visible = false;
+            btnadd.Visible = false;
 
-        private void StyleBreadcrumbButtons()
-        {
-            // Style the home button with icon
-            StyleBreadcrumbButton(btnhome, "Home", true);
-
-            // Style the product list button
-            StyleBreadcrumbButton(btnproductlist, "Product List", false);
-
-            // Style the add button (this would be the active/current page)
-            StyleBreadcrumbButton(btnadd, "Add Product", false);
-        }
-
-        private void StyleBreadcrumbButton(Guna.UI2.WinForms.Guna2Button btn, string text, bool showHomeIcon = false)
-        {
-            btn.Text = showHomeIcon ? "" : text;
-            btn.BorderRadius = 0;
-            btn.BorderThickness = 0;
-            btn.FillColor = Color.Transparent;
-            btn.Cursor = Cursors.Hand;
-            btn.TextAlign = HorizontalAlignment.Left;
-            btn.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            btn.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.ToogleButton;
-            btn.DisabledState.BorderColor = Color.Transparent;
-            btn.DisabledState.FillColor = Color.Transparent;
-
-            // Set icon for home button
-            if (showHomeIcon)
+            // === TEXTBOXES ===
+            foreach (var tb in new[] { guna2TextBox1, guna2TextBox2, guna2TextBox3, guna2TextBox4 })
             {
-                btn.Text = "🏠 Home";
-                btn.ImageAlign = HorizontalAlignment.Left;
-                btn.ImageSize = new Size(20, 20);
+                tb.Font = new Font("Poppins", 11F);
+                tb.ForeColor = Color.Black;
+                tb.BorderRadius = 12;
+                tb.BorderThickness = 1;
+                tb.BorderColor = Color.FromArgb(180, 180, 180);
+                tb.FillColor = Color.White;
+                tb.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+                tb.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+                tb.PlaceholderForeColor = Color.Gray;
             }
 
-            // Different color for the last breadcrumb (current page)
-            if (btn == btnadd)
+            // Product Name
+            guna2TextBox1.PlaceholderText = "Enter Product Name";
+            guna2TextBox1.Text = "";
+
+            // Unit Cost & Selling Price - Numbers only + placeholder
+            guna2TextBox2.PlaceholderText = "0.00";
+            guna2TextBox3.PlaceholderText = "0.00";
+            guna2TextBox2.Text = "";
+            guna2TextBox3.Text = "";
+
+            // Description - Left-top aligned
+            guna2TextBox4.PlaceholderText = "Enter product description...";
+            guna2TextBox4.Text = "";
+            guna2TextBox4.TextAlign = HorizontalAlignment.Left;
+            guna2TextBox4.BorderRadius = 16;
+            guna2TextBox4.Multiline = true;
+
+            // === COMBOBOXES ===
+            foreach (var cb in new[] { guna2ComboBox1, guna2ComboBox2, guna2ComboBox3 })
             {
-                btn.ForeColor = Color.FromArgb(94, 148, 255); // Blue color for active
-                btn.Checked = true;
+                cb.Font = new Font("Poppins", 11F);
+                cb.ForeColor = Color.Black;
+                cb.BorderRadius = 12;
+                cb.BorderThickness = 1;
+                cb.BorderColor = Color.FromArgb(180, 180, 180);
+                cb.FillColor = Color.White;
+                cb.FocusedColor = Color.FromArgb(94, 148, 255);
             }
-            else
+
+            // === LABELS (except header) ===
+            foreach (Control c in mainpanel.Controls)
             {
-                btn.ForeColor = Color.FromArgb(125, 137, 149); // Gray for inactive
-                btn.Checked = false;
+                if (c is Label lbl && lbl != label2)
+                {
+                    lbl.Font = new Font("Poppins", 11F);
+                    lbl.ForeColor = Color.Black;
+                }
             }
 
-            // Hover state
-            btn.HoverState.FillColor = Color.Transparent;
-            btn.HoverState.ForeColor = Color.FromArgb(50, 50, 50);
+            // === BUTTONS - Poppins + Modern Style ===
+            foreach (var btn in new[] { btnaddprod, btncancel })
+            {
+                btn.Font = new Font("Poppins", 10.5F, FontStyle.Bold);
+                btn.BorderRadius = 12;
+                btn.FillColor = btn == btnaddprod ? Color.FromArgb(0, 123, 255) : Color.FromArgb(220, 53, 69);
+                btn.ForeColor = Color.White;
+                btn.HoverState.FillColor = btn == btnaddprod
+                    ? Color.FromArgb(0, 105, 230)
+                    : Color.FromArgb(200, 35, 51);
+            }
 
-            // Pressed state
-            btn.PressedColor = Color.Transparent;
+            // === NUMBERS ONLY FOR PRICE FIELDS ===
+            guna2TextBox2.KeyPress += (s, e) => { if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.') e.Handled = true; };
+            guna2TextBox3.KeyPress += (s, e) => { if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.') e.Handled = true; };
+
+            // Allow only one decimal point
+            guna2TextBox2.TextChanged += (s, e) => LimitDecimalPlaces(guna2TextBox2);
+            guna2TextBox3.TextChanged += (s, e) => LimitDecimalPlaces(guna2TextBox3);
         }
 
-        private void btnhome_Click(object sender, EventArgs e)
+        private void LimitDecimalPlaces(Guna.UI2.WinForms.Guna2TextBox tb)
         {
-            // Navigate to Home form
-            // Example: 
-            // Home homeForm = new Home();
-            // homeForm.Show();
-            // this.Hide();
+            if (tb.Text.Contains(".") && tb.Text.Split('.').Length > 2)
+                tb.Text = tb.Text.Remove(tb.Text.LastIndexOf('.'));
+            if (tb.Text.StartsWith(".")) tb.Text = "0" + tb.Text;
+            tb.SelectionStart = tb.Text.Length;
         }
 
-        private void btnproductlist_Click(object sender, EventArgs e)
-        {
-            // Navigate to ProductList form
-            NavigateToProductList();
-        }
-
-        private void btnadd_Click(object sender, EventArgs e)
-        {
-            // Already on Add Product page, so do nothing or refresh
-            // This is the current active page
-        }
-
-        private void btncancel_Click(object sender, EventArgs e)
-        {
-            // Cancel button - navigate back to ProductList
-            NavigateToProductList();
-        }
+        private void btncancel_Click(object sender, EventArgs e) => NavigateToProductList();
 
         private void btnaddprod_Click(object sender, EventArgs e)
         {
-            // Validate Product Name
             string productName = guna2TextBox1.Text.Trim();
-            if (string.IsNullOrEmpty(productName) || productName == "Enter Product Name")
+            if (string.IsNullOrEmpty(productName))
             {
                 MessageBox.Show("Please enter a product name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate Unit Cost
-            string unitCostStr = guna2TextBox2.Text.Trim().Replace("₱", "").Replace(",", "").Trim();
-            if (string.IsNullOrEmpty(unitCostStr) || unitCostStr == "0.00")
+            string unitCostStr = guna2TextBox2.Text.Trim();
+            if (!decimal.TryParse(unitCostStr, out decimal unitCost) || unitCost <= 0)
             {
                 MessageBox.Show("Please enter a valid unit cost.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate Selling Price
-            string sellingPriceStr = guna2TextBox3.Text.Trim().Replace("₱", "").Replace(",", "").Trim();
-            if (string.IsNullOrEmpty(sellingPriceStr) || sellingPriceStr == "0.00")
+            string sellingPriceStr = guna2TextBox3.Text.Trim();
+            if (!decimal.TryParse(sellingPriceStr, out decimal sellingPrice) || sellingPrice <= 0)
             {
                 MessageBox.Show("Please enter a valid selling price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate Category
-            if (guna2ComboBox1.SelectedIndex < 0 || guna2ComboBox1.SelectedItem == null)
+            if (guna2ComboBox1.SelectedIndex < 0 || guna2ComboBox2.SelectedIndex < 0 || guna2ComboBox3.SelectedIndex < 0)
             {
-                MessageBox.Show("Please select a product category.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate Supplier
-            if (guna2ComboBox2.SelectedIndex < 0 || guna2ComboBox2.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a supplier company.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            string description = string.IsNullOrWhiteSpace(guna2TextBox4.Text) || guna2TextBox4.Text == "Enter product description..."
+                ? "" : guna2TextBox4.Text.Trim();
+
+            if (MessageBox.Show("Add this product to the product list?", "Confirm Add", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
-            }
 
-            // Validate Status
-            if (guna2ComboBox3.SelectedIndex < 0 || guna2ComboBox3.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a product status.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Get Description
-            string description = guna2TextBox4.Text.Trim();
-            if (string.IsNullOrEmpty(description) || description == "Enter product description....")
-            {
-                description = "";
-            }
-
-            // Confirm save
-            DialogResult result = MessageBox.Show("Add this product to the product list?", "Confirm Add", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result != DialogResult.Yes)
-            {
-                return;
-            }
-
-            // Create product item
             var productItem = new ProductItem
             {
                 ProductName = productName,
                 Category = guna2ComboBox1.SelectedItem.ToString(),
-                UnitCost = "₱" + unitCostStr,
-                SellingPrice = "₱" + sellingPriceStr,
+                UnitCost = "₱" + unitCost.ToString("N2"),
+                SellingPrice = "₱" + sellingPrice.ToString("N2"),
                 PrimarySupplier = guna2ComboBox2.SelectedItem.ToString(),
                 Status = guna2ComboBox3.SelectedItem.ToString(),
                 Description = description
             };
 
-            // Navigate to ProductList and add the product
-            Form1 parentForm = this.ParentForm as Form1;
+            var parentForm = this.ParentForm as Form1;
             if (parentForm != null)
             {
                 parentForm.navBar1.PageTitle = "Product List";
-
-                ProductList productListForm = new ProductList();
-
-                // Add the product to the list
+                var productListForm = new ProductList();
                 productListForm.AddProduct(productItem);
-
                 productListForm.TopLevel = false;
                 productListForm.FormBorderStyle = FormBorderStyle.None;
                 productListForm.Dock = DockStyle.Fill;
@@ -217,7 +177,6 @@ namespace IT13
             }
         }
 
-        // Helper class to hold product item data
         public class ProductItem
         {
             public string ProductName { get; set; }
@@ -231,29 +190,21 @@ namespace IT13
 
         private void NavigateToProductList()
         {
-            // Get the parent form (Form1)
-            Form1 parentForm = this.ParentForm as Form1;
+            var parentForm = this.ParentForm as Form1;
             if (parentForm != null)
             {
-                // Update the navbar title
                 parentForm.navBar1.PageTitle = "Product List";
-
-                // Create ProductList form
-                ProductList productListForm = new ProductList();
-                productListForm.TopLevel = false;
-                productListForm.FormBorderStyle = FormBorderStyle.None;
-                productListForm.Dock = DockStyle.Fill;
-
-                // Clear the content panel and add ProductList
+                var productListForm = new ProductList
+                {
+                    TopLevel = false,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Dock = DockStyle.Fill
+                };
                 parentForm.pnlContent.Controls.Clear();
                 parentForm.pnlContent.Controls.Add(productListForm);
                 productListForm.Show();
             }
-            else
-            {
-                // Fallback if parent form is not found
-                this.Close();
-            }
+            else this.Close();
         }
     }
 }

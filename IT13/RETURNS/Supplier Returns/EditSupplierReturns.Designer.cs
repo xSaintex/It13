@@ -4,7 +4,7 @@ using Guna.UI2.WinForms;
 
 namespace IT13
 {
-    partial class AddCustomerReturns
+    partial class EditSupplierReturns
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -22,14 +22,14 @@ namespace IT13
             lblHeader = new Label();
             lblRequired = new Label();
             lnkBack = new LinkLabel();
-            btnCustomerOrder = new Guna2Button();
+            btnSupplierOrder = new Guna2Button();
             btnAddress = new Guna2Button();
             btnReturns = new Guna2Button();
-            pnlCustomerOrder = new Guna2ShadowPanel();
+            pnlSupplierOrder = new Guna2ShadowPanel();
             pnlAddress = new Guna2ShadowPanel();
             pnlReturns = new Guna2ShadowPanel();
 
-            lblOrderId = new Label(); cmbCustomerOrderID = new Guna2ComboBox();
+            lblOrderId = new Label(); cmbSupplierOrderID = new Guna2ComboBox();
             lblPaymentTerms = new Label(); cmbPaymentTerms = new Guna2ComboBox();
             lblStatus = new Label(); cmbStatus = new Guna2ComboBox();
             lblItems = new Label();
@@ -47,17 +47,17 @@ namespace IT13
             lblReturnType = new Label(); cmbReturnType = new Guna2ComboBox();
             lblReturnReason = new Label(); txtReturnReason = new Guna2TextBox();
 
-            btnSaveCustomerOrder = new Guna2Button();
+            btnSaveSupplierOrder = new Guna2Button();
             btnSaveAddress = new Guna2Button();
             btnSaveReturns = new Guna2Button();
 
-            lblTotalLabelCO = new Label(); lblTotalAmountCO = new Label();
+            lblTotalLabelSO = new Label(); lblTotalAmountSO = new Label();
             lblTotalLabelAddr = new Label(); lblTotalAmountAddr = new Label();
             lblTotalLabelRet = new Label(); lblTotalAmountRet = new Label();
 
             mainPanel.SuspendLayout();
             contentPanel.SuspendLayout();
-            pnlCustomerOrder.SuspendLayout();
+            pnlSupplierOrder.SuspendLayout();
             pnlAddress.SuspendLayout();
             pnlReturns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvOrderItems).BeginInit();
@@ -74,8 +74,8 @@ namespace IT13
             contentPanel.AutoScroll = false;
             contentPanel.Padding = new Padding(30, 20, 30, 20);
 
-            // HEADER — TAHOMA (like Supplier)
-            lblHeader.Text = "New Customer Return";
+            // HEADER (KEPT TAHOMA)
+            lblHeader.Text = "Edit Supplier Return";
             lblHeader.Font = new Font("Tahoma", 20F, FontStyle.Bold);
             lblHeader.Location = new Point(50, 30);
             lblHeader.AutoSize = true;
@@ -86,19 +86,20 @@ namespace IT13
             lblRequired.Location = new Point(54, 73);
             lblRequired.AutoSize = true;
 
-            lnkBack.Text = "← Back to Customer Returns";
+            lnkBack.Text = "← Back to Supplier Returns";
             lnkBack.LinkColor = Color.FromArgb(0, 123, 255);
             lnkBack.Font = new Font("Poppins", 10F);
             lnkBack.Location = new Point(1280, 68);
             lnkBack.AutoSize = true;
 
+            // TAB BUTTONS
             int tabY = 120;
-            btnCustomerOrder.Text = "🧾 Customer Order Information";
-            btnCustomerOrder.Size = new Size(250, 36);
-            btnCustomerOrder.Location = new Point(54, tabY);
-            btnCustomerOrder.FillColor = Color.FromArgb(0, 123, 255);
-            btnCustomerOrder.ForeColor = Color.White;
-            btnCustomerOrder.BorderRadius = 5;
+            btnSupplierOrder.Text = "🧾 Supplier Order Information";
+            btnSupplierOrder.Size = new Size(250, 36);
+            btnSupplierOrder.Location = new Point(54, tabY);
+            btnSupplierOrder.FillColor = Color.FromArgb(0, 123, 255);
+            btnSupplierOrder.ForeColor = Color.White;
+            btnSupplierOrder.BorderRadius = 5;
 
             btnAddress.Text = "📍 Address";
             btnAddress.Size = new Size(170, 36);
@@ -116,24 +117,24 @@ namespace IT13
 
             int panelY = tabY + 70;
 
-            // CUSTOMER ORDER PANEL
-            pnlCustomerOrder.Location = new Point(50, panelY);
-            pnlCustomerOrder.Size = new Size(1500, 650);
-            pnlCustomerOrder.FillColor = Color.FromArgb(248, 249, 252);
-            pnlCustomerOrder.Radius = 20;
-            pnlCustomerOrder.Visible = true;
+            // SUPPLIER ORDER PANEL
+            pnlSupplierOrder.Location = new Point(50, panelY);
+            pnlSupplierOrder.Size = new Size(1500, 650);
+            pnlSupplierOrder.FillColor = Color.FromArgb(248, 249, 252);
+            pnlSupplierOrder.Radius = 20;
+            pnlSupplierOrder.Visible = true;
 
             int cy = 50;
-            lblOrderId.Text = "Customer Order ID *";
+            lblOrderId.Text = "Supplier Order ID *";
             lblOrderId.Font = new Font("Poppins", 11F);
             lblOrderId.Location = new Point(40, cy);
-            lblOrderId.Size = new Size(180, 28);
+            lblOrderId.Size = new Size(170, 28);
 
-            cmbCustomerOrderID.Location = new Point(40, cy + 28);
-            cmbCustomerOrderID.Size = new Size(420, 44);
-            cmbCustomerOrderID.BorderRadius = 8;
-            cmbCustomerOrderID.ForeColor = Color.Black;
-            cmbCustomerOrderID.Font = new Font("Poppins", 10F);
+            cmbSupplierOrderID.Location = new Point(40, cy + 28);
+            cmbSupplierOrderID.Size = new Size(420, 44);
+            cmbSupplierOrderID.BorderRadius = 8;
+            cmbSupplierOrderID.ForeColor = Color.Black;
+            cmbSupplierOrderID.Font = new Font("Poppins", 10F);
 
             lblPaymentTerms.Text = "Payment *";
             lblPaymentTerms.Font = new Font("Poppins", 11F);
@@ -184,30 +185,30 @@ namespace IT13
             colTotal.HeaderText = "Total"; colTotal.Width = 280;
             dgvOrderItems.Columns.AddRange(colProduct, colQty, colPrice, colTotal);
 
-            btnSaveCustomerOrder.Text = "Save Customer Return";
-            btnSaveCustomerOrder.Size = new Size(220, 44);
-            btnSaveCustomerOrder.Location = new Point(40, 540);
-            btnSaveCustomerOrder.FillColor = Color.FromArgb(0, 123, 255);
-            btnSaveCustomerOrder.ForeColor = Color.White;
-            btnSaveCustomerOrder.Font = new Font("Poppins", 10F, FontStyle.Bold);
-            btnSaveCustomerOrder.BorderRadius = 10;
+            btnSaveSupplierOrder.Text = "Update";
+            btnSaveSupplierOrder.Size = new Size(180, 44);
+            btnSaveSupplierOrder.Location = new Point(40, 540);
+            btnSaveSupplierOrder.FillColor = Color.FromArgb(0, 123, 255);
+            btnSaveSupplierOrder.ForeColor = Color.White;
+            btnSaveSupplierOrder.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            btnSaveSupplierOrder.BorderRadius = 10;
 
-            lblTotalLabelCO.Text = "Total Refunded:";
-            lblTotalLabelCO.Font = new Font("Poppins", 11F);
-            lblTotalLabelCO.Location = new Point(1100, 555);
-            lblTotalLabelCO.AutoSize = true;
+            lblTotalLabelSO.Text = "Total Returned:";
+            lblTotalLabelSO.Font = new Font("Poppins", 11F);
+            lblTotalLabelSO.Location = new Point(1100, 555);
+            lblTotalLabelSO.AutoSize = true;
 
-            lblTotalAmountCO.Text = "₱0.00";
-            lblTotalAmountCO.Font = new Font("Segoe UI", 24F, FontStyle.Bold); 
-            lblTotalAmountCO.ForeColor = Color.FromArgb(0, 123, 255);
-            lblTotalAmountCO.Location = new Point(1240, 545);
-            lblTotalAmountCO.AutoSize = true;
+            lblTotalAmountSO.Text = "₱0.00";
+            lblTotalAmountSO.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            lblTotalAmountSO.ForeColor = Color.FromArgb(0, 123, 255);
+            lblTotalAmountSO.Location = new Point(1240, 545);
+            lblTotalAmountSO.AutoSize = true;
 
-            pnlCustomerOrder.Controls.AddRange(new Control[]
+            pnlSupplierOrder.Controls.AddRange(new Control[]
             {
-                lblOrderId, cmbCustomerOrderID, lblPaymentTerms, cmbPaymentTerms,
+                lblOrderId, cmbSupplierOrderID, lblPaymentTerms, cmbPaymentTerms,
                 lblStatus, cmbStatus, lblItems, dgvOrderItems,
-                btnSaveCustomerOrder, lblTotalLabelCO, lblTotalAmountCO
+                btnSaveSupplierOrder, lblTotalLabelSO, lblTotalAmountSO
             });
 
             // ADDRESS PANEL
@@ -242,15 +243,15 @@ namespace IT13
             txtShippingAddress.ForeColor = Color.Black;
             txtShippingAddress.Font = new Font("Poppins", 10F);
 
-            btnSaveAddress.Text = "Save Customer Return";
-            btnSaveAddress.Size = new Size(220, 44);
+            btnSaveAddress.Text = "Update";
+            btnSaveAddress.Size = new Size(180, 44);
             btnSaveAddress.Location = new Point(40, 540);
             btnSaveAddress.FillColor = Color.FromArgb(0, 123, 255);
             btnSaveAddress.ForeColor = Color.White;
             btnSaveAddress.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btnSaveAddress.BorderRadius = 10;
 
-            lblTotalLabelAddr.Text = "Total Refunded:";
+            lblTotalLabelAddr.Text = "Total Returned:";
             lblTotalLabelAddr.Font = new Font("Poppins", 11F);
             lblTotalLabelAddr.Location = new Point(1100, 555);
             lblTotalLabelAddr.AutoSize = true;
@@ -310,15 +311,15 @@ namespace IT13
             txtReturnReason.ForeColor = Color.Black;
             txtReturnReason.Font = new Font("Poppins", 10F);
 
-            btnSaveReturns.Text = "Save Customer Return";
-            btnSaveReturns.Size = new Size(220, 44);
+            btnSaveReturns.Text = "Update";
+            btnSaveReturns.Size = new Size(180, 44);
             btnSaveReturns.Location = new Point(40, 540);
             btnSaveReturns.FillColor = Color.FromArgb(0, 123, 255);
             btnSaveReturns.ForeColor = Color.White;
             btnSaveReturns.Font = new Font("Poppins", 10F, FontStyle.Bold);
             btnSaveReturns.BorderRadius = 10;
 
-            lblTotalLabelRet.Text = "Total Refunded:";
+            lblTotalLabelRet.Text = "Total Returned:";
             lblTotalLabelRet.Font = new Font("Poppins", 11F);
             lblTotalLabelRet.Location = new Point(1100, 555);
             lblTotalLabelRet.AutoSize = true;
@@ -339,17 +340,17 @@ namespace IT13
             contentPanel.Controls.AddRange(new Control[]
             {
                 lblHeader, lblRequired, lnkBack,
-                btnCustomerOrder, btnAddress, btnReturns,
-                pnlCustomerOrder, pnlAddress, pnlReturns
+                btnSupplierOrder, btnAddress, btnReturns,
+                pnlSupplierOrder, pnlAddress, pnlReturns
             });
 
             this.Controls.Add(mainPanel);
             this.ClientSize = new Size(1920, 1080);
-            this.Text = "Add Customer Return";
+            this.Text = "Edit Supplier Return";
             this.StartPosition = FormStartPosition.CenterScreen;
 
             ((System.ComponentModel.ISupportInitialize)dgvOrderItems).EndInit();
-            pnlCustomerOrder.ResumeLayout(false);
+            pnlSupplierOrder.ResumeLayout(false);
             pnlAddress.ResumeLayout(false);
             pnlReturns.ResumeLayout(false);
             contentPanel.ResumeLayout(false);
@@ -357,14 +358,14 @@ namespace IT13
             this.ResumeLayout(false);
         }
 
-        private Guna2ShadowPanel mainPanel, pnlCustomerOrder, pnlAddress, pnlReturns;
+        private Guna2ShadowPanel mainPanel, pnlSupplierOrder, pnlAddress, pnlReturns;
         private Guna2Panel contentPanel;
         private Label lblHeader, lblRequired;
         private LinkLabel lnkBack;
-        private Guna2Button btnCustomerOrder, btnAddress, btnReturns;
-        private Guna2Button btnSaveCustomerOrder, btnSaveAddress, btnSaveReturns;
+        private Guna2Button btnSupplierOrder, btnAddress, btnReturns;
+        private Guna2Button btnSaveSupplierOrder, btnSaveAddress, btnSaveReturns;
         private Label lblOrderId, lblPaymentTerms, lblStatus, lblItems;
-        private Guna2ComboBox cmbCustomerOrderID, cmbPaymentTerms, cmbStatus;
+        private Guna2ComboBox cmbSupplierOrderID, cmbPaymentTerms, cmbStatus;
         private Guna2DataGridView dgvOrderItems;
         private DataGridViewTextBoxColumn colProduct, colQty, colPrice, colTotal;
         private Label lblBillingTitle, lblShippingTitle;
@@ -373,7 +374,7 @@ namespace IT13
         private Guna2DateTimePicker dtpReturnDate;
         private Guna2ComboBox cmbReturnType;
         private Guna2TextBox txtReturnReason;
-        private Label lblTotalLabelCO, lblTotalAmountCO;
+        private Label lblTotalLabelSO, lblTotalAmountSO;
         private Label lblTotalLabelAddr, lblTotalAmountAddr;
         private Label lblTotalLabelRet, lblTotalAmountRet;
     }

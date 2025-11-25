@@ -18,6 +18,7 @@ namespace IT13
         private DeliveryVehicleList deliveryVehicleListForm;
         private DeliveryList deliveryListForm;
         private CustomerReturns customerReturnsForm;
+        private SupplierReturns supplierReturnsForm; // ← ADDED
 
         public Form1()
         {
@@ -31,7 +32,7 @@ namespace IT13
             navBar1.Left = 260;
             navBar1.Top = 0;
             navBar1.NavHeight = 80;
-            navBar1.PageTitle = "Dashboard"; // Default
+            navBar1.PageTitle = "Dashboard";
             navBar1.UserName = "Admin";
 
             sidebar1.Dock = DockStyle.Left;
@@ -54,6 +55,7 @@ namespace IT13
                 pnlContent.Width = this.ClientSize.Width - 260;
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
+
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -67,6 +69,7 @@ namespace IT13
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
                 string section = ev.Section?.Trim() ?? "";
+
                 switch (section)
                 {
                     case "Dashboard":
@@ -129,18 +132,21 @@ namespace IT13
                         LoadDeliveryListForm();
                         break;
 
-                    default:
-                        navBar1.PageTitle = section;
-                        break;
-
                     case "Customer Returns":
                         navBar1.PageTitle = "Customer Returns";
                         LoadCustomerReturnsForm();
                         break;
 
+                    case "Supplier Returns": // ← ADDED THIS CASE
+                        navBar1.PageTitle = "Supplier Returns";
+                        LoadSupplierReturnsForm();
+                        break;
+
+                    default:
+                        navBar1.PageTitle = section;
+                        break;
                 }
             };
-
         }
 
         #region Load Form Methods
@@ -301,6 +307,19 @@ namespace IT13
             customerReturnsForm.Show();
         }
 
+        private void LoadSupplierReturnsForm() // ← NEW METHOD
+        {
+            pnlContent.Controls.Clear();
+            supplierReturnsForm = new SupplierReturns
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(supplierReturnsForm);
+            supplierReturnsForm.Show();
+        }
+
         #endregion
 
         // === NAVIGATION HELPERS ===
@@ -331,7 +350,13 @@ namespace IT13
         public void NavigateToCustomerReturns()
         {
             navBar1.PageTitle = "Customer Returns";
-            LoadCustomerReturnsForm();   
+            LoadCustomerReturnsForm();
+        }
+
+        public void NavigateToSupplierReturns() // ← NEW HELPER
+        {
+            navBar1.PageTitle = "Supplier Returns";
+            LoadSupplierReturnsForm();
         }
     }
 }

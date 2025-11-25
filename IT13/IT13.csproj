@@ -16,7 +16,6 @@
     <Folder Include="REPORTS\Inventory Report\" />
     <Folder Include="REPORTS\Sales Report\" />
     <Folder Include="RETURNS\Returns List\" />
-    <Folder Include="RETURNS\Supplier Returns\" />
     <Folder Include="USERS\User Admins\" />
     <Folder Include="USERS\User List\" />
   </ItemGroup>
