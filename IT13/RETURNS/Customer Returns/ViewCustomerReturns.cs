@@ -122,11 +122,22 @@ namespace IT13
 
         private void CloseForm()
         {
-            // CASE 1: Opened inside your main Form1 (MDI or panel-based navigation)
             var parent = this.Owner as Form1 ?? this.ParentForm as Form1;
             if (parent != null)
             {
-                // If you passed the original CustomerReturns instance via .Tag when opening
+                // ← NEW: Check if opened from ReturnList
+                if (this.Tag is ReturnList returnListForm)
+                {
+                    parent.navBar1.PageTitle = "Return List";
+                    parent.pnlContent.Controls.Clear();
+                    parent.pnlContent.Controls.Add(returnListForm);
+                    returnListForm.Show();
+                    returnListForm.BringToFront();
+                    this.Close();
+                    return;
+                }
+
+                // ← OLD behavior
                 if (this.Tag is CustomerReturns customerReturnsForm)
                 {
                     parent.navBar1.PageTitle = "Customer Returns";
@@ -138,11 +149,11 @@ namespace IT13
                     return;
                 }
 
-                // Fallback: use built-in navigation method
                 parent.NavigateToCustomerReturns();
                 this.Close();
                 return;
             }
+            this.Close();
         }
     }
-}
+ }

@@ -18,7 +18,8 @@ namespace IT13
         private DeliveryVehicleList deliveryVehicleListForm;
         private DeliveryList deliveryListForm;
         private CustomerReturns customerReturnsForm;
-        private SupplierReturns supplierReturnsForm; // ← ADDED
+        private SupplierReturns supplierReturnsForm;
+        private ReturnList returnListForm; // ← NEW: ReturnList reference
 
         public Form1()
         {
@@ -34,12 +35,10 @@ namespace IT13
             navBar1.NavHeight = 80;
             navBar1.PageTitle = "Dashboard";
             navBar1.UserName = "Admin";
-
             sidebar1.Dock = DockStyle.Left;
             sidebar1.Width = 260;
             sidebar1.Height = this.ClientSize.Height;
             sidebar1.BringToFront();
-
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Left = 260;
             pnlContent.Top = 70;
@@ -55,7 +54,6 @@ namespace IT13
                 pnlContent.Width = this.ClientSize.Width - 260;
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
-
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -69,79 +67,68 @@ namespace IT13
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
                 string section = ev.Section?.Trim() ?? "";
-
                 switch (section)
                 {
                     case "Dashboard":
                         navBar1.PageTitle = "Dashboard";
                         pnlContent.Controls.Clear();
                         break;
-
                     case "Product List":
                         navBar1.PageTitle = "Product List";
                         LoadProductListForm();
                         break;
-
                     case "Categories":
                         navBar1.PageTitle = "Categories";
                         LoadProductCategoryForm();
                         break;
-
                     case "Inventory":
                         navBar1.PageTitle = "Inventory";
                         LoadInventoryForm();
                         break;
-
                     case "Stock Adjustments":
                         navBar1.PageTitle = "Stock Adjustments";
                         LoadStockAdjustmentForm();
                         break;
-
                     case "Order List":
                         navBar1.PageTitle = "Order List";
                         LoadOrderListForm();
                         break;
-
                     case "Supplier Order":
                         navBar1.PageTitle = "Supplier Order";
                         LoadSupplierOrderListForm();
                         break;
-
                     case "Customer Order":
                         navBar1.PageTitle = "Customer Order";
                         LoadCustomerOrderForm();
                         break;
-
                     case "Customer List":
                         navBar1.PageTitle = "Customer List";
                         LoadCustomerListForm();
                         break;
-
                     case "Supplier List":
                         navBar1.PageTitle = "Supplier List";
                         LoadSupplierListForm();
                         break;
-
                     case "Delivery Vehicles":
                         navBar1.PageTitle = "Delivery Vehicles";
                         LoadDeliveryVehicleListForm();
                         break;
-
                     case "Delivery List":
                         navBar1.PageTitle = "Delivery List";
                         LoadDeliveryListForm();
                         break;
-
                     case "Customer Returns":
                         navBar1.PageTitle = "Customer Returns";
                         LoadCustomerReturnsForm();
                         break;
-
-                    case "Supplier Returns": // ← ADDED THIS CASE
+                    case "Supplier Returns":
                         navBar1.PageTitle = "Supplier Returns";
                         LoadSupplierReturnsForm();
                         break;
-
+                    case "Returns List": // ← NEW MENU ITEM
+                        navBar1.PageTitle = "Returns List";
+                        LoadReturnListForm();
+                        break;
                     default:
                         navBar1.PageTitle = section;
                         break;
@@ -307,7 +294,7 @@ namespace IT13
             customerReturnsForm.Show();
         }
 
-        private void LoadSupplierReturnsForm() // ← NEW METHOD
+        private void LoadSupplierReturnsForm()
         {
             pnlContent.Controls.Clear();
             supplierReturnsForm = new SupplierReturns
@@ -318,6 +305,19 @@ namespace IT13
             };
             pnlContent.Controls.Add(supplierReturnsForm);
             supplierReturnsForm.Show();
+        }
+
+        private void LoadReturnListForm() // ← NEW METHOD
+        {
+            pnlContent.Controls.Clear();
+            returnListForm = new ReturnList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(returnListForm);
+            returnListForm.Show();
         }
 
         #endregion
@@ -353,10 +353,16 @@ namespace IT13
             LoadCustomerReturnsForm();
         }
 
-        public void NavigateToSupplierReturns() // ← NEW HELPER
+        public void NavigateToSupplierReturns()
         {
             navBar1.PageTitle = "Supplier Returns";
             LoadSupplierReturnsForm();
+        }
+
+        public void NavigateToReturnList() // ← NEW HELPER
+        {
+            navBar1.PageTitle = "Returns List";
+            LoadReturnListForm();
         }
     }
 }

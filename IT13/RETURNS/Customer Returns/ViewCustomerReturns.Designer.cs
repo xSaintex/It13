@@ -84,10 +84,10 @@ namespace IT13
             lblRequired.Location = new Point(54, 73);
             lblRequired.AutoSize = true;
 
-            lnkBack.Text = "← Back to Customer Returns";
+            lnkBack.Text = "← Back to List";
             lnkBack.LinkColor = Color.FromArgb(0, 123, 255);
             lnkBack.Font = new Font("Poppins", 10F);
-            lnkBack.Location = new Point(1280, 68);
+            lnkBack.Location = new Point(1400, 68);
             lnkBack.AutoSize = true;
 
             int tabY = 120;
@@ -182,14 +182,6 @@ namespace IT13
             colTotal.HeaderText = "Total"; colTotal.Width = 280;
             dgvOrderItems.Columns.AddRange(colProduct, colQty, colPrice, colTotal);
 
-            btnSaveCustomerOrder.Text = "Save Customer Return";
-            btnSaveCustomerOrder.Size = new Size(220, 44);
-            btnSaveCustomerOrder.Location = new Point(40, 540);
-            btnSaveCustomerOrder.FillColor = Color.FromArgb(0, 123, 255);
-            btnSaveCustomerOrder.ForeColor = Color.White;
-            btnSaveCustomerOrder.Font = new Font("Poppins", 10F, FontStyle.Bold);
-            btnSaveCustomerOrder.BorderRadius = 10;
-
             lblTotalLabelCO.Text = "Total Refunded:";
             lblTotalLabelCO.Font = new Font("Poppins", 11F);
             lblTotalLabelCO.Location = new Point(1100, 555);
@@ -238,15 +230,7 @@ namespace IT13
             txtShippingAddress.Multiline = true;
             txtShippingAddress.BorderRadius = 10;
             txtShippingAddress.ForeColor = Color.Black;
-            txtShippingAddress.Font = new Font("Poppins", 10F);
-
-            btnSaveAddress.Text = "Save Customer Return";
-            btnSaveAddress.Size = new Size(220, 44);
-            btnSaveAddress.Location = new Point(40, 540);
-            btnSaveAddress.FillColor = Color.FromArgb(0, 123, 255);
-            btnSaveAddress.ForeColor = Color.White;
-            btnSaveAddress.Font = new Font("Poppins", 10F, FontStyle.Bold);
-            btnSaveAddress.BorderRadius = 10;
+            txtShippingAddress.Font = new Font("Poppins", 10F);           
 
             lblTotalLabelAddr.Text = "Total Refunded:";
             lblTotalLabelAddr.Font = new Font("Poppins", 11F);
@@ -307,14 +291,6 @@ namespace IT13
             txtReturnReason.ScrollBars = ScrollBars.Vertical;
             txtReturnReason.ForeColor = Color.Black;
             txtReturnReason.Font = new Font("Poppins", 10F);
-
-            btnSaveReturns.Text = "Save Customer Return";
-            btnSaveReturns.Size = new Size(220, 44);
-            btnSaveReturns.Location = new Point(40, 540);
-            btnSaveReturns.FillColor = Color.FromArgb(0, 123, 255);
-            btnSaveReturns.ForeColor = Color.White;
-            btnSaveReturns.Font = new Font("Poppins", 10F, FontStyle.Bold);
-            btnSaveReturns.BorderRadius = 10;
 
             lblTotalLabelRet.Text = "Total Refunded:";
             lblTotalLabelRet.Font = new Font("Poppins", 11F);

@@ -112,6 +112,19 @@ namespace IT13
             var parent = this.Owner as Form1 ?? this.ParentForm as Form1;
             if (parent != null)
             {
+                // ← NEW: Check if opened from ReturnList
+                if (this.Tag is ReturnList returnListForm)
+                {
+                    parent.navBar1.PageTitle = "Return List";
+                    parent.pnlContent.Controls.Clear();
+                    parent.pnlContent.Controls.Add(returnListForm);
+                    returnListForm.Show();
+                    returnListForm.BringToFront();
+                    this.Close();
+                    return;
+                }
+
+                // ← OLD behavior: if opened from SupplierReturns page
                 if (this.Tag is SupplierReturns supplierReturnsForm)
                 {
                     parent.navBar1.PageTitle = "Supplier Returns";
@@ -122,6 +135,8 @@ namespace IT13
                     this.Close();
                     return;
                 }
+
+                // Fallback
                 parent.NavigateToSupplierReturns();
                 this.Close();
                 return;
