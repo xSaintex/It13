@@ -76,7 +76,7 @@ namespace IT13
 
             // SCROLL PANEL
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 700);
+            scrollPanel.Size = new Size(1597, 700);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 
@@ -398,7 +398,7 @@ namespace IT13
             // BOTTOM PANEL
             bottomPanel.Location = new Point(0, 700);
             bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
 
             btnCancel.Text = "Cancel";
             btnCancel.Font = new Font("Poppins", 10.5F, FontStyle.Bold);

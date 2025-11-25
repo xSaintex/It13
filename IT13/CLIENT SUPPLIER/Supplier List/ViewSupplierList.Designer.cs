@@ -71,7 +71,7 @@ namespace IT13
             mainPanel.Controls.Add(bottomPanel);
 
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 780);
+            scrollPanel.Size = new Size(1597, 780);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 

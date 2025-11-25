@@ -21,6 +21,9 @@ namespace IT13
             _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
 
+            // IMPORTANT: Wire up the TextChanged event for real-time search
+            txtSearch.TextChanged += txtSearch_TextChanged;
+
             // Setup
             SetupDataGridView();
             SetupFilterComboBox();
@@ -48,29 +51,35 @@ namespace IT13
             dgvSuppliers.RowTemplate.Height = 45;
             dgvSuppliers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // Column weights
-            dgvSuppliers.Columns["colID"].MinimumWidth = 160;
-            dgvSuppliers.Columns["colID"].FillWeight = 10;
-            dgvSuppliers.Columns["colCompany"].FillWeight = 28;
-            dgvSuppliers.Columns["colContact"].FillWeight = 18;
-            dgvSuppliers.Columns["colPhone"].FillWeight = 16;
+            // Fixed column weights for better alignment
+            dgvSuppliers.Columns["colID"].MinimumWidth = 140;
+            dgvSuppliers.Columns["colID"].FillWeight = 12;
+            dgvSuppliers.Columns["colCompany"].FillWeight = 20;
+            dgvSuppliers.Columns["colContact"].FillWeight = 20;
+            dgvSuppliers.Columns["colPhone"].FillWeight = 15;
             dgvSuppliers.Columns["colEmail"].FillWeight = 22;
-            dgvSuppliers.Columns["colPayment"].FillWeight = 12;
-            dgvSuppliers.Columns["colStatus"].FillWeight = 12;
-            dgvSuppliers.Columns["colActions"].FillWeight = 14;
+            dgvSuppliers.Columns["colPayment"].FillWeight = 10;
+            dgvSuppliers.Columns["colStatus"].FillWeight = 10;
+            dgvSuppliers.Columns["colActions"].FillWeight = 12;
 
-            // Alignment
+            // Alignment - All columns centered
+            dgvSuppliers.Columns["colID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvSuppliers.Columns["colCompany"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colContact"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colPhone"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colEmail"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colPayment"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSuppliers.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvSuppliers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgvSuppliers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvSuppliers.Columns["colActions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvSuppliers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            dgvSuppliers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            dgvSuppliers.Columns["colContact"].DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         }
 
         private void SetupFilterComboBox()
         {
+            Filter.Items.Clear();
             Filter.Items.AddRange(new object[] { "Filter", "All", "Active", "Inactive" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
@@ -84,6 +93,7 @@ namespace IT13
 
         private void SetupExportComboBox()
         {
+            Export.Items.Clear();
             Export.Items.AddRange(new object[] { "Export", "Excel", "PDF", "CSV" });
             Export.SelectedIndex = 0;
             Export.ForeColor = Color.Gray;
@@ -133,33 +143,40 @@ namespace IT13
 
         private void AddRow(string id, string company, string contact, string phone, string email, string payment, string status)
         {
+            // Column order: colID(checkbox), colCompany, colContact, colPhone, colEmail, colPayment, colStatus, colActions
             int idx = dgvSuppliers.Rows.Add(false, company, contact, phone, email, payment, status, null);
             var row = dgvSuppliers.Rows[idx];
-            row.Tag = id; // Store formatted ID like "SUP-001"
+            row.Tag = id; // Store the formatted ID (e.g., "SUP-001") in the Tag property
             row.Height = 45;
         }
 
         private void ApplyFiltersAndSearch()
         {
+            // Get search text and convert to lowercase for case-insensitive search
             string searchText = txtSearch.Text.Trim().ToLower();
-            string filterStatus = Filter.SelectedItem?.ToString() ?? "Filter";
 
+            // Get filter status
+            string filterStatus = Filter.SelectedItem?.ToString() ?? "Filter";
             bool showAll = filterStatus == "Filter" || filterStatus == "All";
             bool showActive = filterStatus == "Active";
             bool showInactive = filterStatus == "Inactive";
 
+            // Loop through all rows
             foreach (DataGridViewRow row in dgvSuppliers.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                // Get values for searching
-                string id = (row.Tag?.ToString() ?? "").ToLower(); // This is SUP-001
-                string company = (row.Cells["colCompany"].Value?.ToString() ?? "").ToLower();
-                string contact = (row.Cells["colContact"].Value?.ToString() ?? "").ToLower();
-                string phone = (row.Cells["colPhone"].Value?.ToString() ?? "").ToLower();
-                string email = (row.Cells["colEmail"].Value?.ToString() ?? "").ToLower();
-                string status = (row.Cells["colStatus"].Value?.ToString() ?? "").ToLower();
+                // Get the ID from Tag property
+                string id = row.Tag?.ToString()?.ToLower() ?? "";
 
+                // Get values from cells
+                string company = row.Cells["colCompany"].Value?.ToString()?.ToLower() ?? "";
+                string contact = row.Cells["colContact"].Value?.ToString()?.ToLower() ?? "";
+                string phone = row.Cells["colPhone"].Value?.ToString()?.ToLower() ?? "";
+                string email = row.Cells["colEmail"].Value?.ToString()?.ToLower() ?? "";
+                string status = row.Cells["colStatus"].Value?.ToString()?.ToLower() ?? "";
+
+                // Check if the search text matches any field
                 bool matchesSearch = string.IsNullOrEmpty(searchText) ||
                                      id.Contains(searchText) ||
                                      company.Contains(searchText) ||
@@ -167,10 +184,12 @@ namespace IT13
                                      phone.Contains(searchText) ||
                                      email.Contains(searchText);
 
+                // Check if status matches the filter
                 bool matchesFilter = showAll ||
                                      (showActive && status == "active") ||
                                      (showInactive && status == "inactive");
 
+                // Show row only if it matches both search and filter criteria
                 row.Visible = matchesSearch && matchesFilter;
             }
 
@@ -187,7 +206,7 @@ namespace IT13
                 if (row.Visible && !row.IsNewRow)
                 {
                     visibleCount++;
-                    if (Convert.ToBoolean(row.Cells[0].Value ?? false))
+                    if (Convert.ToBoolean(row.Cells["colID"].Value ?? false))
                         checkedCount++;
                 }
             }
@@ -196,7 +215,7 @@ namespace IT13
                                 checkedCount == 0 ? false :
                                 checkedCount == visibleCount ? (bool?)true : null;
 
-            dgvSuppliers.InvalidateCell(0, -1); // Refresh header checkbox
+            dgvSuppliers.InvalidateCell(dgvSuppliers.Columns["colID"].Index, -1);
         }
 
         private GraphicsPath GetRoundedRect(Rectangle rect, float radius)
@@ -214,7 +233,7 @@ namespace IT13
         private void dgvSuppliers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             // Header Checkbox + "ID" label
-            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            if (e.RowIndex == -1 && e.ColumnIndex == dgvSuppliers.Columns["colID"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
                 var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
@@ -245,11 +264,11 @@ namespace IT13
             }
 
             // Row Checkbox + ID Display
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvSuppliers.Columns["colID"].Index)
             {
                 e.PaintBackground(e.CellBounds, true);
                 bool isChecked = Convert.ToBoolean(e.Value ?? false);
-                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
+                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 14, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, r);
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
 
@@ -263,12 +282,13 @@ namespace IT13
                         });
                 }
 
+                // Draw the ID from Tag property
                 string id = dgvSuppliers.Rows[e.RowIndex].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
                 {
                     TextRenderer.DrawText(e.Graphics, id,
                         new Font("Poppins", 11F),
-                        new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
+                        new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 40, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
                 e.Handled = true;
@@ -298,8 +318,8 @@ namespace IT13
                     ? Color.FromArgb(34, 197, 94)
                     : Color.FromArgb(239, 68, 68);
 
-                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 8, e.CellBounds.Width - 20, e.CellBounds.Height - 16);
-                using (var path = GetRoundedRect(rect, 10f))
+                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10, e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+                using (var path = GetRoundedRect(rect, 8f))
                 using (var brush = new SolidBrush(bg))
                     e.Graphics.FillPath(brush, path);
 
@@ -320,13 +340,13 @@ namespace IT13
             dgvSuppliers.CurrentCell = null;
 
             // Header checkbox
-            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            if (e.RowIndex == -1 && e.ColumnIndex == dgvSuppliers.Columns["colID"].Index)
             {
                 bool newState = !(_headerCheckState == true);
                 foreach (DataGridViewRow row in dgvSuppliers.Rows)
                 {
                     if (row.Visible && !row.IsNewRow)
-                        row.Cells[0].Value = newState;
+                        row.Cells["colID"].Value = newState;
                 }
                 _headerCheckState = newState ? true : (bool?)false;
                 UpdateHeaderCheckState();
@@ -334,11 +354,11 @@ namespace IT13
             }
 
             // Row checkbox
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            if (e.ColumnIndex == dgvSuppliers.Columns["colID"].Index && e.RowIndex >= 0)
             {
                 var row = dgvSuppliers.Rows[e.RowIndex];
-                bool current = Convert.ToBoolean(row.Cells[0].Value ?? false);
-                row.Cells[0].Value = !current;
+                bool current = Convert.ToBoolean(row.Cells["colID"].Value ?? false);
+                row.Cells["colID"].Value = !current;
                 UpdateHeaderCheckState();
                 return;
             }
@@ -361,12 +381,13 @@ namespace IT13
             }
         }
 
-        // Real-time Search
+        // Real-time Search - triggers as you type
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             ApplyFiltersAndSearch();
         }
 
+        // Search button click - also triggers search
         private void btnSearch_Click(object sender, EventArgs e)
         {
             ApplyFiltersAndSearch();

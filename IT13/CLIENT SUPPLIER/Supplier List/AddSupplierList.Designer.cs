@@ -72,7 +72,7 @@ namespace IT13
             mainPanel.Controls.Add(bottomPanel);
 
             scrollPanel.Location = new Point(0, 0);
-            scrollPanel.Size = new Size(1602, 780);
+            scrollPanel.Size = new Size(1597, 780);
             scrollPanel.AutoScroll = true;
             scrollPanel.Controls.Add(contentPanel);
 
@@ -82,7 +82,7 @@ namespace IT13
 
             bottomPanel.Location = new Point(0, 780);
             bottomPanel.Size = new Size(1602, 80);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
 
             // Header
             lblHeader.Text = "Add New Supplier";

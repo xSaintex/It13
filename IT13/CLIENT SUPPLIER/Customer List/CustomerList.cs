@@ -45,16 +45,18 @@ namespace IT13
             dgvCustomers.Columns["colStatus"].FillWeight = 12;
             dgvCustomers.Columns["colActions"].FillWeight = 12;
 
-            foreach (DataGridViewColumn col in dgvCustomers.Columns)
-            {
-                if (col.Name != "colID" && col.Name != "colActions" && col.Name != "colStatus")
-                {
-                    col.DefaultCellStyle.Padding = new Padding(15, 0, 0, 0);
-                    col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                }
-            }
-            dgvCustomers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgvCustomers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            // Center align all columns except ID (which stays left because of checkbox)
+            dgvCustomers.Columns["colID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvCustomers.Columns["colCompany"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colContact"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colPhone"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colEmail"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colPayment"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCustomers.Columns["colActions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvCustomers.Columns["colCompany"].DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            dgvCustomers.Columns["colEmail"].DefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
             LoadCustomersFromDatabase();
             UpdateHeaderCheckState();
@@ -124,7 +126,8 @@ namespace IT13
         private void AddRow(string id, string company, string contact, string phone, string email, string payment, string status)
         {
             int idx = dgvCustomers.Rows.Add(false, company, contact, phone, email, payment, status, null);
-            dgvCustomers.Rows[idx].Cells[0].Tag = id;
+            // Store ONLY the numeric ID without any formatting
+            dgvCustomers.Rows[idx].Cells[0].Tag = id.Trim();
             dgvCustomers.Rows[idx].Height = 45;
         }
 
@@ -147,7 +150,6 @@ namespace IT13
             dgvCustomers.InvalidateCell(0, -1);
         }
 
-        // FULLY FIXED SEARCH - ID + CONTACT + EVERYTHING WORKS
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             ApplySearchAndFilter(txtSearch.Text.Trim());
@@ -155,38 +157,51 @@ namespace IT13
 
         private void ApplySearchAndFilter(string searchText)
         {
-            string searchLower = searchText.ToLowerInvariant();
-            bool hasSearch = !string.IsNullOrEmpty(searchText);
+            string searchTrimmed = searchText.Trim();
+            bool hasSearch = !string.IsNullOrEmpty(searchTrimmed);
             string filterStatus = Filter.SelectedItem?.ToString() ?? "Filter";
 
             foreach (DataGridViewRow row in dgvCustomers.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                string id = row.Cells[0].Tag?.ToString() ?? "";
-                string company = (row.Cells["colCompany"].Value?.ToString() ?? "").ToLowerInvariant();
-                string contact = (row.Cells["colContact"].Value?.ToString() ?? "").ToLowerInvariant();
-                string phone = (row.Cells["colPhone"].Value?.ToString() ?? "").ToLowerInvariant();
-                string email = (row.Cells["colEmail"].Value?.ToString() ?? "").ToLowerInvariant();
+                // Get values from row
+                string id = row.Cells[0].Tag?.ToString()?.Trim() ?? "";
+                string company = row.Cells["colCompany"].Value?.ToString() ?? "";
+                string contact = row.Cells["colContact"].Value?.ToString() ?? "";
+                string phone = row.Cells["colPhone"].Value?.ToString() ?? "";
+                string email = row.Cells["colEmail"].Value?.ToString() ?? "";
                 string status = row.Cells["colStatus"].Value?.ToString() ?? "Active";
 
-                bool matchesSearch = true;
+                bool matchesSearch = !hasSearch; // Default to true if no search
+
                 if (hasSearch)
                 {
-                    bool idMatch = id.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0;
-                    bool textMatch = company.Contains(searchLower) ||
-                                     contact.Contains(searchLower) ||
-                                     phone.Contains(searchLower) ||
-                                     email.Contains(searchLower);
+                    // Check if search text is a number (for ID search)
+                    bool isNumericSearch = searchTrimmed.All(char.IsDigit);
 
-                    matchesSearch = idMatch || textMatch;
+                    if (isNumericSearch)
+                    {
+                        // If searching for a number, ONLY match exact ID
+                        matchesSearch = id == searchTrimmed;
+                    }
+                    else
+                    {
+                        // If searching for text, search in company, contact, phone, email
+                        bool companyMatch = company.IndexOf(searchTrimmed, StringComparison.OrdinalIgnoreCase) >= 0;
+                        bool contactMatch = contact.IndexOf(searchTrimmed, StringComparison.OrdinalIgnoreCase) >= 0;
+                        bool phoneMatch = phone.Contains(searchTrimmed);
+                        bool emailMatch = email.IndexOf(searchTrimmed, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        matchesSearch = companyMatch || contactMatch || phoneMatch || emailMatch;
+                    }
                 }
 
                 bool matchesFilter = filterStatus switch
                 {
                     "All" => true,
-                    "Active" => status == "Active",
-                    "Inactive" => status == "Inactive",
+                    "Active" => status.Equals("Active", StringComparison.OrdinalIgnoreCase),
+                    "Inactive" => status.Equals("Inactive", StringComparison.OrdinalIgnoreCase),
                     _ => true
                 };
 
@@ -270,15 +285,15 @@ namespace IT13
                 return;
             }
 
-            // Other column headers
+            // Other column headers - centered
             if (e.RowIndex == -1 && e.ColumnIndex > 0)
             {
                 e.PaintBackground(e.CellBounds, true);
                 string headerText = dgvCustomers.Columns[e.ColumnIndex].HeaderText;
                 TextRenderer.DrawText(e.Graphics, headerText,
                     new Font("Poppins", 12F, FontStyle.Bold),
-                    new Rectangle(e.CellBounds.X + 15, e.CellBounds.Y, e.CellBounds.Width - 15, e.CellBounds.Height),
-                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                    e.CellBounds,
+                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
                 e.Handled = true;
                 return;
             }
@@ -288,7 +303,7 @@ namespace IT13
             {
                 e.PaintBackground(e.CellBounds, true);
                 bool chk = (bool)(e.Value ?? false);
-                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 12, 16, 16);
+                var r = new Rectangle(e.CellBounds.X + 12, e.CellBounds.Y + 14, 16, 16);
                 e.Graphics.FillRectangle(Brushes.White, r);
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
 
@@ -300,12 +315,11 @@ namespace IT13
                         });
                 }
 
-                // FIXED: Use dgvCustomers.Rows[e.RowIndex] instead of undefined 'row'
                 string id = dgvCustomers.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
                 {
                     TextRenderer.DrawText(e.Graphics, id, new Font("Poppins", 11F),
-                        new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
+                        new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 40, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 }
 
@@ -317,8 +331,8 @@ namespace IT13
             if (e.ColumnIndex == dgvCustomers.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                int sz = 24, gap = 16;
-                int x = e.CellBounds.X + 15;
+                int sz = 24, gap = 16, total = sz * 2 + gap;
+                int x = e.CellBounds.X + (e.CellBounds.Width - total) / 2;
                 int y = e.CellBounds.Y + (e.CellBounds.Height - sz) / 2;
                 e.Graphics.DrawImage(_editIcon, x, y, sz, sz);
                 e.Graphics.DrawImage(_viewIcon, x + sz + gap, y, sz, sz);
@@ -326,27 +340,25 @@ namespace IT13
                 return;
             }
 
-            // Status badge
+            // Status badge - centered
             if (e.ColumnIndex == dgvCustomers.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
                 string status = e.Value?.ToString() ?? "";
                 Color bg = status == "Active" ? Color.FromArgb(34, 197, 94) : Color.FromArgb(239, 68, 68);
-                using (var f = new Font("Poppins", 10F, FontStyle.Bold))
+
+                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10, e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+                using (var path = GetRoundedRect(rect, 8f))
+                using (var brush = new SolidBrush(bg))
+                    e.Graphics.FillPath(brush, path);
+
+                using (var font = new Font("Poppins", 10F, FontStyle.Bold))
+                using (var textBrush = new SolidBrush(Color.White))
                 {
-                    var sz = e.Graphics.MeasureString(status, f);
-                    int badgeWidth = (int)sz.Width + 30;
-                    int badgeHeight = e.CellBounds.Height - 16;
-                    var rect = new Rectangle(e.CellBounds.X + 15, e.CellBounds.Y + 8, badgeWidth, badgeHeight);
-                    using (var path = GetRoundedRect(rect, 10f))
-                    using (var br = new SolidBrush(bg))
-                        e.Graphics.FillPath(br, path);
-                    using (var textBrush = new SolidBrush(Color.White))
-                    {
-                        e.Graphics.DrawString(status, f, textBrush,
-                            rect.X + (rect.Width - sz.Width) / 2,
-                            rect.Y + (rect.Height - sz.Height) / 2);
-                    }
+                    var size = e.Graphics.MeasureString(status, font);
+                    float x = e.CellBounds.X + (e.CellBounds.Width - size.Width) / 2;
+                    float y = e.CellBounds.Y + (e.CellBounds.Height - size.Height) / 2;
+                    e.Graphics.DrawString(status, font, textBrush, x, y);
                 }
                 e.Handled = true;
             }
@@ -379,13 +391,13 @@ namespace IT13
                 var cellRect = dgvCustomers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var pt = dgvCustomers.PointToClient(Cursor.Position);
                 int clickX = pt.X - cellRect.X;
-                int sz = 24, gap = 16;
-                int startX = 15;
+                int sz = 24, gap = 16, total = sz * 2 + gap;
+                int startX = (cellRect.Width - total) / 2;
                 string id = dgvCustomers.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + sz)
                     OpenEditCustomer(id);
-                else if (clickX >= startX + sz + gap && clickX < startX + sz + gap + sz)
+                else if (clickX >= startX + sz + gap && clickX < startX + total)
                     OpenViewCustomer(id);
             }
         }
