@@ -11,8 +11,7 @@
   <ItemGroup>
     <Folder Include="Db\" />
     <Folder Include="EMPLOYEES\" />
-    <Folder Include="RENTAL\New Rental\" />
-    <Folder Include="RENTAL\Rental List\" />
+    <Folder Include="RENTAL\Scheduled Rentals\" />
     <Folder Include="REPORTS\Inventory Report\" />
     <Folder Include="REPORTS\Sales Report\" />
     <Folder Include="USERS\User Admins\" />

@@ -94,12 +94,12 @@ namespace IT13
 
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
             lblRequired.ForeColor = Color.Red;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.Location = new Point(77, 56);
             lblRequired.AutoSize = true;
 
             lblNote.Text = "Note: Customer's Email and Phone number must be unique.";
-            lblNote.Font = new Font("Poppins", 9F);
+            lblNote.Font = new Font("Tahoma", 9F);
             lblNote.ForeColor = Color.Gray;
             lblNote.Location = new Point(77, 80);
             lblNote.AutoSize = true;
@@ -108,86 +108,86 @@ namespace IT13
 
             // BASIC INFO
             lblTitle.Text = "Title";
-            lblTitle.Font = new Font("Poppins", 10F);
+            lblTitle.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblTitle.Location = new Point(77, y);
             lblTitle.AutoSize = true;
             txtTitle.Location = new Point(77, y + 25);
             txtTitle.Size = new Size(100, 36);
             txtTitle.BorderRadius = 5;
-            txtTitle.Font = new Font("Poppins", 10.5F);
+            txtTitle.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtTitle.ForeColor = Color.Black;
 
             lblFName.Text = "First Name *";
-            lblFName.Font = new Font("Poppins", 10F);
+            lblFName.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblFName.Location = new Point(197, y);
             lblFName.AutoSize = true;
             txtFName.Location = new Point(197, y + 25);
             txtFName.Size = new Size(300, 36);
             txtFName.BorderRadius = 5;
-            txtFName.Font = new Font("Poppins", 10.5F);
+            txtFName.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtFName.ForeColor = Color.Black;
 
             lblLName.Text = "Last Name *";
-            lblLName.Font = new Font("Poppins", 10F);
+            lblLName.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblLName.Location = new Point(517, y);
             lblLName.AutoSize = true;
             txtLName.Location = new Point(517, y + 25);
             txtLName.Size = new Size(300, 36);
             txtLName.BorderRadius = 5;
-            txtLName.Font = new Font("Poppins", 10.5F);
+            txtLName.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtLName.ForeColor = Color.Black;
 
             lblEmail.Text = "Email *";
-            lblEmail.Font = new Font("Poppins", 10F);
+            lblEmail.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblEmail.Location = new Point(837, y);
             lblEmail.AutoSize = true;
             txtEmail.Location = new Point(837, y + 25);
             txtEmail.Size = new Size(500, 36);
             txtEmail.BorderRadius = 5;
-            txtEmail.Font = new Font("Poppins", 10.5F);
+            txtEmail.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtEmail.ForeColor = Color.Black;
 
             y += 80;
 
             lblCompany.Text = "Company Name";
-            lblCompany.Font = new Font("Poppins", 10F);
+            lblCompany.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblCompany.Location = new Point(77, y);
             lblCompany.AutoSize = true;
             txtCompany.Location = new Point(77, y + 25);
             txtCompany.Size = new Size(600, 36);
             txtCompany.BorderRadius = 5;
-            txtCompany.Font = new Font("Poppins", 10.5F);
+            txtCompany.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtCompany.ForeColor = Color.Black;
 
             lblPhone.Text = "Phone number *";
-            lblPhone.Font = new Font("Poppins", 10F);
+            lblPhone.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblPhone.Location = new Point(697, y);
             lblPhone.AutoSize = true;
             txtPhone.Location = new Point(697, y + 25);
             txtPhone.Size = new Size(300, 36);
             txtPhone.BorderRadius = 5;
-            txtPhone.Font = new Font("Poppins", 10.5F);
+            txtPhone.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtPhone.ForeColor = Color.Black;
 
             lblPayment.Text = "Payment Terms *";
-            lblPayment.Font = new Font("Poppins", 10F);
+            lblPayment.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblPayment.Location = new Point(77, y + 80);
             lblPayment.AutoSize = true;
             cmbPayment.Location = new Point(77, y + 105);
             cmbPayment.Size = new Size(300, 36);
             cmbPayment.BorderRadius = 5;
-            cmbPayment.Font = new Font("Poppins", 10.5F);
+            cmbPayment.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             cmbPayment.ForeColor = Color.Black;
             cmbPayment.Items.AddRange(new[] { "Cash", "Net 15", "Net 30", "Net 60" });
 
             lblStatus.Text = "Status";
-            lblStatus.Font = new Font("Poppins", 10F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblStatus.Location = new Point(397, y + 80);
             lblStatus.AutoSize = true;
             cmbStatus.Location = new Point(397, y + 105);
             cmbStatus.Size = new Size(150, 36);
             cmbStatus.BorderRadius = 5;
-            cmbStatus.Font = new Font("Poppins", 10.5F);
+            cmbStatus.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             cmbStatus.ForeColor = Color.Black;
             cmbStatus.Items.AddRange(new[] { "Active", "Inactive" });
 
@@ -219,23 +219,23 @@ namespace IT13
             pnlOther.Visible = true;
 
             lblContactPerson.Text = "Contact Person *";
-            lblContactPerson.Font = new Font("Poppins", 10F);
+            lblContactPerson.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblContactPerson.Location = new Point(40, 25);
             lblContactPerson.AutoSize = true;
             txtContactPerson.Location = new Point(40, 50);
             txtContactPerson.Size = new Size(600, 36);
             txtContactPerson.BorderRadius = 5;
-            txtContactPerson.Font = new Font("Poppins", 10.5F);
+            txtContactPerson.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtContactPerson.ForeColor = Color.Black;
 
             lblContactNum.Text = "Contact number *";
-            lblContactNum.Font = new Font("Poppins", 10F);
+            lblContactNum.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblContactNum.Location = new Point(40, 105);
             lblContactNum.AutoSize = true;
             txtContactNum.Location = new Point(40, 130);
             txtContactNum.Size = new Size(300, 36);
             txtContactNum.BorderRadius = 5;
-            txtContactNum.Font = new Font("Poppins", 10.5F);
+            txtContactNum.Font = new Font("Bahnschrift SemiCondensed", 10.5F);
             txtContactNum.ForeColor = Color.Black;
 
             pnlOther.Controls.AddRange(new Control[] { lblContactPerson, txtContactPerson, lblContactNum, txtContactNum });
@@ -251,62 +251,62 @@ namespace IT13
             int leftX = 40, rightX = 760, fieldY = 70;
 
             lblBilling.Text = "Billing Address";
-            lblBilling.Font = new Font("Poppins", 12F, FontStyle.Bold);
+            lblBilling.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold);
             lblBilling.Location = new Point(leftX, 25);
-            lblBilling.AutoSize = true;
+            lblBilling.Size = new Size(300, 36);
 
             lblShip.Text = "Shipping Address";
-            lblShip.Font = new Font("Poppins", 12F, FontStyle.Bold);
+            lblShip.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold);
             lblShip.Location = new Point(rightX, 25);
-            lblShip.AutoSize = true;
+            lblShip.Size = new Size(300, 36);
 
             lnkCopy.Text = "Copy billing address";
-            lnkCopy.Font = new Font("Poppins", 9.5F);
+            lnkCopy.Font = new Font("Bahnschrift SemiCondensed", 9.5F);
             lnkCopy.Location = new Point(rightX + 10, 28);
             lnkCopy.AutoSize = true;
             lnkCopy.LinkColor = Color.FromArgb(0, 123, 255);
 
             // Billing Fields
-            lblBCountry.Text = "Country *"; lblBCountry.Font = new Font("Poppins", 10F); lblBCountry.Location = new Point(leftX, fieldY); lblBCountry.AutoSize = true;
+            lblBCountry.Text = "Country *"; lblBCountry.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBCountry.Location = new Point(leftX, fieldY); lblBCountry.AutoSize = true;
             cmbBCountry.Location = new Point(leftX, fieldY + 25); cmbBCountry.Size = new Size(300, 36); cmbBCountry.BorderRadius = 5;
-            cmbBCountry.Font = new Font("Poppins", 10.5F); cmbBCountry.ForeColor = Color.Black;
+            cmbBCountry.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbBCountry.ForeColor = Color.Black;
 
-            lblBCity.Text = "City *"; lblBCity.Font = new Font("Poppins", 10F); lblBCity.Location = new Point(leftX, fieldY + 80); lblBCity.AutoSize = true;
+            lblBCity.Text = "City *"; lblBCity.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBCity.Location = new Point(leftX, fieldY + 80); lblBCity.AutoSize = true;
             txtBCity.Location = new Point(leftX, fieldY + 105); txtBCity.Size = new Size(300, 36); txtBCity.BorderRadius = 5;
-            txtBCity.Font = new Font("Poppins", 10.5F); txtBCity.ForeColor = Color.Black;
+            txtBCity.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBCity.ForeColor = Color.Black;
 
-            lblBZip.Text = "Zip Code *"; lblBZip.Font = new Font("Poppins", 10F); lblBZip.Location = new Point(leftX, fieldY + 160); lblBZip.AutoSize = true;
+            lblBZip.Text = "Zip Code *"; lblBZip.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBZip.Location = new Point(leftX, fieldY + 160); lblBZip.AutoSize = true;
             txtBZip.Location = new Point(leftX, fieldY + 185); txtBZip.Size = new Size(150, 36); txtBZip.BorderRadius = 5;
-            txtBZip.Font = new Font("Poppins", 10.5F); txtBZip.ForeColor = Color.Black;
+            txtBZip.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBZip.ForeColor = Color.Black;
 
-            lblBLine1.Text = "Address Line 1 *"; lblBLine1.Font = new Font("Poppins", 10F); lblBLine1.Location = new Point(leftX, fieldY + 240); lblBLine1.AutoSize = true;
+            lblBLine1.Text = "Address Line 1 *"; lblBLine1.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBLine1.Location = new Point(leftX, fieldY + 240); lblBLine1.AutoSize = true;
             txtBLine1.Location = new Point(leftX, fieldY + 265); txtBLine1.Size = new Size(500, 36); txtBLine1.BorderRadius = 5;
-            txtBLine1.Font = new Font("Poppins", 10.5F); txtBLine1.ForeColor = Color.Black;
+            txtBLine1.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBLine1.ForeColor = Color.Black;
 
-            lblBLine2.Text = "Address Line 2"; lblBLine2.Font = new Font("Poppins", 10F); lblBLine2.Location = new Point(leftX, fieldY + 320); lblBLine2.AutoSize = true;
+            lblBLine2.Text = "Address Line 2"; lblBLine2.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBLine2.Location = new Point(leftX, fieldY + 320); lblBLine2.AutoSize = true;
             txtBLine2.Location = new Point(leftX, fieldY + 345); txtBLine2.Size = new Size(500, 36); txtBLine2.BorderRadius = 5;
-            txtBLine2.Font = new Font("Poppins", 10.5F); txtBLine2.ForeColor = Color.Black;
+            txtBLine2.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBLine2.ForeColor = Color.Black;
 
             // Shipping Fields
-            lblSCountry.Text = "Country *"; lblSCountry.Font = new Font("Poppins", 10F); lblSCountry.Location = new Point(rightX, fieldY); lblSCountry.AutoSize = true;
+            lblSCountry.Text = "Country *"; lblSCountry.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSCountry.Location = new Point(rightX, fieldY); lblSCountry.AutoSize = true;
             cmbSCountry.Location = new Point(rightX, fieldY + 25); cmbSCountry.Size = new Size(300, 36); cmbSCountry.BorderRadius = 5;
-            cmbSCountry.Font = new Font("Poppins", 10.5F); cmbSCountry.ForeColor = Color.Black;
+            cmbSCountry.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbSCountry.ForeColor = Color.Black;
 
-            lblSCity.Text = "City *"; lblSCity.Font = new Font("Poppins", 10F); lblSCity.Location = new Point(rightX, fieldY + 80); lblSCity.AutoSize = true;
+            lblSCity.Text = "City *"; lblSCity.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSCity.Location = new Point(rightX, fieldY + 80); lblSCity.AutoSize = true;
             txtSCity.Location = new Point(rightX, fieldY + 105); txtSCity.Size = new Size(300, 36); txtSCity.BorderRadius = 5;
-            txtSCity.Font = new Font("Poppins", 10.5F); txtSCity.ForeColor = Color.Black;
+            txtSCity.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSCity.ForeColor = Color.Black;
 
-            lblSZip.Text = "Zip Code *"; lblSZip.Font = new Font("Poppins", 10F); lblSZip.Location = new Point(rightX, fieldY + 160); lblSZip.AutoSize = true;
+            lblSZip.Text = "Zip Code *"; lblSZip.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSZip.Location = new Point(rightX, fieldY + 160); lblSZip.AutoSize = true;
             txtSZip.Location = new Point(rightX, fieldY + 185); txtSZip.Size = new Size(150, 36); txtSZip.BorderRadius = 5;
-            txtSZip.Font = new Font("Poppins", 10.5F); txtSZip.ForeColor = Color.Black;
+            txtSZip.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSZip.ForeColor = Color.Black;
 
-            lblSLine1.Text = "Address Line 1 *"; lblSLine1.Font = new Font("Poppins", 10F); lblSLine1.Location = new Point(rightX, fieldY + 240); lblSLine1.AutoSize = true;
+            lblSLine1.Text = "Address Line 1 *"; lblSLine1.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSLine1.Location = new Point(rightX, fieldY + 240); lblSLine1.AutoSize = true;
             txtSLine1.Location = new Point(rightX, fieldY + 265); txtSLine1.Size = new Size(500, 36); txtSLine1.BorderRadius = 5;
-            txtSLine1.Font = new Font("Poppins", 10.5F); txtSLine1.ForeColor = Color.Black;
+            txtSLine1.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSLine1.ForeColor = Color.Black;
 
-            lblSLine2.Text = "Address Line 2"; lblSLine2.Font = new Font("Poppins", 10F); lblSLine2.Location = new Point(rightX, fieldY + 320); lblSLine2.AutoSize = true;
+            lblSLine2.Text = "Address Line 2"; lblSLine2.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSLine2.Location = new Point(rightX, fieldY + 320); lblSLine2.AutoSize = true;
             txtSLine2.Location = new Point(rightX, fieldY + 345); txtSLine2.Size = new Size(500, 36); txtSLine2.BorderRadius = 5;
-            txtSLine2.Font = new Font("Poppins", 10.5F); txtSLine2.ForeColor = Color.Black;
+            txtSLine2.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSLine2.ForeColor = Color.Black;
 
             pnlAddress.Controls.AddRange(new Control[] {
                 lblBilling, lblShip, lnkCopy,

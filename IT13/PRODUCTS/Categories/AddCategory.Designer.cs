@@ -55,7 +55,7 @@ namespace IT13
 
             // CATEGORY NAME
             lblName.AutoSize = true;
-            lblName.Font = new Font("Poppins", 11F);
+            lblName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblName.Location = new Point(77, 120);
             lblName.Text = "Category Name *";
 
@@ -66,13 +66,13 @@ namespace IT13
             txtName.BorderColor = Color.FromArgb(180, 180, 180);
             txtName.FillColor = Color.White;
             txtName.ForeColor = Color.Black;
-            txtName.Font = new Font("Poppins", 11F);
+            txtName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtName.PlaceholderText = "Enter category name";
             txtName.PlaceholderForeColor = Color.Gray;
 
             // STATUS
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Poppins", 11F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblStatus.Location = new Point(750, 120);
             lblStatus.Text = "Category Status *";
 
@@ -83,7 +83,7 @@ namespace IT13
             txtStatus.BorderColor = Color.FromArgb(180, 180, 180);
             txtStatus.FillColor = Color.FromArgb(240, 240, 240);
             txtStatus.ForeColor = Color.Black;
-            txtStatus.Font = new Font("Poppins", 11F);
+            txtStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtStatus.Text = "Active";
             txtStatus.ReadOnly = true;
 
@@ -95,7 +95,7 @@ namespace IT13
 
             // DATE
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Poppins", 11F);
+            lblDate.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblDate.Location = new Point(750, 260);
             lblDate.Text = "Date *";
 
@@ -103,7 +103,7 @@ namespace IT13
             datePicker.Size = new Size(600, 52);
             datePicker.Format = DateTimePickerFormat.Custom;
             datePicker.CustomFormat = "MM/dd/yyyy";
-            datePicker.Font = new Font("Poppins", 11F);
+            datePicker.Font = new Font("Bahnschrift SemiCondensed", 11F);
             datePicker.FillColor = Color.White;
             datePicker.ForeColor = Color.Black;
             datePicker.BorderColor = Color.FromArgb(180, 180, 180);

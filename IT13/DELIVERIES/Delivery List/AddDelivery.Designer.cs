@@ -57,14 +57,14 @@ namespace IT13
 
             // === REQUIRED TEXT ===
             lblRequired.AutoSize = true;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.ForeColor = Color.Red;
             lblRequired.Location = new Point(77, 56);
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
 
             // === CUSTOMER ORDER ===
             lblCustomerOrder.AutoSize = true;
-            lblCustomerOrder.Font = new Font("Poppins", 10F);
+            lblCustomerOrder.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblCustomerOrder.ForeColor = Color.FromArgb(70, 70, 70);
             lblCustomerOrder.Location = new Point(77, 110);
             lblCustomerOrder.Text = "Customer Order *";
@@ -76,12 +76,12 @@ namespace IT13
             comboCustomerOrder.BorderColor = Color.FromArgb(200, 200, 200);
             comboCustomerOrder.BorderThickness = 1;
             comboCustomerOrder.FillColor = Color.White;
-            comboCustomerOrder.Font = new Font("Poppins", 11F);
+            comboCustomerOrder.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboCustomerOrder.ForeColor = Color.Black;  // Typed/selected text = Black
 
             // === DELIVERY VEHICLE ===
             lblVehicle.AutoSize = true;
-            lblVehicle.Font = new Font("Poppins", 10F);
+            lblVehicle.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblVehicle.ForeColor = Color.FromArgb(70, 70, 70);
             lblVehicle.Location = new Point(750, 110);
             lblVehicle.Text = "Delivery Vehicle *";
@@ -93,12 +93,12 @@ namespace IT13
             comboVehicle.BorderColor = Color.FromArgb(200, 200, 200);
             comboVehicle.BorderThickness = 1;
             comboVehicle.FillColor = Color.White;
-            comboVehicle.Font = new Font("Poppins", 11F);
+            comboVehicle.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboVehicle.ForeColor = Color.Black;
 
             // === EMPLOYEE ===
             lblEmployee.AutoSize = true;
-            lblEmployee.Font = new Font("Poppins", 10F);
+            lblEmployee.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblEmployee.ForeColor = Color.FromArgb(70, 70, 70);
             lblEmployee.Location = new Point(77, 210);
             lblEmployee.Text = "Employee *";
@@ -110,12 +110,12 @@ namespace IT13
             comboEmployee.BorderColor = Color.FromArgb(200, 200, 200);
             comboEmployee.BorderThickness = 1;
             comboEmployee.FillColor = Color.White;
-            comboEmployee.Font = new Font("Poppins", 11F);
+            comboEmployee.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboEmployee.ForeColor = Color.Black;
 
             // === DELIVERY DATE ===
             lblDeliveryDate.AutoSize = true;
-            lblDeliveryDate.Font = new Font("Poppins", 10F);
+            lblDeliveryDate.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblDeliveryDate.ForeColor = Color.FromArgb(70, 70, 70);
             lblDeliveryDate.Location = new Point(750, 210);
             lblDeliveryDate.Text = "Delivery Date *";
@@ -129,12 +129,12 @@ namespace IT13
             datePicker.BorderColor = Color.FromArgb(200, 200, 200);
             datePicker.BorderThickness = 1;
             datePicker.BorderRadius = 8;
-            datePicker.Font = new Font("Poppins", 11F);
+            datePicker.Font = new Font("Bahnschrift SemiCondensed", 11F);
             datePicker.ForeColor = Color.Black;
 
             // === STATUS ===
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Poppins", 10F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblStatus.ForeColor = Color.FromArgb(70, 70, 70);
             lblStatus.Location = new Point(77, 310);
             lblStatus.Text = "Status *";
@@ -146,7 +146,7 @@ namespace IT13
             comboStatus.BorderColor = Color.FromArgb(200, 200, 200);
             comboStatus.BorderThickness = 1;
             comboStatus.FillColor = Color.White;
-            comboStatus.Font = new Font("Poppins", 11F);
+            comboStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboStatus.ForeColor = Color.Black;
 
             // === CANCEL BUTTON ===

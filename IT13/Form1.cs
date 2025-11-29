@@ -19,7 +19,8 @@ namespace IT13
         private DeliveryList deliveryListForm;
         private CustomerReturns customerReturnsForm;
         private SupplierReturns supplierReturnsForm;
-        private ReturnList returnListForm; // ← NEW: ReturnList reference
+        private ReturnList returnListForm;       
+        private RentalList rentalListForm;       
 
         public Form1()
         {
@@ -125,9 +126,13 @@ namespace IT13
                         navBar1.PageTitle = "Supplier Returns";
                         LoadSupplierReturnsForm();
                         break;
-                    case "Returns List": // ← NEW MENU ITEM
+                    case "Returns List":
                         navBar1.PageTitle = "Returns List";
                         LoadReturnListForm();
+                        break;
+                    case "Rental List": 
+                        navBar1.PageTitle = "Rental List";
+                        LoadRentalListForm();
                         break;
                     default:
                         navBar1.PageTitle = section;
@@ -307,7 +312,7 @@ namespace IT13
             supplierReturnsForm.Show();
         }
 
-        private void LoadReturnListForm() // ← NEW METHOD
+        private void LoadReturnListForm()
         {
             pnlContent.Controls.Clear();
             returnListForm = new ReturnList
@@ -318,6 +323,19 @@ namespace IT13
             };
             pnlContent.Controls.Add(returnListForm);
             returnListForm.Show();
+        }
+
+        private void LoadRentalListForm() 
+        {
+            pnlContent.Controls.Clear();
+            rentalListForm = new RentalList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(rentalListForm);
+            rentalListForm.Show();
         }
 
         #endregion
@@ -359,10 +377,16 @@ namespace IT13
             LoadSupplierReturnsForm();
         }
 
-        public void NavigateToReturnList() // ← NEW HELPER
+        public void NavigateToReturnList()
         {
             navBar1.PageTitle = "Returns List";
             LoadReturnListForm();
+        }
+
+        public void NavigateToRentalList() 
+        {
+            navBar1.PageTitle = "Rental List";
+            LoadRentalListForm();
         }
     }
 }

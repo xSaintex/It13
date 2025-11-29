@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------
-// DeliveryVehicleList.designer.cs – 100% IDENTICAL TO DeliveryList (Checkboxes + Status Badges)
+// DeliveryVehicleList.designer.cs 
 // ---------------------------------------------------------------------
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -13,7 +13,7 @@ namespace IT13
         {
             BackColor = Color.FromArgb(12, 57, 101),
             ForeColor = Color.White,
-            Font = new Font("Poppins", 12F, FontStyle.Bold),
+            Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
             Alignment = DataGridViewContentAlignment.MiddleCenter
         };
 
@@ -181,6 +181,7 @@ namespace IT13
             txtSearch.PlaceholderText = "Search vehicle name, plate number...";
             txtSearch.Font = new Font("Poppins", 10.5F);
             txtSearch.BorderRadius = 12;
+            txtSearch.ForeColor = Color.Black;
             txtSearch.PlaceholderForeColor = Color.FromArgb(80, 80, 80);
 
             // ===================== FORM =====================

@@ -66,10 +66,10 @@ namespace IT13
             btnAddAttempt.Click += btnAddAttempt_Click;
             btnBack.Click += btnBack_Click;
 
-            dgvAttempts.Rows.Clear(); // Ensures empty on load
+            dgvAttempts.Rows.Clear(); 
 
             ShowAttempts();
-            RefreshAttemptsTable(); // Show table with style
+            RefreshAttemptsTable(); 
         }
 
         private void RefreshAttemptsTable()
@@ -98,7 +98,6 @@ namespace IT13
             btnAttempts.ForeColor = Color.Black;
         }
 
-        // ADD ATTEMPT BUTTON — NOW OPENS YOUR MODAL!
         private void btnAddAttempt_Click(object sender, EventArgs e)
         {
             using (var modal = new AddAttemptModal())
@@ -107,7 +106,7 @@ namespace IT13
                 {
                     string formattedDate = modal.AttemptDate.ToString("MMM dd, yyyy");
                     dgvAttempts.Rows.Add(formattedDate, modal.Status, modal.Remarks);
-                    dgvAttempts.ClearSelection(); // Keeps it unclickable
+                    dgvAttempts.ClearSelection(); 
                 }
             }
         }

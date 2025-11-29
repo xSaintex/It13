@@ -55,7 +55,7 @@ namespace IT13
 
             // ID
             lblId.AutoSize = true;
-            lblId.Font = new Font("Poppins", 11F);
+            lblId.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblId.Location = new Point(77, 120);
             lblId.Text = "Category ID";
 
@@ -64,12 +64,12 @@ namespace IT13
             txtId.BorderRadius = 12;
             txtId.FillColor = Color.FromArgb(245, 245, 245);
             txtId.ForeColor = Color.Black;
-            txtId.Font = new Font("Poppins", 11F);
+            txtId.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtId.ReadOnly = true;
 
             // STATUS
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Poppins", 11F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblStatus.Location = new Point(750, 120);
             lblStatus.Text = "Category Status";
 
@@ -78,12 +78,12 @@ namespace IT13
             txtStatus.BorderRadius = 12;
             txtStatus.FillColor = Color.FromArgb(245, 245, 245);
             txtStatus.ForeColor = Color.Black;
-            txtStatus.Font = new Font("Poppins", 11F);
+            txtStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtStatus.ReadOnly = true;
 
             // NAME
             lblName.AutoSize = true;
-            lblName.Font = new Font("Poppins", 11F);
+            lblName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblName.Location = new Point(77, 220);
             lblName.Text = "Category Name";
 
@@ -92,12 +92,12 @@ namespace IT13
             txtName.BorderRadius = 12;
             txtName.FillColor = Color.FromArgb(245, 245, 245);
             txtName.ForeColor = Color.Black;
-            txtName.Font = new Font("Poppins", 11F);
+            txtName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtName.ReadOnly = true;
 
             // DATE
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Poppins", 11F);
+            lblDate.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblDate.Location = new Point(750, 220);
             lblDate.Text = "Date";
 
@@ -106,7 +106,7 @@ namespace IT13
             txtDate.BorderRadius = 12;
             txtDate.FillColor = Color.FromArgb(245, 245, 245);
             txtDate.ForeColor = Color.Black;
-            txtDate.Font = new Font("Poppins", 11F);
+            txtDate.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtDate.ReadOnly = true;
 
             // BACK BUTTON — Red + Smaller (consistent with Cancel)

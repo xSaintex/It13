@@ -36,7 +36,7 @@ namespace IT13
                 tb.ReadOnly = true;
                 tb.BorderColor = Color.FromArgb(200, 200, 200);
                 tb.BackColor = Color.FromArgb(248, 248, 248);
-                tb.Font = new Font("Poppins", 11F);
+                tb.Font = new Font("Bahnschrift SemiCondensed", 11F);
                 tb.Cursor = Cursors.Default;
             }
             guna2TextBox4.Multiline = true;
@@ -48,12 +48,12 @@ namespace IT13
                 cb.Enabled = false;
                 cb.BackColor = Color.FromArgb(248, 248, 248);
                 cb.BorderColor = Color.FromArgb(200, 200, 200);
-                cb.Font = new Font("Poppins", 11F);
+                cb.Font = new Font("Bahnschrift SemiCondensed", 11F);
             }
 
             foreach (Control c in mainpanel.Controls)
                 if (c is Label lbl && lbl != label2)
-                    lbl.Font = new Font("Poppins", 11F);
+                    lbl.Font = new Font("Bahnschrift SemiCondensed", 11F);
 
             btnaddprod.Visible = false;
             btncancel.Text = "Close";

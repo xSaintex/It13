@@ -154,7 +154,7 @@ namespace IT13
             CreateSubmenuIfMissing(btnRental, new[]
             {
                 "📝 Rental List",
-                "➕ New Rental"
+                "📅 Schedules"
             });
 
             CreateSubmenuIfMissing(btnUsers, new[]
