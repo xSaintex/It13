@@ -164,7 +164,7 @@ namespace IT13
             this.bottomPanel.BackColor = Color.White;
             this.bottomPanel.BorderColor = Color.FromArgb(231, 229, 255);
 
-            this.btnClose.Text = "Close"; this.btnClose.Location = new Point(1330, 20); this.btnClose.Size = new Size(180, 40); this.btnClose.BorderRadius = 8; 
+            this.btnClose.Text = "Close"; this.btnClose.Location = new Point(1330, 20); this.btnClose.Size = new Size(150, 40); this.btnClose.BorderRadius = 8; 
 
             this.contentPanel.Controls.AddRange(new Control[] {
                 label1, lblCompany, txtCompany, lblOrderDate, txtOrderDate, lblPayment, txtPayment, lblEstDate, txtEstDate,

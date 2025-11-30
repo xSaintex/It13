@@ -9,7 +9,7 @@ namespace IT13
         private inven inventoryForm;
         private ProductList productListForm;
         private ProductCategory productCategoryForm;
-        private CustOrder custOrderForm;
+        private CustomerOrderList customerOrderListForm;
         private StockAdjustment stockAdjustmentForm;
         private OrderList orderListForm;
         private SupplierOrderList supplierOrderListForm;
@@ -185,14 +185,14 @@ namespace IT13
         private void LoadCustomerOrderForm()
         {
             pnlContent.Controls.Clear();
-            custOrderForm = new CustOrder
+            customerOrderListForm = new CustomerOrderList
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
                 Dock = DockStyle.Fill
             };
-            pnlContent.Controls.Add(custOrderForm);
-            custOrderForm.Show();
+            pnlContent.Controls.Add(customerOrderListForm);
+            customerOrderListForm.Show();
         }
 
         private void LoadStockAdjustmentForm()
