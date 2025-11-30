@@ -96,7 +96,7 @@ namespace IT13
             // ===================== HEADER =====================
             lblHeader = new Label { Text = "View Rental", Font = new Font("Tahoma", 18F, FontStyle.Bold), Location = new Point(77, 20), AutoSize = true };
             lblRequired = new Label { Text = "Read-only view", ForeColor = Color.Gray, Font = new Font("Tahoma", 9F), Location = new Point(80, 56), AutoSize = true };
-            lnkBack = new LinkLabel { Text = "Back to Rental List", LinkColor = Color.FromArgb(0, 123, 255), Font = new Font("Poppins", 10F), Location = new Point(1350, 68), AutoSize = true };
+            lnkBack = new LinkLabel { Text = "← Back to Rental List", LinkColor = Color.FromArgb(0, 123, 255), Font = new Font("Poppins", 10F), Location = new Point(1350, 68), AutoSize = true };
 
             // ===================== TAB BUTTONS =====================
             int tabY = 100;
