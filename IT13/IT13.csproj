@@ -13,7 +13,6 @@
     <Folder Include="REPORTS\Inventory Report\" />
     <Folder Include="REPORTS\Sales Report\" />
     <Folder Include="USERS\User Admins\" />
-    <Folder Include="USERS\User List\" />
   </ItemGroup>
 
   <ItemGroup>

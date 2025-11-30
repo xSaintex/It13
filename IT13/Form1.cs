@@ -23,6 +23,7 @@ namespace IT13
         private RentalList rentalListForm;
         private Schedule scheduleForm;
         private Employees employeesForm;
+        private UserList userListForm;
 
         public Form1()
         {
@@ -146,6 +147,10 @@ namespace IT13
                     case "Employees":
                         navBar1.PageTitle = "Employees";
                         LoadEmployeesForm();
+                        break;
+                    case "User List": 
+                        navBar1.PageTitle = "User List";
+                        LoadUserListForm();
                         break;
                 }
             };
@@ -374,6 +379,19 @@ namespace IT13
             employeesForm.Show();
         }
 
+        private void LoadUserListForm()
+        {
+            pnlContent.Controls.Clear();
+            userListForm = new UserList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(userListForm);
+            userListForm.Show();
+        }
+
         #endregion
 
         // === NAVIGATION HELPERS ===
@@ -429,6 +447,12 @@ namespace IT13
         {
             navBar1.PageTitle = "Schedules";
             LoadScheduleForm();
+        }
+
+        public void NavigateToUserList()
+        {
+            navBar1.PageTitle = "User List";
+            LoadUserListForm();
         }
     }
 }

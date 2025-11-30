@@ -57,7 +57,7 @@ namespace IT13
             // === EMPLOYEE ID ===
             lblId.AutoSize = true;
             lblId.Font = new Font("Bahnschrift SemiCondensed", 10F);
-            lblId.ForeColor = Color.FromArgb(70, 70, 70);
+            lblId.ForeColor = Color.Black;
             lblId.Location = new Point(77, 130);
             lblId.Text = "Employee ID";
 
@@ -73,7 +73,7 @@ namespace IT13
             // === FIRST NAME ===
             lblFirstName.AutoSize = true;
             lblFirstName.Font = new Font("Bahnschrift SemiCondensed", 10F);
-            lblFirstName.ForeColor = Color.FromArgb(70, 70, 70);
+            lblFirstName.ForeColor = Color.Black;
             lblFirstName.Location = new Point(77, 230);
             lblFirstName.Text = "First Name";
 
@@ -89,7 +89,7 @@ namespace IT13
             // === LAST NAME ===
             lblLastName.AutoSize = true;
             lblLastName.Font = new Font("Bahnschrift SemiCondensed", 10F);
-            lblLastName.ForeColor = Color.FromArgb(70, 70, 70);
+            lblLastName.ForeColor = Color.Black;
             lblLastName.Location = new Point(750, 230);
             lblLastName.Text = "Last Name";
 

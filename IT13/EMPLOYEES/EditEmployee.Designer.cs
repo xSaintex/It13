@@ -63,7 +63,7 @@ namespace IT13
             // === FIRST NAME ===
             lblFirstName.AutoSize = true;
             lblFirstName.Font = new Font("Bahnschrift SemiCondensed", 10F);
-            lblFirstName.ForeColor = Color.FromArgb(70, 70, 70);
+            lblFirstName.ForeColor = Color.Black;
             lblFirstName.Location = new Point(77, 140);
             lblFirstName.Text = "First Name *";
 
@@ -81,7 +81,7 @@ namespace IT13
             // === LAST NAME ===
             lblLastName.AutoSize = true;
             lblLastName.Font = new Font("Bahnschrift SemiCondensed", 10F);
-            lblLastName.ForeColor = Color.FromArgb(70, 70, 70);
+            lblLastName.ForeColor = Color.Black;
             lblLastName.Location = new Point(750, 140);
             lblLastName.Text = "Last Name *";
 
