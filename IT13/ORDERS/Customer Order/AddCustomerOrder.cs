@@ -151,11 +151,30 @@ namespace IT13
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
-            parent.navBar1.PageTitle = "Customer Orders";
-            var list = new CustomerOrderList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            parent.pnlContent.Controls.Clear();
-            parent.pnlContent.Controls.Add(list);
-            list.Show();
+
+            // Return to OrderList if opened from there
+            if (this.Tag is OrderList)
+            {
+                parent.navBar1.PageTitle = "Orders";
+                var list = new OrderList
+                {
+                    TopLevel = false,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Dock = DockStyle.Fill
+                };
+                parent.pnlContent.Controls.Clear();
+                parent.pnlContent.Controls.Add(list);
+                list.Show();
+            }
+            else
+            {
+                // Fallback (if opened from elsewhere)
+                parent.navBar1.PageTitle = "Customer Orders";
+                var list = new CustomerOrderList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                parent.pnlContent.Controls.Clear();
+                parent.pnlContent.Controls.Add(list);
+                list.Show();
+            }
         }
     }
 }

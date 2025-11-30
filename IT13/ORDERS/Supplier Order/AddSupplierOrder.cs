@@ -141,11 +141,28 @@ namespace IT13
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
-            parent.navBar1.PageTitle = "Supplier Orders";
-            var list = new SupplierOrderList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            parent.pnlContent.Controls.Clear();
-            parent.pnlContent.Controls.Add(list);
-            list.Show();
+
+            if (this.Tag is OrderList)
+            {
+                parent.navBar1.PageTitle = "Orders";
+                var list = new OrderList
+                {
+                    TopLevel = false,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Dock = DockStyle.Fill
+                };
+                parent.pnlContent.Controls.Clear();
+                parent.pnlContent.Controls.Add(list);
+                list.Show();
+            }
+            else
+            {
+                parent.navBar1.PageTitle = "Supplier Orders";
+                var list = new SupplierOrderList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                parent.pnlContent.Controls.Clear();
+                parent.pnlContent.Controls.Add(list);
+                list.Show();
+            }
         }
     }
 }

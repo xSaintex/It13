@@ -27,7 +27,7 @@ namespace IT13
             dgvReturns.EnableHeadersVisualStyles = false;
             dgvReturns.DefaultCellStyle.SelectionBackColor = dgvReturns.DefaultCellStyle.BackColor;
             dgvReturns.DefaultCellStyle.SelectionForeColor = dgvReturns.DefaultCellStyle.ForeColor;
-            dgvReturns.DefaultCellStyle.Font = new Font("Poppins", 11F);
+            dgvReturns.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 11F);
             dgvReturns.RowTemplate.Height = 45;
             dgvReturns.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
@@ -164,7 +164,7 @@ namespace IT13
                     e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
 
                 TextRenderer.DrawText(e.Graphics, "Return ID",
-                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 e.Handled = true; return;
@@ -187,7 +187,7 @@ namespace IT13
                 }
                 string id = dgvReturns.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
-                    TextRenderer.DrawText(e.Graphics, id, new Font("Poppins", 11F),
+                    TextRenderer.DrawText(e.Graphics, id, new Font("Bahnschrift SemiCondensed", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 e.Handled = true; return;
@@ -209,7 +209,7 @@ namespace IT13
                 using (var path = GetRoundedRect(rect, 10f))
                 using (var br = new SolidBrush(bg))
                     e.Graphics.FillPath(br, path);
-                using (var f = new Font("Poppins", 10F, FontStyle.Bold))
+                using (var f = new Font("Bahnschrift SemiCondensed", 10F, FontStyle.Bold))
                 using (var br = new SolidBrush(Color.White))
                 {
                     var sz = e.Graphics.MeasureString(status, f);
