@@ -21,13 +21,21 @@ namespace IT13
 
             SetupFilterComboBox();
             SetupExportComboBox();
+            ConfigureDataGridView();
+            LoadSampleData();
+            UpdateHeaderCheckState();
+            dgvOrders.ClearSelection();
+        }
 
+        private void ConfigureDataGridView()
+        {
             dgvOrders.ReadOnly = true;
             dgvOrders.AllowUserToAddRows = false;
             dgvOrders.AllowUserToDeleteRows = false;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dgvOrders.MultiSelect = false;
             dgvOrders.EnableHeadersVisualStyles = false;
+
             dgvOrders.DefaultCellStyle.SelectionBackColor = dgvOrders.DefaultCellStyle.BackColor;
             dgvOrders.DefaultCellStyle.SelectionForeColor = dgvOrders.DefaultCellStyle.ForeColor;
             dgvOrders.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 11F);
@@ -38,37 +46,52 @@ namespace IT13
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             dgvOrders.Columns["colCheck"].MinimumWidth = 180;
-            dgvOrders.Columns["colCheck"].Width = 180;
             dgvOrders.Columns["colCheck"].FillWeight = 20;
-
-            dgvOrders.Columns["colOrderType"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvOrders.Columns["colOrderType"].FillWeight = 12;
-            dgvOrders.Columns["colCompanyName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvOrders.Columns["colCompanyName"].FillWeight = 25;
-            dgvOrders.Columns["colQty"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvOrders.Columns["colQty"].FillWeight = 8;
-            dgvOrders.Columns["colTotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvOrders.Columns["colTotal"].FillWeight = 12;
-            dgvOrders.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvOrders.Columns["colStatus"].FillWeight = 12;
-            dgvOrders.Columns["colEstDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvOrders.Columns["colEstDate"].FillWeight = 12;
             dgvOrders.Columns["colActions"].FillWeight = 10;
 
-            LoadSampleData();
-            UpdateHeaderCheckState();
-            dgvOrders.ClearSelection();
+            dgvOrders.Columns["colOrderType"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvOrders.Columns["colCompanyName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvOrders.Columns["colQty"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvOrders.Columns["colTotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvOrders.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvOrders.Columns["colEstDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
-        private Image CreatePlaceholder(Color c)
+        private Image CreatePlaceholder(Color color)
         {
-            var b = new Bitmap(24, 24);
-            using (var g = Graphics.FromImage(b)) g.Clear(Color.Transparent);
-            return b;
+            var bmp = new Bitmap(24, 24);
+            using (var g = Graphics.FromImage(bmp))
+                g.Clear(Color.Transparent);
+            return bmp;
         }
 
-        private void SetupFilterComboBox() { /* your code - unchanged */ }
-        private void SetupExportComboBox() { /* your code - unchanged */ }
+        // EXACT SAME AS CUSTOMERORDERLIST
+        private void SetupFilterComboBox()
+        {
+            Filter.Items.AddRange(new object[] { "Filter", "All Orders", "Customer Orders", "Supplier Orders", "Delivered", "Pending", "Processing", "Cancelled" });
+            Filter.SelectedIndex = 0;
+            Filter.ForeColor = Color.Gray;
+
+            Filter.SelectedIndexChanged += (s, e) =>
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+        }
+
+        // EXACT SAME AS CUSTOMERORDERLIST
+        private void SetupExportComboBox()
+        {
+            Export.Items.AddRange(new object[] { "Export", "Excel", "PDF", "CSV", "Print" });
+            Export.SelectedIndex = 0;
+            Export.ForeColor = Color.Gray;
+
+            Export.SelectedIndexChanged += (s, e) =>
+                Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+        }
 
         private void LoadSampleData()
         {
@@ -100,8 +123,8 @@ namespace IT13
                 }
             }
             _headerCheckState = visibleCount == 0 ? false :
-                checkedCount == 0 ? false :
-                checkedCount == visibleCount ? true : (bool?)null;
+                               checkedCount == 0 ? false :
+                               checkedCount == visibleCount ? true : (bool?)null;
             dgvOrders.InvalidateCell(0, -1);
         }
 
@@ -119,7 +142,6 @@ namespace IT13
 
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // Header checkbox + text
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -128,18 +150,18 @@ namespace IT13
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
                 if (_headerCheckState == true)
                     using (Pen p = new Pen(Color.Black, 2.5f))
-                        e.Graphics.DrawLines(p, new Point[] { new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5) });
+                        e.Graphics.DrawLines(p, new[] { new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5) });
                 else if (_headerCheckState == null)
                     e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
 
-                TextRenderer.DrawText(e.Graphics, "Order ID", new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
+                TextRenderer.DrawText(e.Graphics, "Order ID",
+                    new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
-                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                    Color.White, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
                 e.Handled = true;
                 return;
             }
 
-            // Row checkbox + order id
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -149,18 +171,18 @@ namespace IT13
                 e.Graphics.DrawRectangle(Pens.Black, r.X, r.Y, 15, 15);
                 if (chk)
                     using (Pen p = new Pen(Color.Black, 2.5f))
-                        e.Graphics.DrawLines(p, new Point[] { new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5) });
+                        e.Graphics.DrawLines(p, new[] { new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5) });
 
                 string id = dgvOrders.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
-                    TextRenderer.DrawText(e.Graphics, id, new Font("Bahnschrift SemiCondensed", 11F),
+                    TextRenderer.DrawText(e.Graphics, id,
+                        new Font("Bahnschrift SemiCondensed", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
-                        Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                        Color.Black, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
                 e.Handled = true;
                 return;
             }
 
-            // Status badge
             if (e.ColumnIndex == dgvOrders.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -177,11 +199,12 @@ namespace IT13
                 using (var path = GetRoundedRect(rect, 10f))
                 using (var br = new SolidBrush(bg))
                     e.Graphics.FillPath(br, path);
+
                 using (var f = new Font("Bahnschrift SemiCondensed", 10F, FontStyle.Bold))
-                using (var br = new SolidBrush(Color.White))
+                using (var tb = new SolidBrush(Color.White))
                 {
                     var sz = e.Graphics.MeasureString(status, f);
-                    e.Graphics.DrawString(status, f, br,
+                    e.Graphics.DrawString(status, f, tb,
                         e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
                         e.CellBounds.Y + (e.CellBounds.Height - sz.Height) / 2);
                 }
@@ -189,27 +212,21 @@ namespace IT13
                 return;
             }
 
-            // View + Delete icons
             if (e.ColumnIndex == dgvOrders.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
-                int totalWidth = 58; // 24 + 10 + 24
-                int startX = e.CellBounds.X + (e.CellBounds.Width - totalWidth) / 2;
+                int startX = e.CellBounds.X + (e.CellBounds.Width - 58) / 2;
                 int y = e.CellBounds.Y + (e.CellBounds.Height - 24) / 2;
-
                 e.Graphics.DrawImage(_viewIcon, startX, y, 24, 24);
                 e.Graphics.DrawImage(_deleteIcon, startX + 34, y, 24, 24);
-
-                e.Handled = true; // ← THIS IS WHAT YOUR RETURNLIST USES AND IT WORKS
+                e.Handled = true;
             }
         }
 
-        // EXACT SAME LOGIC AS YOUR WORKING ReturnList
         private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             dgvOrders.CurrentCell = null;
 
-            // Header checkbox
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 bool newState = !(_headerCheckState == true);
@@ -220,7 +237,6 @@ namespace IT13
                 return;
             }
 
-            // Row checkbox
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 var row = dgvOrders.Rows[e.RowIndex];
@@ -229,7 +245,6 @@ namespace IT13
                 return;
             }
 
-            // View or Delete icon
             if (e.RowIndex >= 0 && e.ColumnIndex == dgvOrders.Columns["colActions"].Index)
             {
                 var cellRect = dgvOrders.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
@@ -238,21 +253,30 @@ namespace IT13
 
                 string orderId = dgvOrders.Rows[e.RowIndex].Cells["colCheck"].Tag?.ToString() ?? "";
                 string orderType = dgvOrders.Rows[e.RowIndex].Cells["colOrderType"].Tag?.ToString() ?? "";
+
                 var parent = this.ParentForm as Form1;
                 if (parent == null) return;
 
-                if (relativeX >= 17 && relativeX <= 41) // View icon area
+                if (relativeX >= 17 && relativeX <= 41) // View
                 {
-                    parent.navBar1.PageTitle = $"View Order: {orderId}";
-                    Form f = orderType == "Customer" ? new ViewCustomerOrder(orderId) : new ViewSupplierOrder(orderId);
-                    f.Tag = this; f.TopLevel = false; f.FormBorderStyle = FormBorderStyle.None; f.Dock = DockStyle.Fill;
+                    Form viewForm = orderType == "Customer"
+                        ? new ViewCustomerOrder(orderId)
+                        : new ViewSupplierOrder(orderId);
+
+                    parent.navBar1.PageTitle = orderType == "Customer"
+                        ? $"View Customer Order: {orderId}"
+                        : $"View Supplier Order: {orderId}";
+
+                    viewForm.TopLevel = false;
+                    viewForm.FormBorderStyle = FormBorderStyle.None;
+                    viewForm.Dock = DockStyle.Fill;
                     parent.pnlContent.Controls.Clear();
-                    parent.pnlContent.Controls.Add(f);
-                    f.Show();
+                    parent.pnlContent.Controls.Add(viewForm);
+                    viewForm.Show();
                 }
-                else if (relativeX >= 51 && relativeX <= 75) // Delete icon area
+                else if (relativeX >= 51 && relativeX <= 75) // Delete
                 {
-                    if (MessageBox.Show($"Delete {orderId}?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show($"Delete order {orderId}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         dgvOrders.Rows.RemoveAt(e.RowIndex);
                         UpdateHeaderCheckState();
@@ -261,9 +285,28 @@ namespace IT13
             }
         }
 
-        // Your other buttons unchanged methods (btnSearch_Click, btnAddCustomerOrder_Click, etc.)
-        private void btnSearch_Click(object sender, EventArgs e) { /* your code */ }
-        private void btnAddCustomerOrder_Click(object sender, EventArgs e) { /* your code */ }
-        private void btnAddSupplierOrder_Click(object sender, EventArgs e) { /* your code */ }
+        private void btnAddCustomerOrder_Click(object sender, EventArgs e)
+        {
+            var parent = this.ParentForm as Form1;
+            if (parent == null) return;
+            parent.navBar1.PageTitle = "Add Customer Order";
+            var f = new AddCustomerOrder { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            parent.pnlContent.Controls.Clear();
+            parent.pnlContent.Controls.Add(f);
+            f.Show();
+        }
+
+        private void btnAddSupplierOrder_Click(object sender, EventArgs e)
+        {
+            var parent = this.ParentForm as Form1;
+            if (parent == null) return;
+            parent.navBar1.PageTitle = "Add Supplier Order";
+            var f = new AddSupplierOrder { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            parent.pnlContent.Controls.Clear();
+            parent.pnlContent.Controls.Add(f);
+            f.Show();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e) { }
     }
 }

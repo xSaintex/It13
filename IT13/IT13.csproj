@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Db\" />
-    <Folder Include="EMPLOYEES\" />
-    <Folder Include="RENTAL\Scheduled Rentals\" />
     <Folder Include="REPORTS\Inventory Report\" />
     <Folder Include="REPORTS\Sales Report\" />
     <Folder Include="USERS\User Admins\" />

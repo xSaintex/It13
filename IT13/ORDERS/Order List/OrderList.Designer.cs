@@ -129,6 +129,7 @@ namespace IT13
 
             // Top controls
             Export.Location = new Point(1400, 45); Export.Size = new Size(128, 50);
+            Export.Text = "Export";
             Export.Font = new Font("Poppins", 10F); Export.BorderRadius = 8; Export.FillColor = Color.White;
 
             btnAddSupplierOrder.Location = new Point(1150, 45); btnAddSupplierOrder.Size = new Size(240, 38);
@@ -148,6 +149,7 @@ namespace IT13
             btnAddCustomerOrder.Click += btnAddCustomerOrder_Click;
 
             Filter.Location = new Point(760, 45); Filter.Size = new Size(128, 50);
+            Filter.Text = "Filters";
             Filter.Font = new Font("Poppins", 10F); Filter.BorderRadius = 8; Filter.FillColor = Color.White;
 
             btnSearch.Location = new Point(537, 41); btnSearch.Size = new Size(103, 48);

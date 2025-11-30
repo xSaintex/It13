@@ -20,7 +20,9 @@ namespace IT13
         private CustomerReturns customerReturnsForm;
         private SupplierReturns supplierReturnsForm;
         private ReturnList returnListForm;       
-        private RentalList rentalListForm;       
+        private RentalList rentalListForm;
+        private Schedule scheduleForm;
+        private Employees employeesForm;
 
         public Form1()
         {
@@ -136,6 +138,14 @@ namespace IT13
                         break;
                     default:
                         navBar1.PageTitle = section;
+                        break;
+                    case "Schedules":
+                        navBar1.PageTitle = "Schedules";
+                        LoadScheduleForm();
+                        break;
+                    case "Employees":
+                        navBar1.PageTitle = "Employees";
+                        LoadEmployeesForm();
                         break;
                 }
             };
@@ -338,6 +348,32 @@ namespace IT13
             rentalListForm.Show();
         }
 
+        private void LoadScheduleForm()
+        {
+            pnlContent.Controls.Clear();
+            scheduleForm = new Schedule
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(scheduleForm);
+            scheduleForm.Show();
+        }
+
+        private void LoadEmployeesForm()
+        {
+            pnlContent.Controls.Clear();
+            employeesForm = new Employees
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(employeesForm);
+            employeesForm.Show();
+        }
+
         #endregion
 
         // === NAVIGATION HELPERS ===
@@ -387,6 +423,12 @@ namespace IT13
         {
             navBar1.PageTitle = "Rental List";
             LoadRentalListForm();
+        }
+
+        public void NavigateToSchedule()
+        {
+            navBar1.PageTitle = "Schedules";
+            LoadScheduleForm();
         }
     }
 }
