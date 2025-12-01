@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using Microsoft.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -8,6 +10,7 @@ namespace IT13
 {
     public partial class SelectProductsModal : Form
     {
+        private string connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public List<ProductRow> SelectedProducts { get; private set; } = new List<ProductRow>();
         private bool? _headerCheckState = false;
 
@@ -43,29 +46,69 @@ namespace IT13
             dgvProducts.CellValueChanged += (s, e) => { if (e.ColumnIndex == 0) UpdateHeaderCheckState(); };
             txtSearch.TextChanged += txtSearch_TextChanged;
 
-            LoadSampleProducts();
+            LoadProductsFromDatabase();
             UpdateHeaderCheckState();
         }
 
-        private void LoadSampleProducts()
+        private void LoadProductsFromDatabase()
         {
-            AddProduct("HikVision Camera", 10, 2000.00m);
-            AddProduct("Logitech Mouse", 5, 200.00m);
-            AddProduct("Dell Monitor", 3, 8000.00m);
-            AddProduct("Samsung SSD 1TB", 8, 6500.00m);
-            AddProduct("USB-C Hub 7-in-1", 15, 1200.00m);
-        }
-
-        private void AddProduct(string name, int available, decimal price)
-        {
-            int idx = dgvProducts.Rows.Add(false, name, 1, $"₱{price:F2}", available);
-            dgvProducts.Rows[idx].Tag = new ProductRow
+            try
             {
-                Name = name,
-                Price = price,
-                Available = available,
-                Qty = 1
-            };
+                dgvProducts.Rows.Clear();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT 
+                            p.ProdID,
+                            p.ProductName,
+                            p.unit_cost,
+                            ISNULL(SUM(s.qty), 0) as AvailableQty
+                        FROM product_list p
+                        LEFT JOIN stock_items s ON p.ProdID = s.ProductID
+                        GROUP BY p.ProdID, p.ProductName, p.unit_cost
+                        ORDER BY p.ProductName";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string productName = reader.GetString(1);
+                            decimal sellingPrice = reader.IsDBNull(2) ? 0 : reader.GetDecimal(2);
+                            int availableQty = reader.GetInt32(3);
+
+                            int idx = dgvProducts.Rows.Add(
+                                false,
+                                productName,
+                                1,
+                                $"₱{sellingPrice:F2}",
+                                availableQty
+                            );
+
+                            dgvProducts.Rows[idx].Tag = new ProductRow
+                            {
+                                Name = productName,
+                                Price = sellingPrice,
+                                Available = availableQty,
+                                Qty = 1
+                            };
+                        }
+                    }
+                }
+
+                if (dgvProducts.Rows.Count == 0)
+                {
+                    MessageBox.Show("No active products found in the database.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading products: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnAddSelected_Click(object sender, EventArgs e)
@@ -76,14 +119,25 @@ namespace IT13
                 if (row.Cells[0].Value is bool checkedVal && checkedVal)
                 {
                     var product = (ProductRow)row.Tag;
-                    product.Qty = Convert.ToInt32(row.Cells[2].Value);
+                    int requestedQty = Convert.ToInt32(row.Cells[2].Value);
+
+                    // Validate quantity - only check if greater than 0
+                    if (requestedQty <= 0)
+                    {
+                        MessageBox.Show($"Quantity for '{product.Name}' must be greater than 0.",
+                            "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    product.Qty = requestedQty;
                     SelectedProducts.Add(product);
                 }
             }
 
             if (SelectedProducts.Count == 0)
             {
-                MessageBox.Show("Select at least one product.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Select at least one product.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

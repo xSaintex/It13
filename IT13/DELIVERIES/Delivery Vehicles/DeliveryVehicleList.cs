@@ -1,7 +1,6 @@
-﻿// ---------------------------------------------------------------------
-// DeliveryVehicleList.cs – 100% IDENTICAL TO DeliveryList (checkboxes + style)
-// ---------------------------------------------------------------------
-using System;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -11,6 +10,7 @@ namespace IT13
 {
     public partial class DeliveryVehicleList : Form
     {
+        private readonly string _connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
         private readonly Image _editIcon;
         private bool? _headerCheckState = false;
 
@@ -22,7 +22,7 @@ namespace IT13
 
             SetupFilterComboBox();
 
-            // Grid Settings - Match DeliveryList exactly
+            // Grid Settings
             dgvVehicles.ReadOnly = true;
             dgvVehicles.AllowUserToAddRows = false;
             dgvVehicles.AllowUserToDeleteRows = false;
@@ -56,7 +56,10 @@ namespace IT13
             dgvVehicles.Columns["colUpdatedAt"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvVehicles.Columns["colActions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            LoadSampleData();
+            // Add TextChanged event for real-time search
+            txtSearch.TextChanged += (s, e) => ApplySearchAndFilter();
+
+            LoadVehiclesFromDatabase();
             UpdateHeaderCheckState();
             dgvVehicles.ClearSelection();
             dgvVehicles.CurrentCell = null;
@@ -73,23 +76,61 @@ namespace IT13
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
             Filter.SelectedIndexChanged += (s, e) =>
+            {
                 Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                ApplySearchAndFilter();
+            };
         }
 
-        private void LoadSampleData()
+        private void LoadVehiclesFromDatabase()
         {
-            AddRow("VH-001", "Toyota Hiace", "NCR 1234", "Active", "2024-01-15 10:30", "2025-03-22 14:20");
-            AddRow("VH-002", "Isuzu Elf", "NCR 5678", "Active", "2024-02-20 09:15", "2025-02-28 11:45");
-            AddRow("VH-003", "Mitsubishi L300", "NCR 9012", "Inactive", "2024-03-10 13:00", "2024-12-01 08:30");
-            AddRow("VH-004", "Fuso Canter", "NCR 3456", "Active", "2024-05-18 11:00", "2025-01-10 09:15");
-            AddRow("VH-005", "Hyundai Porter", "NCR 7890", "Maintenance", "2024-07-22 14:30", "2025-03-01 16:45");
+            dgvVehicles.Rows.Clear();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string query = @"SELECT id, VehicleName, LicensePlate, Status, 
+                                    created_at, updated_at 
+                                    FROM vehicles 
+                                    ORDER BY id DESC";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string id = "VH-" + reader["id"].ToString().PadLeft(3, '0');
+                            string vehicleName = reader["VehicleName"].ToString();
+                            string licensePlate = reader["LicensePlate"].ToString();
+                            string status = reader["Status"].ToString();
+                            string createdAt = Convert.ToDateTime(reader["created_at"]).ToString("yyyy-MM-dd HH:mm");
+                            string updatedAt = Convert.ToDateTime(reader["updated_at"]).ToString("yyyy-MM-dd HH:mm");
+
+                            AddRow(id, vehicleName, licensePlate, status, createdAt, updatedAt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading vehicles: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void AddRow(string id, string name, string plate, string status, string created, string updated)
+        private void AddRow(string displayId, string name, string plate, string status, string created, string updated)
         {
             int idx = dgvVehicles.Rows.Add(false, name, plate, status, created, updated, null);
-            dgvVehicles.Rows[idx].Cells[0].Tag = id;
+            // Store both display ID and numeric ID
+            dgvVehicles.Rows[idx].Cells[0].Tag = new { DisplayId = displayId, NumericId = displayId.Replace("VH-", "").TrimStart('0') };
             dgvVehicles.Rows[idx].Height = 45;
+        }
+
+        private void ApplyFilter()
+        {
+            ApplySearchAndFilter();
         }
 
         private void UpdateHeaderCheckState()
@@ -121,7 +162,6 @@ namespace IT13
             return path;
         }
 
-        // EXACT SAME CHECKBOX PAINTING AS DELIVERYLIST
         private void dgvVehicles_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             // Header checkbox + "ID"
@@ -172,9 +212,18 @@ namespace IT13
                         });
                 }
 
-                string id = dgvVehicles.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
-                if (!string.IsNullOrEmpty(id))
-                    TextRenderer.DrawText(e.Graphics, id,
+                // Get display ID from Tag
+                string displayId = "";
+                var tagData = dgvVehicles.Rows[e.RowIndex].Cells[0].Tag;
+                if (tagData != null)
+                {
+                    var props = tagData.GetType().GetProperty("DisplayId");
+                    if (props != null)
+                        displayId = props.GetValue(tagData)?.ToString() ?? "";
+                }
+
+                if (!string.IsNullOrEmpty(displayId))
+                    TextRenderer.DrawText(e.Graphics, displayId,
                         new Font("Poppins", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
@@ -213,7 +262,7 @@ namespace IT13
                 return;
             }
 
-            // Edit Icon Only
+            // Edit Icon
             if (e.ColumnIndex == dgvVehicles.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -224,7 +273,6 @@ namespace IT13
             }
         }
 
-        // EXACT SAME CLICK BEHAVIOR AS DELIVERYLIST
         private void dgvVehicles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             dgvVehicles.CurrentCell = null;
@@ -254,18 +302,58 @@ namespace IT13
             // Edit click
             if (e.RowIndex >= 0 && e.ColumnIndex == dgvVehicles.Columns["colActions"].Index)
             {
-                string id = dgvVehicles.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
-                if (!string.IsNullOrEmpty(id))
-                    OpenEditVehicle(id);
+                // Get display ID from Tag
+                string displayId = "";
+                var tagData = dgvVehicles.Rows[e.RowIndex].Cells[0].Tag;
+                if (tagData != null)
+                {
+                    var props = tagData.GetType().GetProperty("DisplayId");
+                    if (props != null)
+                        displayId = props.GetValue(tagData)?.ToString() ?? "";
+                }
+
+                if (!string.IsNullOrEmpty(displayId))
+                    OpenEditVehicle(displayId);
             }
         }
 
-        private void OpenEditVehicle(string id)
+        private void OpenEditVehicle(string displayId)
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
+
+            // Find the row with this display ID and get numeric ID
+            string numericId = "";
+            foreach (DataGridViewRow row in dgvVehicles.Rows)
+            {
+                if (row.IsNewRow) continue;
+                var tagData = row.Cells[0].Tag;
+                if (tagData != null)
+                {
+                    var displayProp = tagData.GetType().GetProperty("DisplayId");
+                    var numericProp = tagData.GetType().GetProperty("NumericId");
+
+                    if (displayProp != null && numericProp != null)
+                    {
+                        string rowDisplayId = displayProp.GetValue(tagData)?.ToString() ?? "";
+                        if (rowDisplayId == displayId)
+                        {
+                            numericId = numericProp.GetValue(tagData)?.ToString() ?? "";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(numericId))
+            {
+                MessageBox.Show("Unable to load vehicle details.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             parent.navBar1.PageTitle = "Edit Delivery Vehicle";
-            var form = new EditVehicleList(id)
+            var form = new EditVehicleList(numericId)
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
@@ -294,15 +382,50 @@ namespace IT13
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string s = txtSearch.Text.Trim().ToLower();
+            ApplySearchAndFilter();
+        }
+
+        private void ApplySearchAndFilter()
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            string filterStatus = Filter.SelectedIndex > 1 ? Filter.SelectedItem.ToString() : "";
+
             foreach (DataGridViewRow r in dgvVehicles.Rows)
             {
                 if (r.IsNewRow) continue;
-                string id = r.Cells[0].Tag?.ToString().ToLower() ?? "";
+
+                // Get display ID from Tag
+                string id = "";
+                var tagData = r.Cells[0].Tag;
+                if (tagData != null)
+                {
+                    var props = tagData.GetType().GetProperty("DisplayId");
+                    if (props != null)
+                        id = props.GetValue(tagData)?.ToString().ToLower() ?? "";
+                }
+
                 string name = r.Cells["colVehicleName"].Value?.ToString().ToLower() ?? "";
                 string plate = r.Cells["colPlateNumber"].Value?.ToString().ToLower() ?? "";
-                r.Visible = string.IsNullOrEmpty(s) || id.Contains(s) || name.Contains(s) || plate.Contains(s);
+                string status = r.Cells["colStatus"].Value?.ToString() ?? "";
+
+                // Check search criteria
+                bool matchesSearch = string.IsNullOrEmpty(searchText) ||
+                                    id.Contains(searchText) ||
+                                    name.Contains(searchText) ||
+                                    plate.Contains(searchText);
+
+                // Check filter criteria
+                bool matchesFilter = string.IsNullOrEmpty(filterStatus) ||
+                                    status.Equals(filterStatus, StringComparison.OrdinalIgnoreCase);
+
+                r.Visible = matchesSearch && matchesFilter;
             }
+            UpdateHeaderCheckState();
+        }
+
+        public void RefreshData()
+        {
+            LoadVehiclesFromDatabase();
             UpdateHeaderCheckState();
         }
     }

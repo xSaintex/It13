@@ -2,6 +2,10 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Data.SqlClient;
+using System.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IT13
 {
@@ -9,7 +13,7 @@ namespace IT13
     {
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
-        private int _nextPid = 6;
+        private string connectionString = @"Data Source=HONEYYYS\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
 
         public ProductList()
         {
@@ -22,7 +26,7 @@ namespace IT13
             SetupFilterComboBox();
             SetupExportComboBox();
             ConfigureDataGridView();
-            LoadSampleData();
+            LoadProductData();
             UpdateHeaderCheckState();
             datagridviewinventory.ClearSelection();
         }
@@ -84,9 +88,70 @@ namespace IT13
             btnaddstock.Click += Btnaddstock_Click;
         }
 
+        private void LoadProductData()
+        {
+            try
+            {
+                datagridviewinventory.Rows.Clear();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = @"
+                        SELECT 
+                            p.ProdID,
+                            p.product_number,
+                            p.ProductName,
+                            c.CategoryName,
+                            p.unit_cost,
+                            p.selling_price,
+                            s.CompanyName,
+                            p.Status
+                        FROM product_list p
+                        LEFT JOIN categories c ON p.category_id = c.id
+                        LEFT JOIN suppliers s ON p.supplier_id = s.id
+                        ORDER BY p.created_at DESC";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string pid = reader["product_number"] != DBNull.Value ? reader["product_number"].ToString() : $"PRD-{reader["ProdID"]}";
+                            string name = reader["ProductName"].ToString();
+                            string category = reader["CategoryName"] != DBNull.Value ? reader["CategoryName"].ToString() : "Uncategorized";
+                            decimal unitCost = reader["unit_cost"] != DBNull.Value ? Convert.ToDecimal(reader["unit_cost"]) : 0;
+                            decimal sellingPrice = reader["selling_price"] != DBNull.Value ? Convert.ToDecimal(reader["selling_price"]) : 0;
+                            string supplier = reader["CompanyName"] != DBNull.Value ? reader["CompanyName"].ToString() : "No Supplier";
+                            string status = reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "In Stock";
+
+                            int idx = datagridviewinventory.Rows.Add(
+                                false,
+                                name,
+                                category,
+                                $"₱{unitCost:N2}",
+                                $"₱{sellingPrice:N2}",
+                                supplier,
+                                status,
+                                null
+                            );
+                            datagridviewinventory.Rows[idx].Cells[0].Tag = pid;
+                            datagridviewinventory.Rows[idx].Height = 45;
+                        }
+                    }
+                }
+                UpdateRowCount();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading product data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Load sample data as fallback
+                LoadSampleData();
+            }
+        }
+
         private void LoadSampleData()
         {
-            datagridviewinventory.Rows.Clear();
             AddRow("PRD-001", "Wireless Mouse", "Electronics", "₱250.00", "₱350.00", "TechSupply Co.", "In Stock");
             AddRow("PRD-002", "USB-C Cable", "Accessories", "₱150.00", "₱250.00", "Cable World", "In Stock");
             AddRow("PRD-003", "Laptop Stand", "Furniture", "₱800.00", "₱1,200.00", "Office Plus", "Low Stock");
@@ -103,11 +168,112 @@ namespace IT13
 
         public void AddProduct(AddProd.ProductItem productItem)
         {
-            string newPid = $"PRD-{_nextPid:D3}";
-            _nextPid++;
-            AddRow(newPid, productItem.ProductName, productItem.Category, productItem.UnitCost,
-                   productItem.SellingPrice, productItem.PrimarySupplier, productItem.Status);
-            UpdateHeaderCheckState();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Get category ID
+                    long categoryId = GetOrCreateCategoryId(productItem.Category, connection);
+
+                    // Get supplier ID
+                    long supplierId = GetOrCreateSupplierId(productItem.PrimarySupplier, connection);
+
+                    // Generate product number
+                    string productNumber = GenerateProductNumber(connection);
+
+                    // Insert product
+                    string query = @"
+                        INSERT INTO product_list (
+                            ProductName, category_id, supplier_id, Status, product_number, 
+                            product_description, unit_cost, selling_price
+                        ) VALUES (
+                            @ProductName, @CategoryId, @SupplierId, @Status, @ProductNumber,
+                            @Description, @UnitCost, @SellingPrice
+                        )";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ProductName", productItem.ProductName);
+                        command.Parameters.AddWithValue("@CategoryId", categoryId);
+                        command.Parameters.AddWithValue("@SupplierId", supplierId);
+                        command.Parameters.AddWithValue("@Status", productItem.Status);
+                        command.Parameters.AddWithValue("@ProductNumber", productNumber);
+                        command.Parameters.AddWithValue("@Description", productItem.Description ?? "");
+                        command.Parameters.AddWithValue("@UnitCost", decimal.Parse(productItem.UnitCost.Replace("₱", "")));
+                        command.Parameters.AddWithValue("@SellingPrice", decimal.Parse(productItem.SellingPrice.Replace("₱", "")));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                // Reload data to show the new product
+                LoadProductData();
+                UpdateHeaderCheckState();
+
+                MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adding product: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private long GetOrCreateCategoryId(string categoryName, SqlConnection connection)
+        {
+            string query = "SELECT id FROM categories WHERE CategoryName = @CategoryName";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@CategoryName", categoryName);
+                object result = command.ExecuteScalar();
+                if (result != null) return Convert.ToInt64(result);
+            }
+
+            // Create new category
+            query = @"
+                INSERT INTO categories (CategoryName, Date, Status) 
+                VALUES (@CategoryName, GETDATE(), 'active');
+                SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@CategoryName", categoryName);
+                return Convert.ToInt64(command.ExecuteScalar());
+            }
+        }
+
+        private long GetOrCreateSupplierId(string supplierName, SqlConnection connection)
+        {
+            string query = "SELECT id FROM suppliers WHERE CompanyName = @CompanyName";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@CompanyName", supplierName);
+                object result = command.ExecuteScalar();
+                if (result != null) return Convert.ToInt64(result);
+            }
+
+            // Create new supplier
+            query = @"
+                INSERT INTO suppliers (CompanyName, Status) 
+                VALUES (@CompanyName, 'active');
+                SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@CompanyName", supplierName);
+                return Convert.ToInt64(command.ExecuteScalar());
+            }
+        }
+
+        private string GenerateProductNumber(SqlConnection connection)
+        {
+            string query = "SELECT COUNT(*) FROM product_list";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                int count = Convert.ToInt32(command.ExecuteScalar()) + 1;
+                return $"PRD-{count:D3}";
+            }
         }
 
         private void UpdateHeaderCheckState()

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
@@ -8,6 +10,7 @@ namespace IT13
 {
     public partial class StockAdjustment : Form
     {
+        private readonly string connectionString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
 
@@ -55,7 +58,7 @@ namespace IT13
             dgvAdjustment.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvAdjustment.Columns["colProductName"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-            LoadSampleData();
+            LoadDataFromDatabase();
             UpdateHeaderCheckState();
 
             dgvAdjustment.ClearSelection();
@@ -68,7 +71,11 @@ namespace IT13
             Filter.Items.AddRange(new object[] { "Filter", "All", "Pending", "Approved", "Rejected" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
-            Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+            Filter.SelectedIndexChanged += (s, e) =>
+            {
+                Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+                ApplyFilter();
+            };
         }
 
         private void SetupExportComboBox()
@@ -79,11 +86,76 @@ namespace IT13
             Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
-        private void LoadSampleData()
+        private void LoadDataFromDatabase()
         {
-            AddRow("ADJ-2025-001", "2025-04-10", "CCTV Camera Pro", "Increase", "50", "John Doe", "Pending");
-            AddRow("ADJ-2025-002", "2025-04-08", "Wireless Speaker", "Decrease", "20", "Jane Smith", "Approved");
-            AddRow("ADJ-2025-003", "2025-04-05", "Dual Monitor", "Increase", "15", "Mike Tan", "Rejected");
+            try
+            {
+                dgvAdjustment.Rows.Clear();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT 
+                            sa.StockAdjustmentID,
+                            sa.RequestedDate,
+                            pl.ProductName,
+                            sa.AdjustmentType,
+                            sa.PhysicalCount,
+                            CONCAT(e.FirstName, ' ', e.LastName) AS RequestedBy,
+                            sa.Status
+                        FROM stock_adjustments sa
+                        INNER JOIN stock_items si ON sa.StockItemID = si.StockItemID
+                        INNER JOIN product_list pl ON si.ProductID = pl.ProdID
+                        INNER JOIN users u ON sa.RequestedBy = u.id
+                        INNER JOIN employees e ON u.id = e.UserID
+                        ORDER BY sa.RequestedDate DESC";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string id = $"ADJ-{reader["StockAdjustmentID"]}";
+                            string date = Convert.ToDateTime(reader["RequestedDate"]).ToString("yyyy-MM-dd");
+                            string product = reader["ProductName"].ToString();
+                            string type = reader["AdjustmentType"].ToString();
+                            string count = reader["PhysicalCount"].ToString();
+                            string requestedBy = reader["RequestedBy"].ToString();
+                            string status = reader["Status"].ToString();
+
+                            AddRow(id, date, product, type, count, requestedBy, status);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading stock adjustments: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ApplyFilter()
+        {
+            if (Filter.SelectedIndex <= 1) // "Filter" or "All"
+            {
+                foreach (DataGridViewRow row in dgvAdjustment.Rows)
+                {
+                    if (!row.IsNewRow) row.Visible = true;
+                }
+            }
+            else
+            {
+                string filterStatus = Filter.SelectedItem.ToString();
+                foreach (DataGridViewRow row in dgvAdjustment.Rows)
+                {
+                    if (row.IsNewRow) continue;
+                    string status = row.Cells["colStatus"].Value?.ToString() ?? "";
+                    row.Visible = status.Equals(filterStatus, StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            UpdateHeaderCheckState();
         }
 
         private void AddRow(string id, string date, string product, string type, string count, string requestedBy, string status)
@@ -188,11 +260,11 @@ namespace IT13
             {
                 e.PaintBackground(e.CellBounds, true);
                 string status = e.Value?.ToString() ?? "";
-                Color bg = status switch
+                Color bg = status.ToLower() switch
                 {
-                    "Approved" => Color.FromArgb(34, 197, 94),
-                    "Pending" => Color.FromArgb(255, 159, 0),
-                    "Rejected" => Color.FromArgb(239, 68, 68),
+                    "approved" => Color.FromArgb(34, 197, 94),
+                    "pending" => Color.FromArgb(255, 159, 0),
+                    "rejected" => Color.FromArgb(239, 68, 68),
                     _ => Color.Gray
                 };
                 var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 8, e.CellBounds.Width - 20, e.CellBounds.Height - 16);
@@ -241,12 +313,15 @@ namespace IT13
                 int clickX = pt.X - cellRect.X;
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int startX = (cellRect.Width - total) / 2;
-                string id = dgvAdjustment.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+                string idTag = dgvAdjustment.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+
+                // Extract numeric ID from "ADJ-123" format
+                string numericId = idTag.Replace("ADJ-", "");
 
                 if (clickX >= startX && clickX < startX + sz)
-                    OpenEditAdjustment(id);
+                    OpenEditAdjustment(numericId);
                 else if (clickX >= startX + sz + gap && clickX < startX + total)
-                    OpenViewAdjustment(id);
+                    OpenViewAdjustment(numericId);
             }
         }
 
@@ -265,7 +340,7 @@ namespace IT13
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
-            p.navBar1.PageTitle = $"View Adjustment: {id}";
+            p.navBar1.PageTitle = $"View Adjustment: ADJ-{id}";
             var f = new ViewStockAdjustment(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
             p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
         }

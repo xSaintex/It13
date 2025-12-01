@@ -60,7 +60,6 @@ namespace IT13
             this.colProdName = new DataGridViewTextBoxColumn();
             this.colQty = new DataGridViewTextBoxColumn();
             this.colSellPrice = new DataGridViewTextBoxColumn();
-            this.colAvail = new DataGridViewTextBoxColumn();
             this.colSubtotal = new DataGridViewTextBoxColumn();
             // TOTALS
             this.lblSubtotal = new Label();
@@ -295,18 +294,21 @@ namespace IT13
             this.dgvItems.ColumnHeadersHeight = 40;
             this.dgvItems.GridColor = Color.FromArgb(231, 229, 255);
             this.dgvItems.RowHeadersVisible = false;
-            this.dgvItems.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(12, 57, 101);  // ← EXACT MATCH
+            this.dgvItems.EnableHeadersVisualStyles = false;
+            this.dgvItems.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
+            this.dgvItems.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            this.dgvItems.ColumnHeadersDefaultCellStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            this.dgvItems.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(20, 25, 72);
             this.dgvItems.ThemeStyle.HeaderStyle.ForeColor = Color.White;
             this.dgvItems.ThemeStyle.HeaderStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
 
-            this.colProdName.HeaderText = "PRODUCT NAME"; this.colProdName.Width = 400;
-            this.colQty.HeaderText = "QUANTITY"; this.colQty.Width = 120;
-            this.colSellPrice.HeaderText = "SELLING PRICE"; this.colSellPrice.Width = 150;
-            this.colAvail.HeaderText = "AVAILABLE QUANTITY"; this.colAvail.Width = 150;
-            this.colSubtotal.HeaderText = "SUBTOTAL"; this.colSubtotal.Width = 150;
+            this.colProdName.HeaderText = "PRODUCT NAME"; this.colProdName.Width = 500; this.colProdName.ReadOnly = true;
+            this.colQty.HeaderText = "QUANTITY"; this.colQty.Width = 150; this.colQty.ReadOnly = false;
+            this.colSellPrice.HeaderText = "UNIT COST"; this.colSellPrice.Width = 200; this.colSellPrice.ReadOnly = true;
+            this.colSubtotal.HeaderText = "SUBTOTAL"; this.colSubtotal.Width = 200; this.colSubtotal.ReadOnly = true;
 
             this.dgvItems.Columns.AddRange(new DataGridViewColumn[] {
-                this.colProdName, this.colQty, this.colSellPrice, this.colAvail, this.colSubtotal
+                this.colProdName, this.colQty, this.colSellPrice, this.colSubtotal
             });
 
             // === TOTALS ===
@@ -455,7 +457,6 @@ namespace IT13
         private DataGridViewTextBoxColumn colProdName;
         private DataGridViewTextBoxColumn colQty;
         private DataGridViewTextBoxColumn colSellPrice;
-        private DataGridViewTextBoxColumn colAvail;
         private DataGridViewTextBoxColumn colSubtotal;
         private Label lblSubtotal;
         private Label lblSubtotalVal;

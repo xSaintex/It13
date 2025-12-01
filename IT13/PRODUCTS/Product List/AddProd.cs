@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace IT13
 {
     public partial class AddProd : Form
     {
+        private string connectionString = @"Data Source=HONEYYYS\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
+
         public AddProd()
         {
             InitializeComponent();
@@ -20,6 +22,7 @@ namespace IT13
 
             // Apply all styling
             ApplyModernStyling();
+            LoadComboBoxData();
         }
 
         private void ApplyModernStyling()
@@ -103,6 +106,50 @@ namespace IT13
             guna2TextBox3.TextChanged += (s, e) => LimitDecimalPlaces(guna2TextBox3);
         }
 
+        private void LoadComboBoxData()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Load categories
+                    string categoryQuery = "SELECT CategoryName FROM categories WHERE Status = 'active'";
+                    using (SqlCommand categoryCommand = new SqlCommand(categoryQuery, connection))
+                    using (SqlDataReader categoryReader = categoryCommand.ExecuteReader())
+                    {
+                        while (categoryReader.Read())
+                        {
+                            guna2ComboBox1.Items.Add(categoryReader["CategoryName"].ToString());
+                        }
+                    }
+
+                    // Load suppliers
+                    string supplierQuery = "SELECT CompanyName FROM suppliers WHERE Status = 'active'";
+                    using (SqlCommand supplierCommand = new SqlCommand(supplierQuery, connection))
+                    using (SqlDataReader supplierReader = supplierCommand.ExecuteReader())
+                    {
+                        while (supplierReader.Read())
+                        {
+                            guna2ComboBox2.Items.Add(supplierReader["CompanyName"].ToString());
+                        }
+                    }
+
+                    // Load status options
+                    guna2ComboBox3.Items.AddRange(new object[] { "In Stock", "Low Stock", "Out of Stock" });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading combo box data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Fallback to default items
+                guna2ComboBox1.Items.AddRange(new object[] { "Electronics", "Accessories", "Furniture" });
+                guna2ComboBox2.Items.AddRange(new object[] { "TechSupply Co.", "Cable World", "Office Plus", "AudioTech" });
+                guna2ComboBox3.Items.AddRange(new object[] { "In Stock", "Low Stock", "Out of Stock" });
+            }
+        }
+
         private void LimitDecimalPlaces(Guna.UI2.WinForms.Guna2TextBox tb)
         {
             if (tb.Text.Contains(".") && tb.Text.Split('.').Length > 2)
@@ -115,33 +162,14 @@ namespace IT13
 
         private void btnaddprod_Click(object sender, EventArgs e)
         {
+            if (!ValidateInputs()) return;
+
             string productName = guna2TextBox1.Text.Trim();
-            if (string.IsNullOrEmpty(productName))
-            {
-                MessageBox.Show("Please enter a product name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string unitCostStr = guna2TextBox2.Text.Trim();
-            if (!decimal.TryParse(unitCostStr, out decimal unitCost) || unitCost <= 0)
-            {
-                MessageBox.Show("Please enter a valid unit cost.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string sellingPriceStr = guna2TextBox3.Text.Trim();
-            if (!decimal.TryParse(sellingPriceStr, out decimal sellingPrice) || sellingPrice <= 0)
-            {
-                MessageBox.Show("Please enter a valid selling price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (guna2ComboBox1.SelectedIndex < 0 || guna2ComboBox2.SelectedIndex < 0 || guna2ComboBox3.SelectedIndex < 0)
-            {
-                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
+            decimal unitCost = decimal.Parse(guna2TextBox2.Text.Trim());
+            decimal sellingPrice = decimal.Parse(guna2TextBox3.Text.Trim());
+            string category = guna2ComboBox1.SelectedItem.ToString();
+            string supplier = guna2ComboBox2.SelectedItem.ToString();
+            string status = guna2ComboBox3.SelectedItem.ToString();
             string description = string.IsNullOrWhiteSpace(guna2TextBox4.Text) || guna2TextBox4.Text == "Enter product description..."
                 ? "" : guna2TextBox4.Text.Trim();
 
@@ -151,30 +179,87 @@ namespace IT13
             var productItem = new ProductItem
             {
                 ProductName = productName,
-                Category = guna2ComboBox1.SelectedItem.ToString(),
+                Category = category,
                 UnitCost = "₱" + unitCost.ToString("N2"),
                 SellingPrice = "₱" + sellingPrice.ToString("N2"),
-                PrimarySupplier = guna2ComboBox2.SelectedItem.ToString(),
-                Status = guna2ComboBox3.SelectedItem.ToString(),
+                PrimarySupplier = supplier,
+                Status = status,
                 Description = description
             };
 
             var parentForm = this.ParentForm as Form1;
             if (parentForm != null)
             {
+                // Find existing ProductList form in pnlContent
+                foreach (Control control in parentForm.pnlContent.Controls)
+                {
+                    if (control is ProductList productListForm)
+                    {
+                        productListForm.AddProduct(productItem);
+                        NavigateToProductList();
+                        return;
+                    }
+                }
+
+                // If no existing ProductList found, create new one
                 parentForm.navBar1.PageTitle = "Product List";
-                var productListForm = new ProductList();
-                productListForm.AddProduct(productItem);
-                productListForm.TopLevel = false;
-                productListForm.FormBorderStyle = FormBorderStyle.None;
-                productListForm.Dock = DockStyle.Fill;
+                var newProductListForm = new ProductList();
+                newProductListForm.AddProduct(productItem);
+                newProductListForm.TopLevel = false;
+                newProductListForm.FormBorderStyle = FormBorderStyle.None;
+                newProductListForm.Dock = DockStyle.Fill;
 
                 parentForm.pnlContent.Controls.Clear();
-                parentForm.pnlContent.Controls.Add(productListForm);
-                productListForm.Show();
-
-                MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                parentForm.pnlContent.Controls.Add(newProductListForm);
+                newProductListForm.Show();
             }
+        }
+
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrWhiteSpace(guna2TextBox1.Text))
+            {
+                MessageBox.Show("Please enter a product name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2TextBox1.Focus();
+                return false;
+            }
+
+            if (!decimal.TryParse(guna2TextBox2.Text, out decimal unitCost) || unitCost <= 0)
+            {
+                MessageBox.Show("Please enter a valid unit cost.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2TextBox2.Focus();
+                return false;
+            }
+
+            if (!decimal.TryParse(guna2TextBox3.Text, out decimal sellingPrice) || sellingPrice <= 0)
+            {
+                MessageBox.Show("Please enter a valid selling price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2TextBox3.Focus();
+                return false;
+            }
+
+            if (guna2ComboBox1.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select a category.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2ComboBox1.Focus();
+                return false;
+            }
+
+            if (guna2ComboBox2.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select a supplier.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2ComboBox2.Focus();
+                return false;
+            }
+
+            if (guna2ComboBox3.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select a status.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                guna2ComboBox3.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         public class ProductItem

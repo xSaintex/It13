@@ -50,7 +50,6 @@ namespace IT13
             this.colProdName = new DataGridViewTextBoxColumn();
             this.colQty = new DataGridViewTextBoxColumn();
             this.colSellPrice = new DataGridViewTextBoxColumn();
-            this.colAvail = new DataGridViewTextBoxColumn();
             this.colSubtotal = new DataGridViewTextBoxColumn();
 
             this.lblSubtotal = new Label(); this.lblSubtotalVal = new Label();
@@ -265,12 +264,24 @@ namespace IT13
             this.dgvItems.ThemeStyle.HeaderStyle.ForeColor = Color.White;
             this.dgvItems.ThemeStyle.HeaderStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
 
-            this.colProdName.HeaderText = "PRODUCT NAME"; this.colProdName.Width = 400;
-            this.colQty.HeaderText = "QUANTITY"; this.colQty.Width = 120;
-            this.colSellPrice.HeaderText = "SELLING PRICE"; this.colSellPrice.Width = 150;
-            this.colAvail.HeaderText = "AVAILABLE QUANTITY"; this.colAvail.Width = 150;
-            this.colSubtotal.HeaderText = "SUBTOTAL"; this.colSubtotal.Width = 150;
-            this.dgvItems.Columns.AddRange(new DataGridViewColumn[] { colProdName, colQty, colSellPrice, colAvail, colSubtotal });
+            // UPDATED: Only 4 columns now (removed AVAILABLE QUANTITY)
+            this.colProdName.HeaderText = "PRODUCT NAME";
+            this.colProdName.Name = "colProdName";
+            this.colProdName.Width = 500;
+
+            this.colQty.HeaderText = "QUANTITY";
+            this.colQty.Name = "colQty";
+            this.colQty.Width = 200;
+
+            this.colSellPrice.HeaderText = "UNIT COST";
+            this.colSellPrice.Name = "colSellPrice";
+            this.colSellPrice.Width = 250;
+
+            this.colSubtotal.HeaderText = "SUBTOTAL";
+            this.colSubtotal.Name = "colSubtotal";
+            this.colSubtotal.Width = 250;
+
+            this.dgvItems.Columns.AddRange(new DataGridViewColumn[] { colProdName, colQty, colSellPrice, colSubtotal });
 
             int ty = ay + 660;
 
@@ -330,6 +341,6 @@ namespace IT13
         private Guna2NumericUpDown numDiscount, numShipping;
         private Guna2Button btnCancel, btnSave, btnSearch, btnAddProduct;
         private Guna2DataGridView dgvItems;
-        private DataGridViewTextBoxColumn colProdName, colQty, colSellPrice, colAvail, colSubtotal;
+        private DataGridViewTextBoxColumn colProdName, colQty, colSellPrice, colSubtotal;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
@@ -8,6 +10,7 @@ namespace IT13
 {
     public partial class DeliveryList : Form
     {
+        private readonly string connString = "Data Source=HONEYYYS\\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
 
@@ -18,6 +21,16 @@ namespace IT13
             _viewIcon = new Bitmap(Properties.Resources.view_icon, new Size(24, 24));
             SetupFilterComboBox();
             SetupExportComboBox();
+            SetupDataGridView();
+            LoadDeliveriesFromDatabase();
+            UpdateHeaderCheckState();
+            dgvDeliveries.ClearSelection();
+            dgvDeliveries.CurrentCell = null;
+            dgvDeliveries.MouseDown += (s, e) => dgvDeliveries.CurrentCell = null;
+        }
+
+        private void SetupDataGridView()
+        {
             dgvDeliveries.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dgvDeliveries.MultiSelect = false;
             dgvDeliveries.ReadOnly = true;
@@ -44,11 +57,6 @@ namespace IT13
             dgvDeliveries.Columns["colVehicle"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDeliveries.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDeliveries.Columns["colCustomer"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            LoadSampleData();
-            UpdateHeaderCheckState();
-            dgvDeliveries.ClearSelection();
-            dgvDeliveries.CurrentCell = null;
-            dgvDeliveries.MouseDown += (s, e) => dgvDeliveries.CurrentCell = null;
         }
 
         private void SetupFilterComboBox()
@@ -56,7 +64,34 @@ namespace IT13
             Filter.Items.AddRange(new object[] { "Filter", "All", "Pending", "In Transit", "Delivered" });
             Filter.SelectedIndex = 0;
             Filter.ForeColor = Color.Gray;
-            Filter.SelectedIndexChanged += (s, e) => Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+            Filter.SelectedIndexChanged += Filter_SelectedIndexChanged;
+        }
+
+        private void Filter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
+            ApplyFilter();
+        }
+
+        private void ApplyFilter()
+        {
+            string filterValue = Filter.SelectedItem?.ToString();
+
+            foreach (DataGridViewRow row in dgvDeliveries.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                if (filterValue == "Filter" || filterValue == "All")
+                {
+                    row.Visible = true;
+                }
+                else
+                {
+                    string status = row.Cells["colStatus"].Value?.ToString() ?? "";
+                    row.Visible = status.Equals(filterValue, StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            UpdateHeaderCheckState();
         }
 
         private void SetupExportComboBox()
@@ -67,18 +102,67 @@ namespace IT13
             Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
-        private void LoadSampleData()
+        private void LoadDeliveriesFromDatabase()
         {
-            AddRow("DEL 2025-001", "ORD-1001", "ABC Corporation", "2025-11-20", "Juan Dela Cruz", "Toyota Hiace", "Delivered");
-            AddRow("DEL 2025-002", "ORD-1002", "XYZ Trading", "2025-11-21", "Maria Santos", "Mitsubishi L300", "Pending");
-            AddRow("DEL 2025-003", "ORD-1003", "Global Mart", "2025-11-22", "Pedro Reyes", "Isuzu Elf", "In Transit");
-        }
+            dgvDeliveries.Rows.Clear();
 
-        private void AddRow(string id, string orderId, string customer, string date, string employee, string vehicle, string status)
-        {
-            int idx = dgvDeliveries.Rows.Add(false, orderId, customer, date, employee, vehicle, status, null);
-            dgvDeliveries.Rows[idx].Cells[0].Tag = id;
-            dgvDeliveries.Rows[idx].Height = 45;
+            string query = @"
+                SELECT 
+                    d.DeliveryID,
+                    co.CusOrderID,
+                    c.CompanyName,
+                    d.DeliveryDate,
+                    (e.FirstName + ' ' + e.LastName) AS EmployeeName,
+                    v.VehicleName,
+                    v.LicensePlate,
+                    d.Status,
+                    co.shipping,
+                    d.created_at
+                FROM deliveries d
+                LEFT JOIN customer_orders co ON d.CustOrderID = co.CusOrderID
+                LEFT JOIN customers c ON co.CustomerID = c.CustID
+                LEFT JOIN users u ON d.user_id = u.id
+                LEFT JOIN employees e ON u.id = e.UserID
+                LEFT JOIN vehicles v ON d.VehicleID = v.id
+                ORDER BY d.DeliveryID DESC";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string deliveryId = "DEL " + reader["DeliveryID"].ToString();
+                            string orderId = "ORD-" + reader["CusOrderID"].ToString();
+                            string customer = reader["CompanyName"]?.ToString() ?? "N/A";
+                            string date = Convert.ToDateTime(reader["DeliveryDate"]).ToString("yyyy-MM-dd");
+                            string employee = reader["EmployeeName"]?.ToString() ?? "Not Assigned";
+                            string vehicle = reader["VehicleName"]?.ToString() ?? "-";
+                            string status = reader["Status"]?.ToString() ?? "Pending";
+
+                            int idx = dgvDeliveries.Rows.Add(false, orderId, customer, date, employee, vehicle, status, null);
+                            dgvDeliveries.Rows[idx].Cells[0].Tag = deliveryId;
+                            dgvDeliveries.Rows[idx].Tag = new
+                            {
+                                DeliveryID = reader["DeliveryID"],
+                                LicensePlate = reader["LicensePlate"]?.ToString() ?? "N/A",
+                                ShippingAddress = reader["shipping"]?.ToString() ?? "N/A",
+                                CreatedAt = Convert.ToDateTime(reader["created_at"])
+                            };
+                            dgvDeliveries.Rows[idx].Height = 45;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading deliveries: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateHeaderCheckState()
@@ -112,7 +196,6 @@ namespace IT13
 
         private void dgvDeliveries_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // Header checkbox + "ID"
             if (e.RowIndex == -1 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -135,7 +218,6 @@ namespace IT13
                 e.Handled = true; return;
             }
 
-            // Row checkbox + ID
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -158,7 +240,6 @@ namespace IT13
                 e.Handled = true; return;
             }
 
-            // Actions
             if (e.ColumnIndex == dgvDeliveries.Columns["colActions"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -170,7 +251,6 @@ namespace IT13
                 e.Handled = true; return;
             }
 
-            // Status badge
             if (e.ColumnIndex == dgvDeliveries.Columns["colStatus"].Index && e.RowIndex >= 0)
             {
                 e.PaintBackground(e.CellBounds, true);
@@ -227,16 +307,17 @@ namespace IT13
                 int clickX = pt.X - cellRect.X;
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int startX = (cellRect.Width - total) / 2;
-                string id = dgvDeliveries.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
+
+                dynamic rowData = dgvDeliveries.Rows[e.RowIndex].Tag;
+                long deliveryId = rowData.DeliveryID;
 
                 if (clickX >= startX && clickX < startX + sz)
-                    OpenEditDelivery(id);
+                    OpenEditDelivery(deliveryId);
                 else if (clickX >= startX + sz + gap && clickX < startX + total)
-                    OpenViewDelivery(id);  // Now fully connected with real data!
+                    OpenViewDelivery(deliveryId);
             }
         }
 
-        // ADD DELIVERY BUTTON
         private void btnAddDelivery_Click(object sender, EventArgs e)
         {
             var p = this.ParentForm as Form1;
@@ -248,26 +329,29 @@ namespace IT13
             f.Show();
         }
 
-        private void OpenEditDelivery(string id)
+        private void OpenEditDelivery(long deliveryId)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
             p.navBar1.PageTitle = "Edit Delivery";
-            var f = new EditDelivery(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+            var f = new EditDelivery(deliveryId.ToString()) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
-        // FULLY CONNECTED VIEW DELIVERY — SHOWS REAL DATA FROM ROW
-        private void OpenViewDelivery(string id)
+        private void OpenViewDelivery(long deliveryId)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
 
             foreach (DataGridViewRow row in dgvDeliveries.Rows)
             {
-                if (row.Cells[0].Tag?.ToString() == id)
+                dynamic rowData = row.Tag;
+                if (rowData.DeliveryID == deliveryId)
                 {
-                    p.navBar1.PageTitle = $"View Delivery: {id}";
+                    string deliveryIdStr = row.Cells[0].Tag?.ToString() ?? "";
+                    p.navBar1.PageTitle = $"View Delivery: {deliveryIdStr}";
 
                     var view = new ViewDelivery
                     {
@@ -281,11 +365,11 @@ namespace IT13
                                             .ToString("MMM dd, yyyy"),
                         Employee = row.Cells["colEmployee"].Value?.ToString() ?? "Not Assigned",
                         Vehicle = row.Cells["colVehicle"].Value?.ToString() ?? "-",
-                        PlateNumber = "NCR-JAA 1234", // Change later if you add plate column
+                        PlateNumber = rowData.LicensePlate ?? "N/A",
                         Status = row.Cells["colStatus"].Value?.ToString() ?? "Pending",
-                        LastAttempt = "Oct 22, 2025 2:30 PM",
-                        CreatedDate = DateTime.Now.ToString("MMM dd, yyyy hh:mm tt"),
-                        ShippingAddress = "Block 12 Lot 5, Phase 2, Barangay San Jose, Antipolo City, Rizal 1870"
+                        LastAttempt = GetLastAttempt(deliveryId),
+                        CreatedDate = rowData.CreatedAt.ToString("MMM dd, yyyy hh:mm tt"),
+                        ShippingAddress = rowData.ShippingAddress ?? "N/A"
                     };
 
                     p.pnlContent.Controls.Clear();
@@ -294,6 +378,37 @@ namespace IT13
                     return;
                 }
             }
+        }
+
+        private string GetLastAttempt(long deliveryId)
+        {
+            string query = @"SELECT TOP 1 AttemptDate, Status 
+                           FROM delivery_attempts 
+                           WHERE DeliveryID = @DeliveryID 
+                           ORDER BY AttemptDate DESC";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@DeliveryID", deliveryId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                DateTime attemptDate = Convert.ToDateTime(reader["AttemptDate"]);
+                                return attemptDate.ToString("MMM dd, yyyy hh:mm tt");
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            return "No attempts yet";
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -307,6 +422,12 @@ namespace IT13
                 string cust = r.Cells["colCustomer"].Value?.ToString().ToLower() ?? "";
                 r.Visible = string.IsNullOrEmpty(s) || id.Contains(s) || order.Contains(s) || cust.Contains(s);
             }
+            UpdateHeaderCheckState();
+        }
+
+        public void RefreshData()
+        {
+            LoadDeliveriesFromDatabase();
             UpdateHeaderCheckState();
         }
     }

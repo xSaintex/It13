@@ -1,8 +1,8 @@
-﻿// SupplierOrderList.cs - PERFECT MATCH WITH ProductCategory + WORKING FILTER
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Data.SqlClient;
 
 namespace IT13
 {
@@ -10,6 +10,7 @@ namespace IT13
     {
         private readonly Image _editIcon, _viewIcon, _deleteIcon;
         private bool? _headerCheckState = false;
+        private string connectionString = @"Data Source=HONEYYYS\SQLEXPRESS01;Initial Catalog=IT13;Integrated Security=True;TrustServerCertificate=True";
 
         public SupplierOrderList()
         {
@@ -23,7 +24,7 @@ namespace IT13
             SetupFilterComboBox();
             SetupExportComboBox();
 
-            // === EXACT SAME GRID SETTINGS AS ProductCategory ===
+            // Grid settings
             dgvOrders.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dgvOrders.MultiSelect = false;
             dgvOrders.ReadOnly = true;
@@ -31,7 +32,7 @@ namespace IT13
             dgvOrders.AllowUserToDeleteRows = false;
             dgvOrders.RowHeadersVisible = false;
 
-            // Remove selection highlight completely
+            // Remove selection highlight
             dgvOrders.DefaultCellStyle.SelectionBackColor = dgvOrders.DefaultCellStyle.BackColor;
             dgvOrders.DefaultCellStyle.SelectionForeColor = dgvOrders.DefaultCellStyle.ForeColor;
 
@@ -57,14 +58,14 @@ namespace IT13
             dgvOrders.Columns["colStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvOrders.Columns["colSupplier"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-            LoadSampleData();
+            LoadDataFromDatabase();
             UpdateHeaderCheckState();
 
             // Final anti-selection
             dgvOrders.ClearSelection();
             dgvOrders.CurrentCell = null;
 
-            // Hook MouseDown to kill any accidental selection
+            // Hook MouseDown
             dgvOrders.MouseDown += dgvOrders_MouseDown;
         }
 
@@ -77,7 +78,7 @@ namespace IT13
             Filter.SelectedIndexChanged += (s, e) =>
             {
                 Filter.ForeColor = Filter.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
-                ApplyFiltersAndSearch(); // Apply filter whenever selection changes
+                ApplyFiltersAndSearch();
             };
         }
 
@@ -89,13 +90,45 @@ namespace IT13
             Export.SelectedIndexChanged += (s, e) => Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
         }
 
-        private void LoadSampleData()
+        private void LoadDataFromDatabase()
         {
-            AddRow("SO-2025-001", "2025-11-10", "ABC Supplies Inc.", "₱12,500.50", "Pending");
-            AddRow("SO-2025-002", "2025-11-09", "XYZ Trading", "₱8,900.00", "Delivered");
-            AddRow("SO-2025-003", "2025-11-08", "Global Mart", "₱15,675.75", "Pending");
-            AddRow("SO-2025-004", "2025-11-07", "Tech Depot", "₱22,300.00", "Cancelled");
-            AddRow("SO-2025-005", "2025-11-06", "Prime Supplies", "₱9,450.00", "Delivered");
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = @"
+                        SELECT 
+                            so.SupOrderID,
+                            so.OrderDate,
+                            s.CompanyName,
+                            so.Total,
+                            so.Status
+                        FROM supplier_orders so
+                        INNER JOIN suppliers s ON so.SupplierID = s.id
+                        ORDER BY so.OrderDate DESC";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dgvOrders.Rows.Clear();
+                        while (reader.Read())
+                        {
+                            string orderId = $"SO-{Convert.ToInt64(reader["SupOrderID"]):D5}";
+                            string date = Convert.ToDateTime(reader["OrderDate"]).ToString("yyyy-MM-dd");
+                            string supplier = reader["CompanyName"].ToString();
+                            string total = $"₱{Convert.ToDecimal(reader["Total"]):N2}";
+                            string status = reader["Status"].ToString();
+
+                            AddRow(orderId, date, supplier, total, status);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading orders: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AddRow(string id, string date, string supplier, string total, string status)
@@ -124,10 +157,9 @@ namespace IT13
                                 checkedCount == 0 ? false :
                                 checkedCount == visibleCount ? true : (bool?)null;
 
-            dgvOrders.InvalidateCell(dgvOrders.Columns["colID"].Index, -1); // Refresh header checkbox
+            dgvOrders.InvalidateCell(dgvOrders.Columns["colID"].Index, -1);
         }
 
-        // NEW: Combined filter + search logic
         private void ApplyFiltersAndSearch()
         {
             string searchText = txtSearch.Text.Trim().ToLower();
@@ -158,10 +190,9 @@ namespace IT13
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            ApplyFiltersAndSearch(); // Re-apply both filters when search changes
+            ApplyFiltersAndSearch();
         }
 
-        // Cell Painting (unchanged, only fixed column reference in header invalidate)
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             // HEADER: Checkbox + "ID"
@@ -338,7 +369,6 @@ namespace IT13
             dgvOrders.CurrentCell = null;
         }
 
-        // Action Methods (unchanged)
         private void OpenEditOrder(string orderId)
         {
             var parent = this.ParentForm as Form1;
@@ -365,15 +395,49 @@ namespace IT13
         {
             if (MessageBox.Show($"Delete order {orderId}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                for (int i = dgvOrders.Rows.Count - 1; i >= 0; i--)
+                try
                 {
-                    if (dgvOrders.Rows[i].Cells[0].Tag?.ToString() == orderId)
+                    // Extract numeric ID from format SO-00001
+                    long orderIdNum = long.Parse(orderId.Replace("SO-", ""));
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        dgvOrders.Rows.RemoveAt(i);
-                        break;
+                        connection.Open();
+
+                        // Delete order items first
+                        string deleteItemsQuery = "DELETE FROM supporderitem WHERE SupOrderID = @OrderID";
+                        using (SqlCommand cmd = new SqlCommand(deleteItemsQuery, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@OrderID", orderIdNum);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Delete order
+                        string deleteOrderQuery = "DELETE FROM supplier_orders WHERE SupOrderID = @OrderID";
+                        using (SqlCommand cmd = new SqlCommand(deleteOrderQuery, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@OrderID", orderIdNum);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Remove from grid
+                        for (int i = dgvOrders.Rows.Count - 1; i >= 0; i--)
+                        {
+                            if (dgvOrders.Rows[i].Cells[0].Tag?.ToString() == orderId)
+                            {
+                                dgvOrders.Rows.RemoveAt(i);
+                                break;
+                            }
+                        }
+
+                        MessageBox.Show("Order deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ApplyFiltersAndSearch();
                     }
                 }
-                ApplyFiltersAndSearch(); // Re-apply filter after delete
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting order: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
