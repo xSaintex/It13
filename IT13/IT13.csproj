@@ -12,7 +12,6 @@
     <Folder Include="Db\" />
     <Folder Include="REPORTS\Inventory Report\" />
     <Folder Include="REPORTS\Sales Report\" />
-    <Folder Include="USERS\User Admins\" />
   </ItemGroup>
 
   <ItemGroup>

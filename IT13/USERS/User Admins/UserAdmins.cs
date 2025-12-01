@@ -6,12 +6,12 @@ using Guna.UI2.WinForms;
 
 namespace IT13
 {
-    public partial class UserList : Form
+    public partial class UserAdmins : Form
     {
         private readonly Image _editIcon, _viewIcon;
         private bool? _headerCheckState = false;
 
-        public UserList()
+        public UserAdmins()
         {
             InitializeComponent();
             _editIcon = new Bitmap(Properties.Resources.edit_icon, new Size(24, 24));
@@ -59,11 +59,11 @@ namespace IT13
 
         private void LoadSampleData()
         {
-            AddRow(1, "akosibatman", "John Doe", "john@example.com", "Administrator");
-            AddRow(2, "manager01", "Sarah Wilson", "sarah@company.com", "Manager");
-            AddRow(3, "staff_jane", "Jane Smith", "jane@company.com", "Staff");
-            AddRow(4, "cashier01", "Mike Brown", "mike@store.com", "Cashier");
-            AddRow(5, "it_support", "David Lee", "david@it.com", "IT Support");
+            AddRow(1, "admin1", "John Doe", "john@example.com", "Administrator");
+            AddRow(2, "admin2", "Sarah Wilson", "sarah@company.com", "Manager");
+            AddRow(3, "admin3", "Jane Smith", "jane@company.com", "Staff");
+            AddRow(4, "admin4", "Mike Brown", "mike@store.com", "Cashier");
+            AddRow(5, "admin5", "David Lee", "david@it.com", "IT Support");
         }
 
         private void AddRow(int id, string username, string fullName, string email, string role)
@@ -190,40 +190,40 @@ namespace IT13
                 string userId = dgvUsers.Rows[e.RowIndex].Cells["colID"].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + sz)
-                    OpenEditUser(userId);
+                    OpenEditUserAdmins(userId);
                 else if (clickX >= startX + sz + gap && clickX < startX + total)
-                    OpenViewUser(userId);
+                    OpenViewUserAdmins(userId);
             }
         }
 
-        private void OpenEditUser(string id)
+        private void OpenEditUserAdmins(string id)
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = "Edit User";
-            var f = new EditUser(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            var f = new EditUserAdmins(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
             parent.pnlContent.Controls.Clear();
             parent.pnlContent.Controls.Add(f);
             f.Show();
         }
 
-        private void OpenViewUser(string id)
+        private void OpenViewUserAdmins(string id)
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = $"View User: {id}";
-            var f = new ViewUser(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            var f = new ViewUserAdmins(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
             parent.pnlContent.Controls.Clear();
             parent.pnlContent.Controls.Add(f);
             f.Show();
         }
 
-        private void btnAddUser_Click(object sender, EventArgs e)
+        private void btnAddUserAdmins_Click(object sender, EventArgs e)
         {
             var parent = this.ParentForm as Form1;
             if (parent == null) return;
             parent.navBar1.PageTitle = "Add User";
-            var f = new AddUser { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+            var f = new AddUserAdmins { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
             parent.pnlContent.Controls.Clear();
             parent.pnlContent.Controls.Add(f);
             f.Show();
