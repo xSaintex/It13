@@ -118,22 +118,36 @@ namespace IT13
             var parent = this.ParentForm as Form1;
             if (parent != null)
             {
+                // ← NEW: Check if opened from ReturnList (highest priority)
+                if (this.Tag is ReturnList returnListForm)
+                {
+                    parent.navBar1.PageTitle = "Return List";
+                    parent.pnlContent.Controls.Clear();
+                    parent.pnlContent.Controls.Add(returnListForm);
+                    returnListForm.Show();
+                    returnListForm.BringToFront();
+                    this.Close();
+                    return;
+                }
+
+                // ← OLD behavior: if opened from SupplierReturns page
                 if (this.Tag is SupplierReturns supplierReturnsForm)
                 {
                     parent.navBar1.PageTitle = "Supplier Returns";
                     parent.pnlContent.Controls.Clear();
                     parent.pnlContent.Controls.Add(supplierReturnsForm);
                     supplierReturnsForm.Show();
+                    supplierReturnsForm.BringToFront();
+                    this.Close();
                     return;
                 }
+
+                // Final fallback
                 parent.NavigateToSupplierReturns();
+                this.Close();
                 return;
             }
 
-            this.Hide();
-            var form = Application.OpenForms["SupplierReturns"] as SupplierReturns;
-            if (form != null) { form.Show(); form.BringToFront(); }
-            else { new SupplierReturns().Show(); }
             this.Close();
         }
     }

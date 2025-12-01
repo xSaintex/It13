@@ -20,7 +20,7 @@ namespace IT13
             {
                 BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Poppins", 12F, FontStyle.Bold),
+                Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 
@@ -157,6 +157,7 @@ namespace IT13
             this.txtSearch.PlaceholderText = "Search delivery ID, order, customer...";
             this.txtSearch.Font = new Font("Poppins", 10.5F); this.txtSearch.BorderRadius = 12;
             this.txtSearch.PlaceholderForeColor = Color.FromArgb(80, 80, 80);
+            this.txtSearch.ForeColor = Color.Black;
             this.txtSearch.TextChanged += new EventHandler(this.txtSearch_TextChanged);
 
             this.ClientSize = new Size(1914, 1055);

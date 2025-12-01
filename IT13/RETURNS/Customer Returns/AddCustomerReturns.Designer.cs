@@ -86,10 +86,10 @@ namespace IT13
             lblRequired.Location = new Point(54, 73);
             lblRequired.AutoSize = true;
 
-            lnkBack.Text = "← Back to Customer Returns";
+            lnkBack.Text = "← Back to List";
             lnkBack.LinkColor = Color.FromArgb(0, 123, 255);
             lnkBack.Font = new Font("Poppins", 10F);
-            lnkBack.Location = new Point(1280, 68);
+            lnkBack.Location = new Point(1400, 68);
             lnkBack.AutoSize = true;
 
             int tabY = 120;

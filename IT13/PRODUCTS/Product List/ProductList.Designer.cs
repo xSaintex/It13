@@ -17,13 +17,13 @@
             {
                 BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Poppins", 12F, FontStyle.Bold),
+                Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 
             DataGridViewCellStyle rowStyle = new DataGridViewCellStyle
             {
-                Font = new Font("Poppins", 11F),
+                Font = new Font("Bahnschrift SemiCondensed", 11F),
                 ForeColor = Color.Black,
                 BackColor = Color.White,
                 SelectionBackColor = Color.White,

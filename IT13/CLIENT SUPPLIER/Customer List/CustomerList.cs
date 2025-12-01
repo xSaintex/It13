@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Data.SqlClient;
 using System.Data;
+using System.Linq;
 using Guna.UI2.WinForms;
 
 namespace IT13
@@ -31,8 +32,10 @@ namespace IT13
             dgvCustomers.RowHeadersVisible = false;
             dgvCustomers.DefaultCellStyle.SelectionBackColor = dgvCustomers.DefaultCellStyle.BackColor;
             dgvCustomers.DefaultCellStyle.SelectionForeColor = dgvCustomers.DefaultCellStyle.ForeColor;
-            foreach (DataGridViewColumn c in dgvCustomers.Columns) c.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dgvCustomers.DefaultCellStyle.Font = new Font("Poppins", 11F);
+
+            foreach (DataGridViewColumn c in dgvCustomers.Columns)
+                c.SortMode = DataGridViewColumnSortMode.NotSortable;
+
             dgvCustomers.RowTemplate.Height = 45;
             dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
@@ -70,8 +73,7 @@ namespace IT13
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     string query = @"
-                        SELECT CustID, CompanyName, ContactPerson, PhoneNo, Email, PaymentTerms, Status,
-                               FirstName, LastName
+                        SELECT CustID, CompanyName, ContactPerson, PhoneNo, Email, PaymentTerms, Status, FirstName, LastName
                         FROM customers
                         ORDER BY CustID ASC";
 
@@ -110,9 +112,12 @@ namespace IT13
 
         private string GetFullName(string firstName, string lastName)
         {
-            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName)) return string.Empty;
-            if (string.IsNullOrEmpty(firstName)) return lastName;
-            if (string.IsNullOrEmpty(lastName)) return firstName;
+            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+                return string.Empty;
+            if (string.IsNullOrEmpty(firstName))
+                return lastName;
+            if (string.IsNullOrEmpty(lastName))
+                return firstName;
             return $"{firstName} {lastName}";
         }
 
@@ -139,13 +144,14 @@ namespace IT13
                 if (row.Visible && !row.IsNewRow)
                 {
                     visibleCount++;
-                    if ((bool)(row.Cells[0].Value ?? false)) checkedCount++;
+                    if ((bool)(row.Cells[0].Value ?? false))
+                        checkedCount++;
                 }
             }
 
             _headerCheckState = visibleCount == 0 ? (bool?)false :
-                               checkedCount == 0 ? false :
-                               checkedCount == visibleCount ? true : (bool?)null;
+                checkedCount == 0 ? false :
+                checkedCount == visibleCount ? true : (bool?)null;
 
             dgvCustomers.InvalidateCell(0, -1);
         }
@@ -229,6 +235,7 @@ namespace IT13
             Export.Items.AddRange(new object[] { "Export", "Excel", "PDF", "CSV" });
             Export.SelectedIndex = 0;
             Export.ForeColor = Color.Gray;
+
             Export.SelectedIndexChanged += (s, e) =>
             {
                 Export.ForeColor = Export.SelectedIndex == 0 ? Color.Gray : Color.FromArgb(68, 88, 112);
@@ -242,7 +249,8 @@ namespace IT13
 
         private void ExportData(string format)
         {
-            MessageBox.Show($"Exporting to {format} format...", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Exporting to {format} format...", "Export",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private GraphicsPath GetRoundedRect(Rectangle rect, float radius)
@@ -271,16 +279,18 @@ namespace IT13
                 {
                     using (Pen p = new Pen(Color.Black, 2.5f))
                         e.Graphics.DrawLines(p, new Point[] {
-                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                            new Point(r.X + 3, r.Y + 8),
+                            new Point(r.X + 7, r.Y + 12),
+                            new Point(r.X + 13, r.Y + 5)
                         });
                 }
                 else if (_headerCheckState == null)
                     e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
 
-                TextRenderer.DrawText(e.Graphics, "ID",
-                    new Font("Poppins", 12F, FontStyle.Bold),
+                TextRenderer.DrawText(e.Graphics, "ID", new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+
                 e.Handled = true;
                 return;
             }
@@ -290,10 +300,8 @@ namespace IT13
             {
                 e.PaintBackground(e.CellBounds, true);
                 string headerText = dgvCustomers.Columns[e.ColumnIndex].HeaderText;
-                TextRenderer.DrawText(e.Graphics, headerText,
-                    new Font("Poppins", 12F, FontStyle.Bold),
-                    e.CellBounds,
-                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+                TextRenderer.DrawText(e.Graphics, headerText, new Font("Poppins", 12F, FontStyle.Bold),
+                    e.CellBounds, Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
                 e.Handled = true;
                 return;
             }
@@ -311,7 +319,9 @@ namespace IT13
                 {
                     using (Pen p = new Pen(Color.Black, 2.5f))
                         e.Graphics.DrawLines(p, new Point[] {
-                            new Point(r.X + 3, r.Y + 8), new Point(r.X + 7, r.Y + 12), new Point(r.X + 13, r.Y + 5)
+                            new Point(r.X + 3, r.Y + 8),
+                            new Point(r.X + 7, r.Y + 12),
+                            new Point(r.X + 13, r.Y + 5)
                         });
                 }
 
@@ -334,8 +344,10 @@ namespace IT13
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int x = e.CellBounds.X + (e.CellBounds.Width - total) / 2;
                 int y = e.CellBounds.Y + (e.CellBounds.Height - sz) / 2;
+
                 e.Graphics.DrawImage(_editIcon, x, y, sz, sz);
                 e.Graphics.DrawImage(_viewIcon, x + sz + gap, y, sz, sz);
+
                 e.Handled = true;
                 return;
             }
@@ -347,7 +359,9 @@ namespace IT13
                 string status = e.Value?.ToString() ?? "";
                 Color bg = status == "Active" ? Color.FromArgb(34, 197, 94) : Color.FromArgb(239, 68, 68);
 
-                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10, e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10,
+                    e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+
                 using (var path = GetRoundedRect(rect, 8f))
                 using (var brush = new SolidBrush(bg))
                     e.Graphics.FillPath(brush, path);
@@ -360,6 +374,7 @@ namespace IT13
                     float y = e.CellBounds.Y + (e.CellBounds.Height - size.Height) / 2;
                     e.Graphics.DrawString(status, font, textBrush, x, y);
                 }
+
                 e.Handled = true;
             }
         }
@@ -372,7 +387,9 @@ namespace IT13
             {
                 bool newState = !(_headerCheckState == true);
                 foreach (DataGridViewRow r in dgvCustomers.Rows)
-                    if (r.Visible && !r.IsNewRow) r.Cells[0].Value = newState;
+                    if (r.Visible && !r.IsNewRow)
+                        r.Cells[0].Value = newState;
+
                 _headerCheckState = newState ? true : (bool?)false;
                 dgvCustomers.InvalidateCell(0, -1);
                 return;
@@ -391,8 +408,10 @@ namespace IT13
                 var cellRect = dgvCustomers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var pt = dgvCustomers.PointToClient(Cursor.Position);
                 int clickX = pt.X - cellRect.X;
+
                 int sz = 24, gap = 16, total = sz * 2 + gap;
                 int startX = (cellRect.Width - total) / 2;
+
                 string id = dgvCustomers.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
 
                 if (clickX >= startX && clickX < startX + sz)
@@ -406,27 +425,57 @@ namespace IT13
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = "Edit Customer";
-            var f = new EditCustomerList(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+
+            var f = new EditCustomerList(id)
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
         private void OpenViewCustomer(string id)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = $"View Customer: {id}";
-            var f = new ViewCustomerList(id) { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+
+            var f = new ViewCustomerList(id)
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             var p = this.ParentForm as Form1;
             if (p == null) return;
+
             p.navBar1.PageTitle = "Add Customer";
-            var f = new AddCustomerList { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-            p.pnlContent.Controls.Clear(); p.pnlContent.Controls.Add(f); f.Show();
+
+            var f = new AddCustomerList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            p.pnlContent.Controls.Clear();
+            p.pnlContent.Controls.Add(f);
+            f.Show();
         }
 
         public void RefreshData()

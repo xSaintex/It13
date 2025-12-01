@@ -47,7 +47,7 @@ namespace IT13
             foreach (DataGridViewColumn c in dgvSuppliers.Columns)
                 c.SortMode = DataGridViewColumnSortMode.NotSortable;
 
-            dgvSuppliers.DefaultCellStyle.Font = new Font("Poppins", 11F);
+            dgvSuppliers.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 11F);
             dgvSuppliers.RowTemplate.Height = 45;
             dgvSuppliers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
@@ -255,7 +255,7 @@ namespace IT13
                 }
 
                 TextRenderer.DrawText(e.Graphics, "ID",
-                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
 
@@ -318,7 +318,9 @@ namespace IT13
                     ? Color.FromArgb(34, 197, 94)
                     : Color.FromArgb(239, 68, 68);
 
-                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10, e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+                var rect = new Rectangle(e.CellBounds.X + 10, e.CellBounds.Y + 10,
+                    e.CellBounds.Width - 20, e.CellBounds.Height - 20);
+
                 using (var path = GetRoundedRect(rect, 8f))
                 using (var brush = new SolidBrush(bg))
                     e.Graphics.FillPath(brush, path);

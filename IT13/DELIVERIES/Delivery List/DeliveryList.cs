@@ -40,7 +40,7 @@ namespace IT13
             dgvDeliveries.DefaultCellStyle.SelectionBackColor = dgvDeliveries.DefaultCellStyle.BackColor;
             dgvDeliveries.DefaultCellStyle.SelectionForeColor = dgvDeliveries.DefaultCellStyle.ForeColor;
             foreach (DataGridViewColumn c in dgvDeliveries.Columns) c.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dgvDeliveries.DefaultCellStyle.Font = new Font("Poppins", 11F);
+            dgvDeliveries.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 11F);
             dgvDeliveries.RowTemplate.Height = 45;
             dgvDeliveries.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDeliveries.Columns["colDeliveryID"].MinimumWidth = 160;
@@ -212,7 +212,7 @@ namespace IT13
                 else if (_headerCheckState == null)
                     e.Graphics.FillRectangle(Brushes.Gray, r.X + 3, r.Y + 3, 10, 10);
                 TextRenderer.DrawText(e.Graphics, "ID",
-                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 e.Handled = true; return;
@@ -234,7 +234,7 @@ namespace IT13
                 }
                 string id = dgvDeliveries.Rows[e.RowIndex].Cells[0].Tag?.ToString() ?? "";
                 if (!string.IsNullOrEmpty(id))
-                    TextRenderer.DrawText(e.Graphics, id, new Font("Poppins", 11F),
+                    TextRenderer.DrawText(e.Graphics, id, new Font("Bahnschrift SemiCondensed", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                         Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
                 e.Handled = true; return;
@@ -266,7 +266,7 @@ namespace IT13
                 using (var path = GetRoundedRect(rect, 10f))
                 using (var br = new SolidBrush(bg))
                     e.Graphics.FillPath(br, path);
-                using (var f = new Font("Poppins", 10F, FontStyle.Bold))
+                using (var f = new Font("Bahnschrift SemiCondensed", 10F, FontStyle.Bold))
                 using (var br = new SolidBrush(Color.White))
                 {
                     var sz = e.Graphics.MeasureString(status, f);

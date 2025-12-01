@@ -29,7 +29,7 @@ namespace IT13
             {
                 BackColor = Color.FromArgb(12, 57, 101),
                 ForeColor = Color.White,
-                Font = new Font("Poppins", 12F, FontStyle.Bold),
+                Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 
@@ -232,6 +232,7 @@ namespace IT13
             this.txtSearch.BorderRadius = 12;
             this.txtSearch.BorderColor = Color.FromArgb(200, 200, 200);
             this.txtSearch.BorderThickness = 1;
+            this.txtSearch.ForeColor = Color.Black;
             this.txtSearch.TextChanged += new EventHandler(this.txtSearch_TextChanged);
             // 
             // SupplierOrderList

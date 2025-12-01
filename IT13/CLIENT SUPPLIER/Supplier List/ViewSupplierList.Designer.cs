@@ -89,51 +89,51 @@ namespace IT13
 
             lblRequired.Text = "Read-only view. Click 'Back to List' to return.";
             lblRequired.ForeColor = Color.Gray;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.Location = new Point(77, 56);
             lblRequired.AutoSize = true;
 
             lblNote.Text = "Supplier information is displayed below.";
-            lblNote.Font = new Font("Poppins", 9F);
+            lblNote.Font = new Font("Tahoma", 9F);
             lblNote.ForeColor = Color.Gray;
             lblNote.Location = new Point(77, 80);
             lblNote.AutoSize = true;
 
             int y = 120;
 
-            lblTitle.Text = "Title"; lblTitle.Font = new Font("Poppins", 10F); lblTitle.Location = new Point(77, y);
+            lblTitle.Text = "Title"; lblTitle.Font = new Font("Bahnschrift SemiCondensed", 10F); lblTitle.Location = new Point(77, y);
             txtTitle.Location = new Point(77, y + 25); txtTitle.Size = new Size(100, 36); txtTitle.BorderRadius = 5;
-            txtTitle.Font = new Font("Poppins", 10.5F); txtTitle.ForeColor = Color.Black; txtTitle.ReadOnly = true;
+            txtTitle.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtTitle.ForeColor = Color.Black; txtTitle.ReadOnly = true;
 
-            lblFName.Text = "First Name"; lblFName.Font = new Font("Poppins", 10F); lblFName.Location = new Point(197, y);
+            lblFName.Text = "First Name"; lblFName.Font = new Font("Bahnschrift SemiCondensed", 10F); lblFName.Location = new Point(197, y);
             txtFName.Location = new Point(197, y + 25); txtFName.Size = new Size(300, 36); txtFName.BorderRadius = 5;
-            txtFName.Font = new Font("Poppins", 10.5F); txtFName.ForeColor = Color.Black; txtFName.ReadOnly = true;
+            txtFName.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtFName.ForeColor = Color.Black; txtFName.ReadOnly = true;
 
-            lblLName.Text = "Last Name"; lblLName.Font = new Font("Poppins", 10F); lblLName.Location = new Point(517, y);
+            lblLName.Text = "Last Name"; lblLName.Font = new Font("Bahnschrift SemiCondensed", 10F); lblLName.Location = new Point(517, y);
             txtLName.Location = new Point(517, y + 25); txtLName.Size = new Size(300, 36); txtLName.BorderRadius = 5;
-            txtLName.Font = new Font("Poppins", 10.5F); txtLName.ForeColor = Color.Black; txtLName.ReadOnly = true;
+            txtLName.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtLName.ForeColor = Color.Black; txtLName.ReadOnly = true;
 
-            lblEmail.Text = "Email"; lblEmail.Font = new Font("Poppins", 10F); lblEmail.Location = new Point(837, y);
+            lblEmail.Text = "Email"; lblEmail.Font = new Font("Bahnschrift SemiCondensed", 10F); lblEmail.Location = new Point(837, y);
             txtEmail.Location = new Point(837, y + 25); txtEmail.Size = new Size(500, 36); txtEmail.BorderRadius = 5;
-            txtEmail.Font = new Font("Poppins", 10.5F); txtEmail.ForeColor = Color.Black; txtEmail.ReadOnly = true;
+            txtEmail.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtEmail.ForeColor = Color.Black; txtEmail.ReadOnly = true;
 
             y += 80;
 
-            lblCompany.Text = "Company Name"; lblCompany.Font = new Font("Poppins", 10F); lblCompany.Location = new Point(77, y);
+            lblCompany.Text = "Company Name"; lblCompany.Font = new Font("Bahnschrift SemiCondensed", 10F); lblCompany.Location = new Point(77, y);
             txtCompany.Location = new Point(77, y + 25); txtCompany.Size = new Size(600, 36); txtCompany.BorderRadius = 5;
-            txtCompany.Font = new Font("Poppins", 10.5F); txtCompany.ForeColor = Color.Black; txtCompany.ReadOnly = true;
+            txtCompany.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtCompany.ForeColor = Color.Black; txtCompany.ReadOnly = true;
 
-            lblPhone.Text = "Phone number"; lblPhone.Font = new Font("Poppins", 10F); lblPhone.Location = new Point(697, y);
+            lblPhone.Text = "Phone number"; lblPhone.Font = new Font("Bahnschrift SemiCondensed", 10F); lblPhone.Location = new Point(697, y);
             txtPhone.Location = new Point(697, y + 25); txtPhone.Size = new Size(300, 36); txtPhone.BorderRadius = 5;
-            txtPhone.Font = new Font("Poppins", 10.5F); txtPhone.ForeColor = Color.Black; txtPhone.ReadOnly = true;
+            txtPhone.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtPhone.ForeColor = Color.Black; txtPhone.ReadOnly = true;
 
-            lblPayment.Text = "Payment Terms"; lblPayment.Font = new Font("Poppins", 10F); lblPayment.Location = new Point(77, y + 80);
+            lblPayment.Text = "Payment Terms"; lblPayment.Font = new Font("Bahnschrift SemiCondensed", 10F); lblPayment.Location = new Point(77, y + 80);
             cmbPayment.Location = new Point(77, y + 105); cmbPayment.Size = new Size(300, 36); cmbPayment.BorderRadius = 5;
-            cmbPayment.Font = new Font("Poppins", 10.5F); cmbPayment.ForeColor = Color.Black; cmbPayment.Enabled = false;
+            cmbPayment.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbPayment.ForeColor = Color.Black; cmbPayment.Enabled = false;
 
-            lblStatus.Text = "Status"; lblStatus.Font = new Font("Poppins", 10F); lblStatus.Location = new Point(397, y + 80);
+            lblStatus.Text = "Status"; lblStatus.Font = new Font("Bahnschrift SemiCondensed", 10F); lblStatus.Location = new Point(397, y + 80);
             cmbStatus.Location = new Point(397, y + 105); cmbStatus.Size = new Size(150, 36); cmbStatus.BorderRadius = 5;
-            cmbStatus.Font = new Font("Poppins", 10.5F); cmbStatus.ForeColor = Color.Black; cmbStatus.Enabled = false;
+            cmbStatus.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbStatus.ForeColor = Color.Black; cmbStatus.Enabled = false;
 
             y += 180;
 
@@ -154,13 +154,13 @@ namespace IT13
             pnlOther.Location = new Point(77, panelY); pnlOther.Size = new Size(1300, 200);
             pnlOther.FillColor = Color.FromArgb(248, 249, 252); pnlOther.Radius = 20; pnlOther.Visible = true;
 
-            lblContactPerson.Text = "Contact Person"; lblContactPerson.Font = new Font("Poppins", 10F); lblContactPerson.Location = new Point(40, 25);
+            lblContactPerson.Text = "Contact Person"; lblContactPerson.Font = new Font("Bahnschrift SemiCondensed", 10F); lblContactPerson.Location = new Point(40, 25);
             txtContactPerson.Location = new Point(40, 50); txtContactPerson.Size = new Size(600, 36); txtContactPerson.BorderRadius = 5;
-            txtContactPerson.Font = new Font("Poppins", 10.5F); txtContactPerson.ForeColor = Color.Black; txtContactPerson.ReadOnly = true;
+            txtContactPerson.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtContactPerson.ForeColor = Color.Black; txtContactPerson.ReadOnly = true;
 
-            lblContactNum.Text = "Contact number"; lblContactNum.Font = new Font("Poppins", 10F); lblContactNum.Location = new Point(40, 105);
+            lblContactNum.Text = "Contact number"; lblContactNum.Font = new Font("Bahnschrift SemiCondensed", 10F); lblContactNum.Location = new Point(40, 105);
             txtContactNum.Location = new Point(40, 130); txtContactNum.Size = new Size(300, 36); txtContactNum.BorderRadius = 5;
-            txtContactNum.Font = new Font("Poppins", 10.5F); txtContactNum.ForeColor = Color.Black; txtContactNum.ReadOnly = true;
+            txtContactNum.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtContactNum.ForeColor = Color.Black; txtContactNum.ReadOnly = true;
 
             pnlOther.Controls.AddRange(new Control[] { lblContactPerson, txtContactPerson, lblContactNum, txtContactNum });
 
@@ -169,50 +169,50 @@ namespace IT13
 
             int lx = 40, rx = 760, fy = 70;
 
-            lblBilling.Text = "Billing Address"; lblBilling.Font = new Font("Poppins", 12F, FontStyle.Bold); lblBilling.Location = new Point(lx, 25); lblBilling.AutoSize = true;
-            lblShip.Text = "Shipping Address"; lblShip.Font = new Font("Poppins", 12F, FontStyle.Bold); lblShip.Location = new Point(rx, 25); lblShip.AutoSize = true;
-            lnkCopy.Text = "Copy billing address"; lnkCopy.Font = new Font("Poppins", 9.5F); lnkCopy.Location = new Point(rx + 10, 28); lnkCopy.AutoSize = true;
+            lblBilling.Text = "Billing Address"; lblBilling.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold); lblBilling.Location = new Point(lx, 25); lblBilling.AutoSize = true;
+            lblShip.Text = "Shipping Address"; lblShip.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold); lblShip.Location = new Point(rx, 25); lblShip.AutoSize = true;
+            lnkCopy.Text = "Copy billing address"; lnkCopy.Font = new Font("Bahnschrift SemiCondensed", 9.5F); lnkCopy.Location = new Point(rx + 10, 28); lnkCopy.AutoSize = true;
             lnkCopy.LinkColor = Color.FromArgb(0, 123, 255);
 
-            lblBCountry.Text = "Country"; lblBCountry.Font = new Font("Poppins", 10F); lblBCountry.Location = new Point(lx, fy);
+            lblBCountry.Text = "Country"; lblBCountry.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBCountry.Location = new Point(lx, fy);
             cmbBCountry.Location = new Point(lx, fy + 25); cmbBCountry.Size = new Size(300, 36); cmbBCountry.BorderRadius = 5;
-            cmbBCountry.Font = new Font("Poppins", 10.5F); cmbBCountry.ForeColor = Color.Black; cmbBCountry.Enabled = false;
+            cmbBCountry.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbBCountry.ForeColor = Color.Black; cmbBCountry.Enabled = false;
 
-            lblBCity.Text = "City"; lblBCity.Font = new Font("Poppins", 10F); lblBCity.Location = new Point(lx, fy + 80);
+            lblBCity.Text = "City"; lblBCity.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBCity.Location = new Point(lx, fy + 80);
             txtBCity.Location = new Point(lx, fy + 105); txtBCity.Size = new Size(300, 36); txtBCity.BorderRadius = 5;
-            txtBCity.Font = new Font("Poppins", 10.5F); txtBCity.ForeColor = Color.Black; txtBCity.ReadOnly = true;
+            txtBCity.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBCity.ForeColor = Color.Black; txtBCity.ReadOnly = true;
 
-            lblBZip.Text = "Zip Code"; lblBZip.Font = new Font("Poppins", 10F); lblBZip.Location = new Point(lx, fy + 160);
+            lblBZip.Text = "Zip Code"; lblBZip.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBZip.Location = new Point(lx, fy + 160);
             txtBZip.Location = new Point(lx, fy + 185); txtBZip.Size = new Size(150, 36); txtBZip.BorderRadius = 5;
-            txtBZip.Font = new Font("Poppins", 10.5F); txtBZip.ForeColor = Color.Black; txtBZip.ReadOnly = true;
+            txtBZip.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBZip.ForeColor = Color.Black; txtBZip.ReadOnly = true;
 
-            lblBLine1.Text = "Address Line 1"; lblBLine1.Font = new Font("Poppins", 10F); lblBLine1.Location = new Point(lx, fy + 240);
+            lblBLine1.Text = "Address Line 1"; lblBLine1.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBLine1.Location = new Point(lx, fy + 240);
             txtBLine1.Location = new Point(lx, fy + 265); txtBLine1.Size = new Size(500, 36); txtBLine1.BorderRadius = 5;
-            txtBLine1.Font = new Font("Poppins", 10.5F); txtBLine1.ForeColor = Color.Black; txtBLine1.ReadOnly = true;
+            txtBLine1.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBLine1.ForeColor = Color.Black; txtBLine1.ReadOnly = true;
 
-            lblBLine2.Text = "Address Line 2"; lblBLine2.Font = new Font("Poppins", 10F); lblBLine2.Location = new Point(lx, fy + 320);
+            lblBLine2.Text = "Address Line 2"; lblBLine2.Font = new Font("Bahnschrift SemiCondensed", 10F); lblBLine2.Location = new Point(lx, fy + 320);
             txtBLine2.Location = new Point(lx, fy + 345); txtBLine2.Size = new Size(500, 36); txtBLine2.BorderRadius = 5;
-            txtBLine2.Font = new Font("Poppins", 10.5F); txtBLine2.ForeColor = Color.Black; txtBLine2.ReadOnly = true;
+            txtBLine2.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtBLine2.ForeColor = Color.Black; txtBLine2.ReadOnly = true;
 
-            lblSCountry.Text = "Country"; lblSCountry.Font = new Font("Poppins", 10F); lblSCountry.Location = new Point(rx, fy);
+            lblSCountry.Text = "Country"; lblSCountry.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSCountry.Location = new Point(rx, fy);
             cmbSCountry.Location = new Point(rx, fy + 25); cmbSCountry.Size = new Size(300, 36); cmbSCountry.BorderRadius = 5;
-            cmbSCountry.Font = new Font("Poppins", 10.5F); cmbSCountry.ForeColor = Color.Black; cmbSCountry.Enabled = false;
+            cmbSCountry.Font = new Font("Bahnschrift SemiCondensed", 10.5F); cmbSCountry.ForeColor = Color.Black; cmbSCountry.Enabled = false;
 
-            lblSCity.Text = "City"; lblSCity.Font = new Font("Poppins", 10F); lblSCity.Location = new Point(rx, fy + 80);
+            lblSCity.Text = "City"; lblSCity.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSCity.Location = new Point(rx, fy + 80);
             txtSCity.Location = new Point(rx, fy + 105); txtSCity.Size = new Size(300, 36); txtSCity.BorderRadius = 5;
-            txtSCity.Font = new Font("Poppins", 10.5F); txtSCity.ForeColor = Color.Black; txtSCity.ReadOnly = true;
+            txtSCity.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSCity.ForeColor = Color.Black; txtSCity.ReadOnly = true;
 
-            lblSZip.Text = "Zip Code"; lblSZip.Font = new Font("Poppins", 10F); lblSZip.Location = new Point(rx, fy + 160);
+            lblSZip.Text = "Zip Code"; lblSZip.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSZip.Location = new Point(rx, fy + 160);
             txtSZip.Location = new Point(rx, fy + 185); txtSZip.Size = new Size(150, 36); txtSZip.BorderRadius = 5;
-            txtSZip.Font = new Font("Poppins", 10.5F); txtSZip.ForeColor = Color.Black; txtSZip.ReadOnly = true;
+            txtSZip.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSZip.ForeColor = Color.Black; txtSZip.ReadOnly = true;
 
-            lblSLine1.Text = "Address Line 1"; lblSLine1.Font = new Font("Poppins", 10F); lblSLine1.Location = new Point(rx, fy + 240);
+            lblSLine1.Text = "Address Line 1"; lblSLine1.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSLine1.Location = new Point(rx, fy + 240);
             txtSLine1.Location = new Point(rx, fy + 265); txtSLine1.Size = new Size(500, 36); txtSLine1.BorderRadius = 5;
-            txtSLine1.Font = new Font("Poppins", 10.5F); txtSLine1.ForeColor = Color.Black; txtSLine1.ReadOnly = true;
+            txtSLine1.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSLine1.ForeColor = Color.Black; txtSLine1.ReadOnly = true;
 
-            lblSLine2.Text = "Address Line 2"; lblSLine2.Font = new Font("Poppins", 10F); lblSLine2.Location = new Point(rx, fy + 320);
+            lblSLine2.Text = "Address Line 2"; lblSLine2.Font = new Font("Bahnschrift SemiCondensed", 10F); lblSLine2.Location = new Point(rx, fy + 320);
             txtSLine2.Location = new Point(rx, fy + 345); txtSLine2.Size = new Size(500, 36); txtSLine2.BorderRadius = 5;
-            txtSLine2.Font = new Font("Poppins", 10.5F); txtSLine2.ForeColor = Color.Black; txtSLine2.ReadOnly = true;
+            txtSLine2.Font = new Font("Bahnschrift SemiCondensed", 10.5F); txtSLine2.ForeColor = Color.Black; txtSLine2.ReadOnly = true;
 
             pnlAddress.Controls.AddRange(new Control[] {
                 lblBilling, lblShip, lnkCopy,
@@ -224,14 +224,14 @@ namespace IT13
             pnlRemarks.FillColor = Color.FromArgb(248, 249, 252); pnlRemarks.Radius = 20; pnlRemarks.Visible = false;
 
             lblRemarksTitle.Text = "Remarks / Additional Notes";
-            lblRemarksTitle.Font = new Font("Poppins", 12F, FontStyle.Bold);
+            lblRemarksTitle.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold);
             lblRemarksTitle.Location = new Point(40, 30);
 
             txtRemarks.Location = new Point(40, 70);
             txtRemarks.Size = new Size(1220, 220);
             txtRemarks.Multiline = true;
             txtRemarks.BorderRadius = 8;
-            txtRemarks.Font = new Font("Poppins", 10F);
+            txtRemarks.Font = new Font("Bahnschrift SemiCondensed", 10F);
             txtRemarks.ForeColor = Color.Black;
             txtRemarks.ScrollBars = ScrollBars.Vertical;
             txtRemarks.ReadOnly = true;

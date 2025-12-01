@@ -56,7 +56,7 @@ namespace IT13
 
             // ID
             lblId.AutoSize = true;
-            lblId.Font = new Font("Poppins", 11F);
+            lblId.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblId.Location = new Point(77, 120);
             lblId.Text = "Category ID *";
 
@@ -67,12 +67,12 @@ namespace IT13
             txtId.BorderColor = Color.FromArgb(180, 180, 180);
             txtId.FillColor = Color.FromArgb(240, 240, 240);
             txtId.ForeColor = Color.Black;
-            txtId.Font = new Font("Poppins", 11F);
+            txtId.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtId.ReadOnly = true;
 
             // STATUS
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Poppins", 11F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblStatus.Location = new Point(750, 120);
             lblStatus.Text = "Category Status *";
 
@@ -81,13 +81,13 @@ namespace IT13
             comboStatus.BorderRadius = 12;
             comboStatus.FillColor = Color.White;
             comboStatus.ForeColor = Color.Black;
-            comboStatus.Font = new Font("Poppins", 11F);
+            comboStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             comboStatus.Items.AddRange(new[] { "Active", "Inactive" });
 
             // NAME
             lblName.AutoSize = true;
-            lblName.Font = new Font("Poppins", 11F);
+            lblName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblName.Location = new Point(77, 220);
             lblName.Text = "Category Name *";
 
@@ -98,13 +98,13 @@ namespace IT13
             txtName.BorderColor = Color.FromArgb(180, 180, 180);
             txtName.FillColor = Color.White;
             txtName.ForeColor = Color.Black;
-            txtName.Font = new Font("Poppins", 11F);
+            txtName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtName.PlaceholderText = "Enter category name";
             txtName.PlaceholderForeColor = Color.Gray;
 
             // DATE
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Poppins", 11F);
+            lblDate.Font = new Font("Bahnschrift SemiCondensed", 11F);
             lblDate.Location = new Point(750, 220);
             lblDate.Text = "Date *";
 
@@ -112,7 +112,7 @@ namespace IT13
             datePicker.Size = new Size(600, 52);
             datePicker.Format = DateTimePickerFormat.Custom;
             datePicker.CustomFormat = "MM/dd/yyyy";
-            datePicker.Font = new Font("Poppins", 11F);
+            datePicker.Font = new Font("Bahnschrift SemiCondensed", 11F);
             datePicker.FillColor = Color.White;
             datePicker.ForeColor = Color.Black;
             datePicker.BorderColor = Color.FromArgb(180, 180, 180);

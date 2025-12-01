@@ -92,19 +92,19 @@ namespace IT13
 
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
             lblRequired.ForeColor = Color.Red;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.Location = new Point(77, 56);
             lblRequired.AutoSize = true;
 
             lblNote.Text = "Note: Supplier's Email and Phone number must be unique.";
-            lblNote.Font = new Font("Poppins", 9F);
+            lblNote.Font = new Font("Tahoma", 9F);
             lblNote.ForeColor = Color.Gray;
             lblNote.Location = new Point(77, 80);
             lblNote.AutoSize = true;
 
             int y = 120;
 
-            // Basic Info - Changed txtTitle to cmbTitle
+            // Basic Info - Using Poppins font with ComboBox for Title
             lblTitle.Text = "Title";
             lblTitle.Font = new Font("Poppins", 10F);
             lblTitle.Location = new Point(77, y);
@@ -416,7 +416,7 @@ namespace IT13
             pnlRemarks.Visible = false;
 
             lblRemarksTitle.Text = "Remarks / Additional Notes";
-            lblRemarksTitle.Font = new Font("Poppins", 12F, FontStyle.Bold);
+            lblRemarksTitle.Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold);
             lblRemarksTitle.Location = new Point(40, 30);
             lblRemarksTitle.AutoSize = true;
 
@@ -424,7 +424,7 @@ namespace IT13
             txtRemarks.Size = new Size(1220, 220);
             txtRemarks.Multiline = true;
             txtRemarks.BorderRadius = 8;
-            txtRemarks.Font = new Font("Poppins", 10F);
+            txtRemarks.Font = new Font("Bahnschrift SemiCondensed", 10F);
             txtRemarks.ForeColor = Color.Black;
             txtRemarks.ScrollBars = ScrollBars.Vertical;
             txtRemarks.AcceptsReturn = true;
@@ -451,7 +451,7 @@ namespace IT13
 
             bottomPanel.Controls.AddRange(new Control[] { btnCancel, btnSave });
 
-            // Final Add - Changed txtTitle to cmbTitle
+            // Final Add - Using cmbTitle ComboBox
             contentPanel.Controls.AddRange(new Control[] {
                 lblHeader, lblRequired, lblNote,
                 lblTitle, cmbTitle, lblFName, txtFName, lblLName, txtLName, lblEmail, txtEmail,
@@ -478,7 +478,7 @@ namespace IT13
         private Guna2ShadowPanel mainPanel, pnlOther, pnlAddress, pnlRemarks;
         private Guna2Panel scrollPanel, contentPanel, bottomPanel;
         private Label lblHeader, lblRequired, lblNote, lblTitle, lblFName, lblLName, lblEmail, lblCompany, lblPhone, lblPayment, lblStatus;
-        private Guna2ComboBox cmbTitle; // Changed from txtTitle to cmbTitle
+        private Guna2ComboBox cmbTitle;
         private Guna2TextBox txtFName, txtLName, txtEmail, txtCompany, txtPhone, txtRemarks;
         private Guna2ComboBox cmbPayment, cmbStatus;
         private Guna2Button btnOther, btnAddress, btnRemarks, btnCancel, btnSave;

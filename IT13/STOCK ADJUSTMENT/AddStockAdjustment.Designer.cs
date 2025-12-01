@@ -60,14 +60,14 @@
 
             // === REQUIRED TEXT ===
             lblRequired.AutoSize = true;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.ForeColor = Color.Red;
             lblRequired.Location = new Point(77, 56);
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
 
             // === INVENTORY ITEM ===
             lblItem.AutoSize = true;
-            lblItem.Font = new Font("Poppins", 10F);
+            lblItem.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblItem.ForeColor = Color.FromArgb(70, 70, 70);
             lblItem.Location = new Point(77, 110);
             lblItem.Text = "Inventory Item *";
@@ -79,12 +79,12 @@
             comboItem.BorderColor = Color.FromArgb(200, 200, 200);
             comboItem.BorderThickness = 1;
             comboItem.FillColor = Color.White;
-            comboItem.Font = new Font("Poppins", 11F);
+            comboItem.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboItem.ForeColor = Color.Black; // typed text black
 
             // === DATE ===
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Poppins", 10F);
+            lblDate.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblDate.ForeColor = Color.FromArgb(70, 70, 70);
             lblDate.Location = new Point(750, 110);
             lblDate.Text = "Date *";
@@ -98,12 +98,12 @@
             datePicker.BorderColor = Color.FromArgb(200, 200, 200);
             datePicker.BorderThickness = 1;
             datePicker.BorderRadius = 8;
-            datePicker.Font = new Font("Poppins", 11F);
+            datePicker.Font = new Font("Bahnschrift SemiCondensed", 11F);
             datePicker.ForeColor = Color.Black;
 
             // === REASON ===
             lblReason.AutoSize = true;
-            lblReason.Font = new Font("Poppins", 10F);
+            lblReason.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblReason.ForeColor = Color.FromArgb(70, 70, 70);
             lblReason.Location = new Point(750, 210);
             lblReason.Text = "Reason *";
@@ -115,12 +115,12 @@
             txtReason.BorderColor = Color.FromArgb(200, 200, 200);
             txtReason.BorderThickness = 1;
             txtReason.FillColor = Color.White;
-            txtReason.Font = new Font("Poppins", 11F);
+            txtReason.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtReason.ForeColor = Color.Black;
 
             // === REQUESTED BY ===
             lblRequested.AutoSize = true;
-            lblRequested.Font = new Font("Poppins", 10F);
+            lblRequested.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblRequested.ForeColor = Color.FromArgb(70, 70, 70);
             lblRequested.Location = new Point(77, 210);
             lblRequested.Text = "Requested By *";
@@ -132,12 +132,12 @@
             comboRequestedBy.BorderColor = Color.FromArgb(200, 200, 200);
             comboRequestedBy.BorderThickness = 1;
             comboRequestedBy.FillColor = Color.White;
-            comboRequestedBy.Font = new Font("Poppins", 11F);
+            comboRequestedBy.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboRequestedBy.ForeColor = Color.Black;
 
             // === REVIEWED BY ===
             lblReviewed.AutoSize = true;
-            lblReviewed.Font = new Font("Poppins", 10F);
+            lblReviewed.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblReviewed.ForeColor = Color.FromArgb(70, 70, 70);
             lblReviewed.Location = new Point(77, 310);
             lblReviewed.Text = "Reviewed By *";
@@ -149,12 +149,12 @@
             comboReviewedBy.BorderColor = Color.FromArgb(200, 200, 200);
             comboReviewedBy.BorderThickness = 1;
             comboReviewedBy.FillColor = Color.White;
-            comboReviewedBy.Font = new Font("Poppins", 11F);
+            comboReviewedBy.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboReviewedBy.ForeColor = Color.Black;
 
             // === ADJUSTMENT TYPE ===
             lblAdjType.AutoSize = true;
-            lblAdjType.Font = new Font("Poppins", 10F);
+            lblAdjType.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblAdjType.ForeColor = Color.FromArgb(70, 70, 70);
             lblAdjType.Location = new Point(77, 410);
             lblAdjType.Text = "Adjustment Type *";
@@ -166,12 +166,12 @@
             comboAdjType.BorderColor = Color.FromArgb(200, 200, 200);
             comboAdjType.BorderThickness = 1;
             comboAdjType.FillColor = Color.White;
-            comboAdjType.Font = new Font("Poppins", 11F);
+            comboAdjType.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboAdjType.ForeColor = Color.Black;
 
             // === PHYSICAL COUNT ===
             lblPhysical.AutoSize = true;
-            lblPhysical.Font = new Font("Poppins", 10F);
+            lblPhysical.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblPhysical.ForeColor = Color.FromArgb(70, 70, 70);
             lblPhysical.Location = new Point(77, 510);
             lblPhysical.Text = "Physical Count *";
@@ -185,12 +185,12 @@
             txtPhysicalCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtPhysicalCount.BorderThickness = 1;
             txtPhysicalCount.FillColor = Color.White;
-            txtPhysicalCount.Font = new Font("Poppins", 11F);
+            txtPhysicalCount.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtPhysicalCount.ForeColor = Color.Black;
 
             // === SYSTEM COUNT ===
             lblSystem.AutoSize = true;
-            lblSystem.Font = new Font("Poppins", 10F);
+            lblSystem.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblSystem.ForeColor = Color.FromArgb(70, 70, 70);
             lblSystem.Location = new Point(750, 410);
             lblSystem.Text = "System Count *";
@@ -204,12 +204,12 @@
             txtSystemCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtSystemCount.BorderThickness = 1;
             txtSystemCount.FillColor = Color.White;
-            txtSystemCount.Font = new Font("Poppins", 11F);
+            txtSystemCount.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtSystemCount.ForeColor = Color.Black;
 
             // === ADJUSTMENT COUNT ===
             lblAdjCount.AutoSize = true;
-            lblAdjCount.Font = new Font("Poppins", 10F);
+            lblAdjCount.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblAdjCount.ForeColor = Color.FromArgb(70, 70, 70);
             lblAdjCount.Location = new Point(77, 610);
             lblAdjCount.Text = "Adjustment Count *";
@@ -223,12 +223,12 @@
             txtAdjCount.BorderColor = Color.FromArgb(200, 200, 200);
             txtAdjCount.BorderThickness = 1;
             txtAdjCount.FillColor = Color.White;
-            txtAdjCount.Font = new Font("Poppins", 11F);
+            txtAdjCount.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtAdjCount.ForeColor = Color.Black;
 
             // === STATUS ===
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Poppins", 10F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblStatus.ForeColor = Color.FromArgb(70, 70, 70);
             lblStatus.Location = new Point(750, 510);
             lblStatus.Text = "Status *";
@@ -240,7 +240,7 @@
             comboStatus.BorderColor = Color.FromArgb(200, 200, 200);
             comboStatus.BorderThickness = 1;
             comboStatus.FillColor = Color.White;
-            comboStatus.Font = new Font("Poppins", 11F);
+            comboStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             comboStatus.ForeColor = Color.Black;
 
             // === BUTTONS (Poppins font) ===

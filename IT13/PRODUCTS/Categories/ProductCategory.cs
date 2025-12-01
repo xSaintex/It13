@@ -35,7 +35,7 @@ namespace IT13
             foreach (DataGridViewColumn col in datagridviewcategory.Columns)
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
 
-            datagridviewcategory.DefaultCellStyle.Font = new Font("Poppins", 11F);
+            datagridviewcategory.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 11F);
             datagridviewcategory.RowTemplate.Height = 45;
 
             // Use Fill mode with proper weights for better distribution
@@ -218,7 +218,7 @@ namespace IT13
                 }
 
                 TextRenderer.DrawText(e.Graphics, "ID",
-                    new Font("Poppins", 12F, FontStyle.Bold),
+                    new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                     new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                     Color.White,
                     TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
@@ -303,7 +303,7 @@ namespace IT13
                 if (!string.IsNullOrEmpty(idText))
                 {
                     TextRenderer.DrawText(e.Graphics, idText,
-                        new Font("Poppins", 11F),
+                        new Font("Bahnschrift SemiCondensed", 11F),
                         new Rectangle(e.CellBounds.X + 36, e.CellBounds.Y, e.CellBounds.Width - 36, e.CellBounds.Height),
                         Color.Black,
                         TextFormatFlags.VerticalCenter | TextFormatFlags.Left);

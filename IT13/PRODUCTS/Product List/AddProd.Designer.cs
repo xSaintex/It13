@@ -87,7 +87,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Bahnschrift SemiCondensed", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(31, 24);
             label2.Name = "label2";
             label2.Size = new Size(201, 36);
@@ -184,7 +184,7 @@
             guna2TextBox4.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox4.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox4.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox4.Font = new Font("Segoe UI", 9F);
+            guna2TextBox4.Font = new Font("Bahnschrift SemiCondensed", 9F);
             guna2TextBox4.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             guna2TextBox4.Location = new Point(61, 394);
             guna2TextBox4.Margin = new Padding(3, 4, 3, 4);
@@ -199,7 +199,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(30, 357);
             label9.Name = "label9";
             label9.Size = new Size(145, 18);
@@ -214,7 +214,7 @@
             guna2ComboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             guna2ComboBox3.FocusedColor = Color.FromArgb(94, 148, 255);
             guna2ComboBox3.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox3.Font = new Font("Segoe UI", 10F);
+            guna2ComboBox3.Font = new Font("Bahnschrift SemiCondensed", 10F);
             guna2ComboBox3.ForeColor = Color.FromArgb(68, 88, 112);
             guna2ComboBox3.ItemHeight = 30;
             guna2ComboBox3.Location = new Point(61, 300);
@@ -226,7 +226,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.Location = new Point(30, 266);
             label8.Name = "label8";
             label8.Size = new Size(159, 18);
@@ -241,7 +241,7 @@
             guna2ComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             guna2ComboBox2.FocusedColor = Color.FromArgb(94, 148, 255);
             guna2ComboBox2.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox2.Font = new Font("Segoe UI", 10F);
+            guna2ComboBox2.Font = new Font("Bahnschrift SemiCondensed", 10F);
             guna2ComboBox2.ForeColor = Color.FromArgb(68, 88, 112);
             guna2ComboBox2.ItemHeight = 30;
             guna2ComboBox2.Location = new Point(61, 204);
@@ -253,7 +253,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(30, 169);
             label7.Name = "label7";
             label7.Size = new Size(179, 18);
@@ -268,7 +268,7 @@
             guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             guna2ComboBox1.FocusedColor = Color.FromArgb(94, 148, 255);
             guna2ComboBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox1.Font = new Font("Segoe UI", 10F);
+            guna2ComboBox1.Font = new Font("Bahnschrift SemiCondensed", 10F);
             guna2ComboBox1.ForeColor = Color.FromArgb(68, 88, 112);
             guna2ComboBox1.ItemHeight = 30;
             guna2ComboBox1.Location = new Point(61, 108);
@@ -280,7 +280,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(30, 74);
             label6.Name = "label6";
             label6.Size = new Size(134, 18);
@@ -324,7 +324,7 @@
             guna2TextBox3.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox3.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox3.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox3.Font = new Font("Segoe UI", 9F);
+            guna2TextBox3.Font = new Font("Bahnschrift SemiCondensed", 9F);
             guna2TextBox3.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             guna2TextBox3.Location = new Point(36, 297);
             guna2TextBox3.Margin = new Padding(3, 4, 3, 4);
@@ -344,7 +344,7 @@
             guna2TextBox2.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox2.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox2.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox2.Font = new Font("Segoe UI", 9F);
+            guna2TextBox2.Font = new Font("Bahnschrift SemiCondensed", 9F);
             guna2TextBox2.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             guna2TextBox2.Location = new Point(36, 204);
             guna2TextBox2.Margin = new Padding(3, 4, 3, 4);
@@ -358,7 +358,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(27, 266);
             label5.Name = "label5";
             label5.Size = new Size(94, 18);
@@ -368,7 +368,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(27, 169);
             label4.Name = "label4";
             label4.Size = new Size(80, 18);
@@ -384,7 +384,7 @@
             guna2TextBox1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             guna2TextBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Font = new Font("Segoe UI", 9F);
+            guna2TextBox1.Font = new Font("Bahnschrift SemiCondensed", 9F);
             guna2TextBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             guna2TextBox1.Location = new Point(36, 105);
             guna2TextBox1.Margin = new Padding(3, 4, 3, 4);
@@ -398,7 +398,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Bahnschrift SemiCondensed", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(27, 74);
             label3.Name = "label3";
             label3.Size = new Size(114, 18);

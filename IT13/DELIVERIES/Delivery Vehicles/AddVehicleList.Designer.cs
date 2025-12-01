@@ -56,7 +56,7 @@ namespace IT13
 
             // === REQUIRED TEXT ===
             lblRequired.AutoSize = true;
-            lblRequired.Font = new Font("Poppins", 9F);
+            lblRequired.Font = new Font("Tahoma", 9F);
             lblRequired.ForeColor = Color.Red;
             lblRequired.Location = new Point(77, 56);
             lblRequired.Text = "Fields marked with an asterisk (*) are required.";
@@ -65,7 +65,7 @@ namespace IT13
             lblPlateNumber.AutoSize = true;
             lblPlateNumber.Location = new Point(77, 110);
             lblPlateNumber.Text = "Plate Number *";
-            lblPlateNumber.Font = new Font("Poppins", 10F);
+            lblPlateNumber.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblPlateNumber.ForeColor = Color.FromArgb(70, 70, 70);
 
             txtPlateNumber.Location = new Point(77, 140);
@@ -74,7 +74,7 @@ namespace IT13
             txtPlateNumber.BorderColor = Color.FromArgb(200, 200, 200);
             txtPlateNumber.BorderThickness = 1;
             txtPlateNumber.FillColor = Color.White;
-            txtPlateNumber.Font = new Font("Poppins", 11F);
+            txtPlateNumber.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtPlateNumber.ForeColor = Color.Black;                   
             txtPlateNumber.PlaceholderText = "e.g. NCR 1234";
             txtPlateNumber.PlaceholderForeColor = Color.Gray;
@@ -83,7 +83,7 @@ namespace IT13
             lblVehicleName.AutoSize = true;
             lblVehicleName.Location = new Point(750, 110);
             lblVehicleName.Text = "Vehicle Name *";
-            lblVehicleName.Font = new Font("Poppins", 10F);
+            lblVehicleName.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblVehicleName.ForeColor = Color.FromArgb(70, 70, 70);
 
             txtVehicleName.Location = new Point(750, 140);
@@ -92,7 +92,7 @@ namespace IT13
             txtVehicleName.BorderColor = Color.FromArgb(200, 200, 200);
             txtVehicleName.BorderThickness = 1;
             txtVehicleName.FillColor = Color.White;
-            txtVehicleName.Font = new Font("Poppins", 11F);
+            txtVehicleName.Font = new Font("Bahnschrift SemiCondensed", 11F);
             txtVehicleName.ForeColor = Color.Black;                   
             txtVehicleName.PlaceholderText = "e.g. Toyota Hiace Van";
             txtVehicleName.PlaceholderForeColor = Color.Gray;
@@ -101,7 +101,7 @@ namespace IT13
             lblStatus.AutoSize = true;
             lblStatus.Location = new Point(77, 210);
             lblStatus.Text = "Status *";
-            lblStatus.Font = new Font("Poppins", 10F);
+            lblStatus.Font = new Font("Bahnschrift SemiCondensed", 10F);
             lblStatus.ForeColor = Color.FromArgb(70, 70, 70);
 
             cmbStatus.Location = new Point(77, 240);
@@ -111,7 +111,7 @@ namespace IT13
             cmbStatus.BorderColor = Color.FromArgb(200, 200, 200);
             cmbStatus.BorderThickness = 1;
             cmbStatus.FillColor = Color.White;
-            cmbStatus.Font = new Font("Poppins", 11F);
+            cmbStatus.Font = new Font("Bahnschrift SemiCondensed", 11F);
             cmbStatus.ForeColor = Color.Black;                        
 
             // === CANCEL BUTTON ===

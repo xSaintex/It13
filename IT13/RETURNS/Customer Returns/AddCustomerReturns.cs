@@ -112,32 +112,34 @@ namespace IT13
             var parent = this.ParentForm as Form1;
             if (parent != null)
             {
-                // If this form was opened from CustomerReturns, go back to THAT exact instance
+                // ← NEW: Check if opened from ReturnList (highest priority)
+                if (this.Tag is ReturnList returnListForm)
+                {
+                    parent.navBar1.PageTitle = "Return List";
+                    parent.pnlContent.Controls.Clear();
+                    parent.pnlContent.Controls.Add(returnListForm);
+                    returnListForm.Show();
+                    returnListForm.BringToFront();
+                    this.Close();
+                    return;
+                }
+
+                // ← OLD behavior: if opened from CustomerReturns page
                 if (this.Tag is CustomerReturns customerReturnsForm)
                 {
                     parent.navBar1.PageTitle = "Customer Returns";
                     parent.pnlContent.Controls.Clear();
                     parent.pnlContent.Controls.Add(customerReturnsForm);
                     customerReturnsForm.Show();
+                    customerReturnsForm.BringToFront();
+                    this.Close();
                     return;
                 }
 
-                // Fallback: use main navigation
+                // Final fallback
                 parent.NavigateToCustomerReturns();
+                this.Close();
                 return;
-            }
-
-            // Non-MDI fallback (just in case)
-            this.Hide();
-            var form = Application.OpenForms["CustomerReturns"] as CustomerReturns;
-            if (form != null)
-            {
-                form.Show();
-                form.BringToFront();
-            }
-            else
-            {
-                new CustomerReturns().Show();
             }
 
             this.Close();

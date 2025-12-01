@@ -9,7 +9,7 @@ namespace IT13
         private inven inventoryForm;
         private ProductList productListForm;
         private ProductCategory productCategoryForm;
-        private CustOrder custOrderForm;
+        private CustomerOrderList customerOrderListForm;
         private StockAdjustment stockAdjustmentForm;
         private OrderList orderListForm;
         private SupplierOrderList supplierOrderListForm;
@@ -18,7 +18,13 @@ namespace IT13
         private DeliveryVehicleList deliveryVehicleListForm;
         private DeliveryList deliveryListForm;
         private CustomerReturns customerReturnsForm;
-        private SupplierReturns supplierReturnsForm; // ← ADDED
+        private SupplierReturns supplierReturnsForm;
+        private ReturnList returnListForm;       
+        private RentalList rentalListForm;
+        private Schedule scheduleForm;
+        private Employees employeesForm;
+        private UserList userListForm;
+        private UserAdmins userAdminsForm;
 
         public Form1()
         {
@@ -34,12 +40,10 @@ namespace IT13
             navBar1.NavHeight = 80;
             navBar1.PageTitle = "Dashboard";
             navBar1.UserName = "Admin";
-
             sidebar1.Dock = DockStyle.Left;
             sidebar1.Width = 260;
             sidebar1.Height = this.ClientSize.Height;
             sidebar1.BringToFront();
-
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Left = 260;
             pnlContent.Top = 70;
@@ -55,7 +59,6 @@ namespace IT13
                 pnlContent.Width = this.ClientSize.Width - 260;
                 pnlContent.Height = this.ClientSize.Height - navBar1.Height;
             };
-
             this.Resize += (s, ev) =>
             {
                 sidebar1.Height = this.ClientSize.Height;
@@ -69,81 +72,90 @@ namespace IT13
             sidebar1.SidebarItemClicked += (s, ev) =>
             {
                 string section = ev.Section?.Trim() ?? "";
-
                 switch (section)
                 {
                     case "Dashboard":
                         navBar1.PageTitle = "Dashboard";
                         pnlContent.Controls.Clear();
                         break;
-
                     case "Product List":
                         navBar1.PageTitle = "Product List";
                         LoadProductListForm();
                         break;
-
                     case "Categories":
                         navBar1.PageTitle = "Categories";
                         LoadProductCategoryForm();
                         break;
-
                     case "Inventory":
                         navBar1.PageTitle = "Inventory";
                         LoadInventoryForm();
                         break;
-
                     case "Stock Adjustments":
                         navBar1.PageTitle = "Stock Adjustments";
                         LoadStockAdjustmentForm();
                         break;
-
                     case "Order List":
                         navBar1.PageTitle = "Order List";
                         LoadOrderListForm();
                         break;
-
                     case "Supplier Order":
                         navBar1.PageTitle = "Supplier Order";
                         LoadSupplierOrderListForm();
                         break;
-
                     case "Customer Order":
                         navBar1.PageTitle = "Customer Order";
                         LoadCustomerOrderForm();
                         break;
-
                     case "Customer List":
                         navBar1.PageTitle = "Customer List";
                         LoadCustomerListForm();
                         break;
-
                     case "Supplier List":
                         navBar1.PageTitle = "Supplier List";
                         LoadSupplierListForm();
                         break;
-
                     case "Delivery Vehicles":
                         navBar1.PageTitle = "Delivery Vehicles";
                         LoadDeliveryVehicleListForm();
                         break;
-
                     case "Delivery List":
                         navBar1.PageTitle = "Delivery List";
                         LoadDeliveryListForm();
                         break;
-
                     case "Customer Returns":
                         navBar1.PageTitle = "Customer Returns";
                         LoadCustomerReturnsForm();
                         break;
-
-                    case "Supplier Returns": // ← ADDED THIS CASE
+                    case "Supplier Returns":
                         navBar1.PageTitle = "Supplier Returns";
                         LoadSupplierReturnsForm();
                         break;
-
+                    case "Returns List":
+                        navBar1.PageTitle = "Returns List";
+                        LoadReturnListForm();
+                        break;
+                    case "Rental List": 
+                        navBar1.PageTitle = "Rental List";
+                        LoadRentalListForm();
+                        break;
                     default:
                         navBar1.PageTitle = section;
+                        break;
+                    case "Schedules":
+                        navBar1.PageTitle = "Schedules";
+                        LoadScheduleForm();
+                        break;
+                    case "Employees":
+                        navBar1.PageTitle = "Employees";
+                        LoadEmployeesForm();
+                        break;
+                    case "User List": 
+                        navBar1.PageTitle = "User List";
+                        LoadUserListForm();
+                        break;
+                    case "User Admins":
+                        navBar1.PageTitle = "User Admins";
+                        LoadUserAdminsForm();
                         break;
                 }
             };
@@ -193,14 +205,14 @@ namespace IT13
         private void LoadCustomerOrderForm()
         {
             pnlContent.Controls.Clear();
-            custOrderForm = new CustOrder
+            customerOrderListForm = new CustomerOrderList
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
                 Dock = DockStyle.Fill
             };
-            pnlContent.Controls.Add(custOrderForm);
-            custOrderForm.Show();
+            pnlContent.Controls.Add(customerOrderListForm);
+            customerOrderListForm.Show();
         }
 
         private void LoadStockAdjustmentForm()
@@ -307,7 +319,7 @@ namespace IT13
             customerReturnsForm.Show();
         }
 
-        private void LoadSupplierReturnsForm() // ← NEW METHOD
+        private void LoadSupplierReturnsForm()
         {
             pnlContent.Controls.Clear();
             supplierReturnsForm = new SupplierReturns
@@ -318,6 +330,84 @@ namespace IT13
             };
             pnlContent.Controls.Add(supplierReturnsForm);
             supplierReturnsForm.Show();
+        }
+
+        private void LoadReturnListForm()
+        {
+            pnlContent.Controls.Clear();
+            returnListForm = new ReturnList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(returnListForm);
+            returnListForm.Show();
+        }
+
+        private void LoadRentalListForm() 
+        {
+            pnlContent.Controls.Clear();
+            rentalListForm = new RentalList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(rentalListForm);
+            rentalListForm.Show();
+        }
+
+        private void LoadScheduleForm()
+        {
+            pnlContent.Controls.Clear();
+            scheduleForm = new Schedule
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(scheduleForm);
+            scheduleForm.Show();
+        }
+
+        private void LoadEmployeesForm()
+        {
+            pnlContent.Controls.Clear();
+            employeesForm = new Employees
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(employeesForm);
+            employeesForm.Show();
+        }
+
+        private void LoadUserListForm()
+        {
+            pnlContent.Controls.Clear();
+            userListForm = new UserList
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(userListForm);
+            userListForm.Show();
+        }
+
+        private void LoadUserAdminsForm()
+        {
+            pnlContent.Controls.Clear();
+            userAdminsForm = new UserAdmins
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+            pnlContent.Controls.Add(userAdminsForm);
+            userAdminsForm.Show();
         }
 
         #endregion
@@ -353,10 +443,40 @@ namespace IT13
             LoadCustomerReturnsForm();
         }
 
-        public void NavigateToSupplierReturns() // ← NEW HELPER
+        public void NavigateToSupplierReturns()
         {
             navBar1.PageTitle = "Supplier Returns";
             LoadSupplierReturnsForm();
+        }
+
+        public void NavigateToReturnList()
+        {
+            navBar1.PageTitle = "Returns List";
+            LoadReturnListForm();
+        }
+
+        public void NavigateToRentalList() 
+        {
+            navBar1.PageTitle = "Rental List";
+            LoadRentalListForm();
+        }
+
+        public void NavigateToSchedule()
+        {
+            navBar1.PageTitle = "Schedules";
+            LoadScheduleForm();
+        }
+
+        public void NavigateToUserList()
+        {
+            navBar1.PageTitle = "User List";
+            LoadUserListForm();
+        }
+
+        public void NavigateToUserAdmins()
+        {
+            navBar1.PageTitle = "User Admins";
+            LoadUserAdminsForm();
         }
     }
 }

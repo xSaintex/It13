@@ -35,7 +35,7 @@ namespace IT13
             // === TEXTBOXES ===
             foreach (var tb in new[] { guna2TextBox1, guna2TextBox2, guna2TextBox3, guna2TextBox4 })
             {
-                tb.Font = new Font("Poppins", 11F);
+                tb.Font = new Font("Bahnschrift SemiCondensed", 11F);
                 tb.ForeColor = Color.Black;
                 tb.BorderRadius = 12;
                 tb.BorderThickness = 1;
@@ -66,7 +66,7 @@ namespace IT13
             // === COMBOBOXES ===
             foreach (var cb in new[] { guna2ComboBox1, guna2ComboBox2, guna2ComboBox3 })
             {
-                cb.Font = new Font("Poppins", 11F);
+                cb.Font = new Font("Bahnschrift SemiCondensed", 11F);
                 cb.ForeColor = Color.Black;
                 cb.BorderRadius = 12;
                 cb.BorderThickness = 1;
@@ -80,7 +80,7 @@ namespace IT13
             {
                 if (c is Label lbl && lbl != label2)
                 {
-                    lbl.Font = new Font("Poppins", 11F);
+                    lbl.Font = new Font("Bahnschrift SemiCondensed", 11F);
                     lbl.ForeColor = Color.Black;
                 }
             }

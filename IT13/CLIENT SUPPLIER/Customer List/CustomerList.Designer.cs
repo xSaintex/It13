@@ -16,9 +16,9 @@ namespace IT13
         {
             DataGridViewCellStyle headerStyle = new DataGridViewCellStyle
             {
-                BackColor = Color.FromArgb(12, 57, 101),       // EXACT same as StockAdjustment
+                BackColor = Color.FromArgb(12, 57, 101),    
                 ForeColor = Color.White,
-                Font = new Font("Poppins", 12F, FontStyle.Bold),
+                Font = new Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
 

@@ -83,11 +83,11 @@ namespace IT13
 
             // ===================== HEADER & INFO PANEL (unchanged) =====================
             lblHeader.Font = new Font("Tahoma", 18F, FontStyle.Bold);
-            lblHeader.Location = new Point(77, 25);
+            lblHeader.Location = new Point(75, 25);
             lblHeader.AutoSize = true;
             lblHeader.ForeColor = Color.FromArgb(50, 50, 50);
 
-            lblCreated.Font = new Font("Poppins", 9F);
+            lblCreated.Font = new Font("Tahoma", 9F);
             lblCreated.ForeColor = Color.Gray;
             lblCreated.Location = new Point(77, 65);
             lblCreated.AutoSize = true;
@@ -102,25 +102,25 @@ namespace IT13
             int ix = 60, iy = 35, gapY = 70;
             int col1 = ix, col2 = 400, col3 = 750, col4 = 1100;
 
-            var lbl1 = new Label(); lbl1.Text = "Customer Order"; lbl1.Font = new Font("Poppins", 10F); lbl1.Location = new Point(col1, iy);
-            txtCustomerOrder.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtCustomerOrder.Location = new Point(col1, iy + 24); txtCustomerOrder.AutoSize = true;
-            var lbl2 = new Label(); lbl2.Text = "Delivery Date"; lbl2.Font = new Font("Poppins", 10F); lbl2.Location = new Point(col2, iy);
-            txtDeliveryDate.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtDeliveryDate.Location = new Point(col2, iy + 24); txtDeliveryDate.AutoSize = true;
-            var lbl3 = new Label(); lbl3.Text = "Assigned Employee"; lbl3.Font = new Font("Poppins", 10F); lbl3.Location = new Point(col3, iy);
-            txtEmployee.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtEmployee.Location = new Point(col3, iy + 24); txtEmployee.AutoSize = true;
-            var lbl4 = new Label(); lbl4.Text = "Vehicle"; lbl4.Font = new Font("Poppins", 10F); lbl4.Location = new Point(col1, iy + gapY);
-            txtVehicle.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtVehicle.Location = new Point(col1, iy + gapY + 24); txtVehicle.AutoSize = true;
-            var lbl5 = new Label(); lbl5.Text = "Plate Number"; lbl5.Font = new Font("Poppins", 10F); lbl5.Location = new Point(col2, iy + gapY);
-            txtPlate.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtPlate.Location = new Point(col2, iy + gapY + 24); txtPlate.AutoSize = true;
-            var lbl6 = new Label(); lbl6.Text = "Last Attempt Date"; lbl6.Font = new Font("Poppins", 10F); lbl6.Location = new Point(col3, iy + gapY);
-            txtLastAttempt.Font = new Font("Tahoma", 13F, FontStyle.Bold); txtLastAttempt.Location = new Point(col3, iy + gapY + 24); txtLastAttempt.AutoSize = true;
+            var lbl1 = new Label(); lbl1.Text = "Customer Order"; lbl1.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl1.Location = new Point(col1, iy); lbl1.AutoSize = true; 
+            txtCustomerOrder.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtCustomerOrder.Location = new Point(col1, iy + 24); txtCustomerOrder.AutoSize = true;
+            var lbl2 = new Label(); lbl2.Text = "Delivery Date"; lbl2.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl2.Location = new Point(col2, iy); lbl2.AutoSize = true;
+            txtDeliveryDate.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtDeliveryDate.Location = new Point(col2, iy + 24); txtDeliveryDate.AutoSize = true;
+            var lbl3 = new Label(); lbl3.Text = "Assigned Employee"; lbl3.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl3.Location = new Point(col3, iy); lbl3.AutoSize = true;
+            txtEmployee.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtEmployee.Location = new Point(col3, iy + 24); txtEmployee.AutoSize = true;
+            var lbl4 = new Label(); lbl4.Text = "Vehicle"; lbl4.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl4.Location = new Point(col1, iy + gapY);
+            txtVehicle.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtVehicle.Location = new Point(col1, iy + gapY + 24); txtVehicle.AutoSize = true;
+            var lbl5 = new Label(); lbl5.Text = "Plate Number"; lbl5.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl5.Location = new Point(col2, iy + gapY); lbl5.AutoSize = true;
+            txtPlate.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtPlate.Location = new Point(col2, iy + gapY + 24); txtPlate.AutoSize = true;
+            var lbl6 = new Label(); lbl6.Text = "Last Attempt Date"; lbl6.Font = new Font("Bahnschrift SemiCondensed", 10F); lbl6.Location = new Point(col3, iy + gapY); lbl6.AutoSize = true;
+            txtLastAttempt.Font = new Font("Segoe UI", 13F, FontStyle.Bold); txtLastAttempt.Location = new Point(col3, iy + gapY + 24); txtLastAttempt.AutoSize = true;
 
-            var lblStatusTitle = new Label(); lblStatusTitle.Text = "Status"; lblStatusTitle.Font = new Font("Poppins", 10F); lblStatusTitle.Location = new Point(col4, iy + gapY);
+            var lblStatusTitle = new Label(); lblStatusTitle.Text = "Status"; lblStatusTitle.Font = new Font("Bahnschrift SemiCondensed", 10F); lblStatusTitle.Location = new Point(col4, iy + gapY);
             pnlStatusBadge.Size = new Size(110, 32);
             pnlStatusBadge.Location = new Point(col4, iy + gapY + 24);
             pnlStatusBadge.FillColor = Color.FromArgb(230, 255, 240);
             pnlStatusBadge.BorderRadius = 16;
-            lblStatusValue.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            lblStatusValue.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblStatusValue.ForeColor = Color.FromArgb(0, 150, 80);
             lblStatusValue.Text = "Delivered";
             lblStatusValue.Dock = DockStyle.Fill;
@@ -189,10 +189,10 @@ namespace IT13
             // Dark blue header
             dgvAttempts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(12, 57, 101);
             dgvAttempts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvAttempts.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvAttempts.ColumnHeadersDefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 10F, FontStyle.Bold);
             dgvAttempts.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dgvAttempts.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvAttempts.DefaultCellStyle.Font = new Font("Bahnschrift SemiCondensed", 10F);
             dgvAttempts.DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50);
             dgvAttempts.DefaultCellStyle.SelectionBackColor = Color.White;
             dgvAttempts.DefaultCellStyle.SelectionForeColor = Color.FromArgb(50, 50, 50);
@@ -283,7 +283,7 @@ namespace IT13
                 e.Graphics.FillPath(new SolidBrush(bg), path);
 
                 using var brush = new SolidBrush(Color.White);
-                using var font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+                using var font = new Font("Bahnschrift SemiCondensed", 9.5F, FontStyle.Bold);
                 var sz = e.Graphics.MeasureString(e.Value.ToString(), font);
                 e.Graphics.DrawString(e.Value.ToString(), font, brush,
                     e.CellBounds.X + (e.CellBounds.Width - sz.Width) / 2,
@@ -307,16 +307,16 @@ namespace IT13
             lblInfoHeader.Location = new Point(35, 28);
             lblInfoHeader.AutoSize = true;
 
-            lblCustomerTitle.Text = "Customer"; lblCustomerTitle.Font = new Font("Poppins", 10F); lblCustomerTitle.ForeColor = Color.Gray; lblCustomerTitle.Location = new Point(35, 85);
-            lblCustomerValue.Font = new Font("Tahoma", 11F, FontStyle.Bold); lblCustomerValue.Location = new Point(35, 107); lblCustomerValue.AutoSize = true; lblCustomerValue.MaximumSize = new Size(1300, 0);
-            lblShippingTitle.Text = "Shipping Address"; lblShippingTitle.Font = new Font("Poppins", 10F); lblShippingTitle.ForeColor = Color.Gray; lblShippingTitle.Location = new Point(35, 155);
-            lblShippingValue.Font = new Font("Tahoma", 11F, FontStyle.Bold); lblShippingValue.Location = new Point(35, 177); lblShippingValue.AutoSize = true; lblShippingValue.MaximumSize = new Size(1300, 0);
+            lblCustomerTitle.Text = "Customer"; lblCustomerTitle.Font = new Font("Bahnschrift SemiCondensed", 10F); lblCustomerTitle.ForeColor = Color.Gray; lblCustomerTitle.Location = new Point(35, 85);
+            lblCustomerValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold); lblCustomerValue.Location = new Point(35, 107); lblCustomerValue.AutoSize = true; lblCustomerValue.MaximumSize = new Size(1300, 0);
+            lblShippingTitle.Text = "Shipping Address"; lblShippingTitle.Font = new Font("Bahnschrift SemiCondensed", 10F); lblShippingTitle.ForeColor = Color.Gray; lblShippingTitle.Location = new Point(35, 155); lblShippingTitle.AutoSize = true;
+            lblShippingValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold); lblShippingValue.Location = new Point(35, 177); lblShippingValue.AutoSize = true; lblShippingValue.MaximumSize = new Size(1300, 0);
 
             pnlDetails.Controls.AddRange(new Control[] { lblInfoHeader, lblCustomerTitle, lblCustomerValue, lblShippingTitle, lblShippingValue });
 
             bottomPanel.Location = new Point(0, 800);
             bottomPanel.Size = new Size(1602, 78);
-            bottomPanel.BackColor = Color.White;
+            bottomPanel.BackColor = Color.Transparent;
             btnBack.Text = "Back to List";
             btnBack.Location = new Point(1310, 20);
             btnBack.Size = new Size(170, 40);

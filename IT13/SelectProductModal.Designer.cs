@@ -68,7 +68,7 @@ namespace IT13
             // EXACT SAME HEADER STYLE AS AddSupplierOrder
             dgvProducts.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(12, 57, 101);
             dgvProducts.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            dgvProducts.ThemeStyle.HeaderStyle.Font = new Font("Poppins", 10F, FontStyle.Bold);
+            dgvProducts.ThemeStyle.HeaderStyle.Font = new Font("Bahnschrift SemiCondensed", 10F, FontStyle.Bold);
 
             colCheck.HeaderText = ""; colCheck.Width = 100;
             colName.HeaderText = "PRODUCT NAME"; colName.Width = 250;
